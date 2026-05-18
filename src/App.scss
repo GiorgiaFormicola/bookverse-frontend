@@ -23,4 +23,31 @@ $custom-colors: (
 @import "bootstrap/scss/variables";
 $theme-colors: map-merge($theme-colors, $custom-colors);
 
+$input-bg: transparent;
+$input-color: $text;
+$input-focus-bg: transparent;
+$input-focus-color: $text;
+$input-focus-border-color: $accent;
+$input-placeholder-color: #e9e3e66a;
+$input-focus-box-shadow: 0 0 0 0.1rem $accent;
+
+.form-control:hover {
+  border-color: $accent;
+}
+
+.btn:hover {
+  transform: scale(1.05);
+  /* box-shadow: 0 0 15px $primary; */
+  box-shadow: 0 0 15px rgba(255, 77, 77, 0.4);
+}
+
 @import "bootstrap/scss/bootstrap";
+
+body {
+  background-color: #0f172a;
+  color: #e9e3e6;
+}
+
+a {
+  text-decoration: none;
+}
