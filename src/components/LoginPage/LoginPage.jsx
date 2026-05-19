@@ -1,6 +1,5 @@
-import axios from "axios";
-import { use, useState } from "react";
-import { Container, Row, Col, Form, Button, InputGroup } from "react-bootstrap";
+import { useState } from "react";
+import { Container, Row, Col, Form, Button, InputGroup, Spinner } from "react-bootstrap";
 import { Eye, EyeSlash } from "react-bootstrap-icons";
 import { Link, useNavigate } from "react-router-dom";
 import { instance } from "../../config/api";
@@ -20,13 +19,13 @@ const LoginPage = () => {
     password: "",
   });
 
-  const login = () =>
+  const login = () => {
+    setLoading(true);
     instance
       .post("/auth/login", loginCredentials)
       .then((response) => {
-        console.log(response.data.token);
         localStorage.setItem("token", response.data.token);
-        /* navigate("/"); */
+        navigate("/");
       })
       .catch((error) => {
         if (error.response) {
@@ -42,7 +41,9 @@ const LoginPage = () => {
             errors: [],
           });
         }
-      });
+      })
+      .finally(() => setLoading(false));
+  };
 
   return (
     <Container className="vh-100 d-flex flex-column justify-content-center">
@@ -52,63 +53,80 @@ const LoginPage = () => {
             <img className="rounded-pill img-fluid" src="https://placecats.com/200/200" alt="logo" />
             <h1 className="">Welcome back!</h1>
           </div>
-          <div></div>
-          <Form
-            className=" fw-semibold py-3 small"
-            onSubmit={(e) => {
-              e.preventDefault();
-              login();
-            }}
-          >
-            <Form.Group className="mb-3">
-              <Form.Label>E-mail</Form.Label>
-              <Form.Control
-                className=""
-                type="email"
-                placeholder="Type your email here"
-                value={loginCredentials.email}
-                onChange={(e) => {
-                  setLoginCredentials({
-                    ...loginCredentials,
-                    email: e.target.value,
-                  });
-                }}
-              />
-            </Form.Group>
-            <Form.Group className="mb-3">
-              <Form.Label>Password</Form.Label>
-              <InputGroup>
-                <Form.Control
-                  type={showPassword ? "text" : "password"}
-                  placeholder="Type your password here"
-                  value={loginCredentials.password}
-                  onChange={(e) => {
-                    setLoginCredentials({
-                      ...loginCredentials,
-                      password: e.target.value,
-                    });
-                  }}
-                />
-                <InputGroup.Text onClick={() => setShowPassword(!showPassword)} style={{ cursor: "pointer" }}>
-                  {showPassword ? <EyeSlash /> : <Eye />}
-                </InputGroup.Text>
-              </InputGroup>
-            </Form.Group>
-            <Button className=" fw-semibold text-dark bg-accent border-0 rounded-pill w-100 py-2 fs-5" type="submit">
-              Log in
-            </Button>
-          </Form>
-          <div className="small text-center d-flex flex-column justify-content-center" style={{ height: "5.5rem" }}>
-            {errorInfo.status === 400 &&
-              errorInfo.errors.map((error, i) => {
-                return (
-                  <p key={`error-${i}`} className="my-0">
-                    {error}
-                  </p>
-                );
-              })}
+          <div className="d-flex flex-column justify-content-center" style={{ height: "21rem" }}>
+            {loading && (
+              <div className="text-center">
+                <Spinner animation="border"></Spinner>
+              </div>
+            )}
 
-            {errorInfo.status !== 400 && errorInfo.status && <p className="my-0">{errorInfo.message}</p>}
+            {!loading && (
+              <>
+                <Form
+                  className=" fw-semibold py-3 small"
+                  onSubmit={(e) => {
+                    e.preventDefault();
+                    login();
+                  }}
+                >
+                  <Form.Group className="mb-3">
+                    <Form.Label>E-mail</Form.Label>
+                    <Form.Control
+                      className=""
+                      type="email"
+                      placeholder="Type your email here"
+                      value={loginCredentials.email}
+                      onClick={() => {
+                        setErrorInfo({ status: null, message: "", errors: [] });
+                      }}
+                      onChange={(e) => {
+                        setLoginCredentials({
+                          ...loginCredentials,
+                          email: e.target.value,
+                        });
+                      }}
+                    />
+                  </Form.Group>
+                  <Form.Group className="mb-3">
+                    <Form.Label>Password</Form.Label>
+                    <InputGroup>
+                      <Form.Control
+                        type={showPassword ? "text" : "password"}
+                        placeholder="Type your password here"
+                        value={loginCredentials.password}
+                        onClick={() => {
+                          setErrorInfo({ status: null, message: "", errors: [] });
+                        }}
+                        onChange={(e) => {
+                          setLoginCredentials({
+                            ...loginCredentials,
+                            password: e.target.value,
+                          });
+                        }}
+                      />
+                      <InputGroup.Text onClick={() => setShowPassword(!showPassword)} style={{ cursor: "pointer" }}>
+                        {showPassword ? <EyeSlash /> : <Eye />}
+                      </InputGroup.Text>
+                    </InputGroup>
+                  </Form.Group>
+                  <Button disabled={loading} className=" fw-semibold text-dark bg-accent border-0 rounded-pill w-100 py-2 fs-5" type="submit">
+                    Log in
+                  </Button>
+                </Form>
+                <div className="small text-center d-flex flex-column justify-content-center" style={{ height: "5.5rem" }}>
+                  {errorInfo.status === 400 &&
+                    errorInfo.errors.map((error, i) => {
+                      return (
+                        <p key={`error-${i}`} className="my-0">
+                          {error}
+                        </p>
+                      );
+                    })}
+
+                  {errorInfo.status !== 400 && errorInfo.status && <p className="my-0">{errorInfo.message}</p>}
+                </div>
+              </>
+            )}
           </div>
 
           <div className="text-center py-2">
