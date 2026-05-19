@@ -1,18 +1,18 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Container, Row, Col, Form, Button, InputGroup, Spinner } from "react-bootstrap";
 import { Eye, EyeSlash } from "react-bootstrap-icons";
 import { Link, useNavigate } from "react-router-dom";
 import { instance } from "../../config/api";
+import { useDispatch, useSelector } from "react-redux";
+import { CLEAR_PROFILE, SET_ERROR, CLEAR_ERROR } from "../../redux/actions";
 
 const SignInPage = () => {
   const navigate = useNavigate();
+  const dispatch = useDispatch();
   const [showPassword, setShowPassword] = useState(false);
   const [loading, setLoading] = useState(false);
-  const [errorInfo, setErrorInfo] = useState({
-    status: null,
-    message: "",
-    errors: [],
-  });
+  const [autoDisplayName, setAutoDisplayName] = useState(true);
+  const error = useSelector((currentState) => currentState.error);
 
   const [signInCredentials, setSignInCredentials] = useState({
     username: "",
@@ -23,7 +23,12 @@ const SignInPage = () => {
     birthdate: "",
   });
 
-  const [autoDisplayName, setAutoDisplayName] = useState(true);
+  const setError = (body) => {
+    dispatch({
+      type: SET_ERROR,
+      payload: body,
+    });
+  };
 
   const validateSignInCredentials = (signInCredentials) => {
     if (
@@ -34,16 +39,16 @@ const SignInPage = () => {
       signInCredentials.displayName.trim() === "" ||
       signInCredentials.birthdate === ""
     ) {
-      setErrorInfo({
-        status: null,
+      setError({
+        status: 400,
         message: "To continue you must provide all the required info",
-        errors: [],
+        errorsList: [],
       });
       return false;
     }
     if (signInCredentials.password !== signInCredentials.confirmPassword) {
-      setErrorInfo({
-        status: null,
+      setError({
+        status: 400,
         message: "To continue passwords must match",
         errors: [],
       });
@@ -70,24 +75,33 @@ const SignInPage = () => {
         console.log(response);
         navigate("/login");
       })
-      .catch((error) => {
-        console.log(error.response);
-        if (error.response) {
-          setErrorInfo({
-            status: error.response.status,
-            message: error.response.data.message,
-            errors: error.response.data.errors ? error.response.data.errors : [],
-          });
-        } else {
-          setErrorInfo({
-            status: 500,
-            message: "Something went wrong with the server, try again later!",
-            errors: [],
-          });
-        }
+      .catch((err) => {
+        console.log(err);
       })
       .finally(() => setLoading(false));
   };
+
+  const deleteError = () => {
+    if (error.isPresent) {
+      dispatch({
+        type: CLEAR_ERROR,
+      });
+    }
+  };
+
+  useEffect(() => {
+    const token = localStorage.getItem("token");
+    if (token) {
+      localStorage.removeItem("token");
+      dispatch({
+        type: CLEAR_PROFILE,
+      });
+    }
+  }, []);
+
+  useEffect(() => {
+    deleteError();
+  }, []);
 
   return (
     <Container fluid className="vh-100 d-flex flex-column justify-align-content-between py-5">
@@ -123,9 +137,7 @@ const SignInPage = () => {
                     type="text"
                     placeholder="Type your username here"
                     value={signInCredentials.username}
-                    onClick={() => {
-                      setErrorInfo({ status: null, message: "", errors: [] });
-                    }}
+                    onClick={() => deleteError()}
                     onChange={(e) => {
                       const value = e.target.value;
                       setSignInCredentials((prev) => ({
@@ -140,9 +152,7 @@ const SignInPage = () => {
                     type="checkbox"
                     label="Custom display name"
                     checked={!autoDisplayName}
-                    onClick={() => {
-                      setErrorInfo({ status: null, message: "", errors: [] });
-                    }}
+                    onClick={() => deleteError()}
                     onChange={(e) => {
                       const checked = e.target.checked;
                       setAutoDisplayName(!checked);
@@ -160,9 +170,7 @@ const SignInPage = () => {
                     type="text"
                     placeholder="Type the name you want to show here"
                     value={signInCredentials.displayName}
-                    onClick={() => {
-                      setErrorInfo({ status: null, message: "", errors: [] });
-                    }}
+                    onClick={() => deleteError()}
                     onChange={(e) => {
                       setSignInCredentials({
                         ...signInCredentials,
@@ -174,9 +182,7 @@ const SignInPage = () => {
                   <Form.Control
                     type="date"
                     value={signInCredentials.birthdate}
-                    onClick={() => {
-                      setErrorInfo({ status: null, message: "", errors: [] });
-                    }}
+                    onClick={() => deleteError()}
                     onChange={(e) => setSignInCredentials({ ...signInCredentials, birthdate: e.target.value })}
                   />
                   <Form.Label className="mt-3">E-mail</Form.Label>
@@ -185,9 +191,7 @@ const SignInPage = () => {
                     type="email"
                     placeholder="Type your email here"
                     value={signInCredentials.email}
-                    onClick={() => {
-                      setErrorInfo({ status: null, message: "", errors: [] });
-                    }}
+                    onClick={() => deleteError()}
                     onChange={(e) => setSignInCredentials({ ...signInCredentials, email: e.target.value })}
                   />
                 </Form.Group>
@@ -198,9 +202,7 @@ const SignInPage = () => {
                       type={showPassword ? "text" : "password"}
                       placeholder="Type your password here"
                       value={signInCredentials.password}
-                      onClick={() => {
-                        setErrorInfo({ status: null, message: "", errors: [] });
-                      }}
+                      onClick={() => deleteError()}
                       onChange={(e) => setSignInCredentials({ ...signInCredentials, password: e.target.value })}
                     />
                     <InputGroup.Text onClick={() => setShowPassword(!showPassword)} style={{ cursor: "pointer" }}>
@@ -215,9 +217,7 @@ const SignInPage = () => {
                       type={showPassword ? "text" : "password"}
                       placeholder="Type again your password here"
                       value={signInCredentials.confirmPassword}
-                      onClick={() => {
-                        setErrorInfo({ status: null, message: "", errors: [] });
-                      }}
+                      onClick={() => deleteError()}
                       onChange={(e) => setSignInCredentials({ ...signInCredentials, confirmPassword: e.target.value })}
                     />
                     <InputGroup.Text onClick={() => setShowPassword(!showPassword)} style={{ cursor: "pointer" }}>
@@ -232,19 +232,19 @@ const SignInPage = () => {
               <div
                 className="small text-center d-flex flex-column flex-grow-1 justify-content-center"
                 style={{
-                  visibility: errorInfo.message || errorInfo.errors.length ? "visible" : "hidden",
+                  visibility: error.isPresent ? "visible" : "hidden",
                 }}
               >
-                {errorInfo.errors.length > 0 &&
-                  errorInfo.errors.map((error, i) => {
+                {error.errorsList?.length > 0 &&
+                  error.errorsList.map((error, i) => {
                     return (
                       <p key={`error-${i}`} className="my-0">
                         {error}
                       </p>
                     );
                   })}
-                {errorInfo.message !== "" && errorInfo.errors.length == 0 && <p className="my-0">{errorInfo.message}</p>}
-                {errorInfo.message === "" && (
+                {error.errorsList?.length == 0 && <p className="my-0">{error.message}</p>}
+                {!error.message && (
                   <>
                     <p className="my-0">placeholder</p>
                     <p className="my-0">placeholder</p>

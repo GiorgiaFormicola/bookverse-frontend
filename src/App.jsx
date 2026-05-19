@@ -1,10 +1,13 @@
+import "./App.scss";
+import "./App.css";
 import { useEffect } from "react";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import LoginPage from "./components/LoginPage/LoginPage";
 import SignInPage from "./components/SignInPage/SignInPage";
 import HomePage from "./components/HomePage/HomePage";
-import "./App.scss";
-import "./App.css";
+import { Provider } from "react-redux";
+import store from "./redux/store";
+import ProfileLoader from "./components/ProfileLoader/ProfileLoader";
 
 function App() {
   useEffect(() => {
@@ -12,13 +15,16 @@ function App() {
   }, []);
 
   return (
-    <BrowserRouter>
-      <Routes>
-        <Route path="/login" element={<LoginPage />} />
-        <Route path="/signIn" element={<SignInPage />} />
-        <Route path="/" element={<HomePage />} />
-      </Routes>
-    </BrowserRouter>
+    <Provider store={store}>
+      <BrowserRouter>
+        <ProfileLoader />
+        <Routes>
+          <Route path="/login" element={<LoginPage />} />
+          <Route path="/signIn" element={<SignInPage />} />
+          <Route path="/" element={<HomePage />} />
+        </Routes>
+      </BrowserRouter>
+    </Provider>
   );
 }
 
