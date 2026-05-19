@@ -1,77 +1,60 @@
-import { useState } from "react";
+import axios from "axios";
+import { use, useState } from "react";
 import { Container, Row, Col, Form, Button, InputGroup } from "react-bootstrap";
 import { Eye, EyeSlash } from "react-bootstrap-icons";
 import { Link, useNavigate } from "react-router-dom";
+import { instance } from "../../config/api";
 
 const LoginPage = () => {
   const navigate = useNavigate();
   const [showPassword, setShowPassword] = useState(false);
+  const [loading, setLoading] = useState(false);
+  const [errorInfo, setErrorInfo] = useState({
+    status: null,
+    message: "",
+    errors: [],
+  });
 
   const [loginCredentials, setLoginCredentials] = useState({
     email: "",
     password: "",
   });
 
-  /* const login = () => {
-    fetch("http://localhost:5174/auth/login", {
-      method: "POST",
-      body: JSON.stringify(loginCredentials),
-      headers: {
-        "Content-Type": "application/json ",
-      },
-    })
+  const login = () =>
+    instance
+      .post("/auth/login", loginCredentials)
       .then((response) => {
-        if (response.ok) {
-          setLoginCredentials({
-            email: "",
-            password: "",
+        console.log(response.data.token);
+        localStorage.setItem("token", response.data.token);
+        /* navigate("/"); */
+      })
+      .catch((error) => {
+        if (error.response) {
+          setErrorInfo({
+            status: error.response.status,
+            message: error.response.data.message,
+            errors: error.response.data.errors ? error.response.data.errors : [],
           });
-          return response.json();
         } else {
-          throw new Error(response.status);
+          setErrorInfo({
+            status: 500,
+            message: "Something went wrong with the server, try again later!",
+            errors: [],
+          });
         }
-      })
-      .then((res) => {
-        localStorage.setItem("token", res.token);
-        navigate("/homepage");
-      })
-      .catch((error) => console.log(error));
-  }; */
-
-  const login = () => {
-    fetch("http://localhost:5174/auth/login", {
-      method: "POST",
-      body: JSON.stringify(loginCredentials),
-      headers: {
-        "Content-Type": "application/json",
-      },
-    })
-      .then((response) => {
-        return response.json().then((data) => {
-          if (!response.ok) {
-            if (response.status == 400) {
-              throw new Error(`${response.status} - ${data.message} - ${data.errors.join(", ")}`);
-            } else {
-              throw new Error(`${response.status} - ${data.message}`);
-            }
-          }
-          localStorage.setItem("token", data.token);
-          navigate("/");
-        });
-      })
-      .catch((error) => console.log(error));
-  };
+      });
 
   return (
     <Container className="vh-100 d-flex flex-column justify-content-center">
       <Row className="justify-content-center">
-        <Col xs={4}>
+        <Col xs={7} sm={8} md={6} lg={5} xl={4} xxl={4}>
           <div className="text-center">
-            <img className="rounded-pill" src="https://placecats.com/200/200" alt="logo" />
+            <img className="rounded-pill img-fluid" src="https://placecats.com/200/200" alt="logo" />
             <h1 className="">Welcome back!</h1>
           </div>
+          <div></div>
           <Form
-            className=" fw-semibold pt-3 pb-5 small"
+            className=" fw-semibold py-3 small"
             onSubmit={(e) => {
               e.preventDefault();
               login();
@@ -115,7 +98,20 @@ const LoginPage = () => {
               Log in
             </Button>
           </Form>
-          <div className="text-center">
+          <div className="small text-center d-flex flex-column justify-content-center" style={{ height: "5.5rem" }}>
+            {errorInfo.status === 400 &&
+              errorInfo.errors.map((error, i) => {
+                return (
+                  <p key={`error-${i}`} className="my-0">
+                    {error}
+                  </p>
+                );
+              })}
+
+            {errorInfo.status !== 400 && errorInfo.status && <p className="my-0">{errorInfo.message}</p>}
+          </div>
+
+          <div className="text-center py-2">
             <p className=" text-light opacity-75">You don't have an account yet?</p>
             <Link to="/signIn" className=" fw-semibold">
               Sign In
