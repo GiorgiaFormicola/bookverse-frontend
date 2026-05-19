@@ -114,7 +114,8 @@ const LoginPage = () => {
                   </Button>
                 </Form>
                 <div className="small text-center d-flex flex-column justify-content-center" style={{ height: "5.5rem" }}>
-                  {errorInfo.status === 400 &&
+                  {errorInfo.message !== "" &&
+                    errorInfo.errors.length > 0 &&
                     errorInfo.errors.map((error, i) => {
                       return (
                         <p key={`error-${i}`} className="my-0">
@@ -123,7 +124,7 @@ const LoginPage = () => {
                       );
                     })}
 
-                  {errorInfo.status !== 400 && errorInfo.status && <p className="my-0">{errorInfo.message}</p>}
+                  {errorInfo.message !== "" && errorInfo.errors.length == 0 && <p className="my-0">{errorInfo.message}</p>}
                 </div>
               </>
             )}
