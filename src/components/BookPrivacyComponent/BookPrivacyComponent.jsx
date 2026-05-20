@@ -19,13 +19,13 @@ const BookPrivacyComponent = (props) => {
       {savedBookIsPublic && (
         <>
           <Unlock2 size={50} onClick={() => makeBookPrivate()} />
-          <p className="mb-0">PUBLIC</p>
+          <p className="mb-0">Public</p>
         </>
       )}
       {!savedBookIsPublic && (
         <>
           <LockFill size={50} onClick={() => makeBookPublic()} />
-          <p className="mb-0">PRIVATE</p>
+          <p className="mb-0">Private</p>
         </>
       )}
     </>

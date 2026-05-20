@@ -6,7 +6,7 @@ import { useSelector } from "react-redux";
 import BookSaveComponent from "../BookSaveComponent/BookSaveComponent";
 import BookStatusComponent from "../BookStatusComponent/BookStatusComponent";
 import BookPrivacyComponent from "../BookPrivacyComponent/BookPrivacyComponent";
-import BookReviewButton from "../BookReviewButton/BookReviewButton";
+import BookReviewComponent from "../BookReviewComponent/BookReviewComponent";
 
 //gestire loading e errore
 const BookDetail = () => {
@@ -72,7 +72,7 @@ const BookDetail = () => {
       </div>
       <Container fluid className="min-vh-100 py-4 d-flex flex-column gap-4">
         <Row className="gap-3">
-          {bookDetailsMapped && userSavedBooks && (
+          {bookDetailsMapped && userSavedBooks && reviews && (
             <>
               <Col xs={12}>
                 <Row className=" justify-content-start">
@@ -106,10 +106,9 @@ const BookDetail = () => {
                           <div className="d-flex align-items-center gap-2 py-3 flex-shrink-0">
                             <BookPrivacyComponent bookId={book.googleId} />
                           </div>
-                          <div className="d-flex align-items-center gap-2 py-3 flex-shrink-0">
-                            <BookReviewButton />
-                            <p className="mb-0">Unsave from library</p>
-                          </div>
+                          {/* <div className="d-flex align-items-center gap-2 py-3 flex-shrink-0">
+                            <BookReviewComponent />
+                          </div> */}
                         </div>
                       </div>
                     )}

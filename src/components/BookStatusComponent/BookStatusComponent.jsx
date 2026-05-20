@@ -21,7 +21,7 @@ const BookStatusComponent = (props) => {
       {savedBookStatus === "TO_READ" && <Book size={50} />}
       {savedBookStatus === "READING" && <BookHalf size={50} />}
       {savedBookStatus === "READ" && <BookFill size={50} />}
-      <Form.Select value={savedBookStatus} onChange={(e) => updateStatus(e.target.value)}>
+      <Form.Select size="sm" value={savedBookStatus} onChange={(e) => updateStatus(e.target.value)}>
         <option value="TO_READ">{statusLabels["TO_READ"]}</option>
         <option value="READING">{statusLabels["READING"]}</option>
         <option value="READ">{statusLabels["READ"]}</option>
