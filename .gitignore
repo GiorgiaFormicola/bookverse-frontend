@@ -27,5 +27,3 @@ dist-ssr
 .env
 
 # Tests
-LoginPage2.jsx
-SignInPage2.jsx
