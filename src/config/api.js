@@ -1,0 +1,49 @@
+import axios from "axios";
+import store from "../redux/store";
+import { CLEAR_PROFILE, SET_ERROR } from "../redux/actions";
+
+export const instance = axios.create({
+  baseURL: import.meta.env.VITE_API_URL,
+});
+
+instance.interceptors.request.use((config) => {
+  const token = localStorage.getItem("token");
+
+  if (token) {
+    config.headers.Authorization = `Bearer ${token}`;
+  }
+
+  return config;
+});
+
+instance.interceptors.response.use(
+  (response) => response,
+
+  (error) => {
+    const errorPayload = {
+      status: error.response?.status ?? 500,
+      message: error.response?.data?.message ?? "Something went wrong with the server, try again later!",
+      errorsList: error.response?.data?.errors ?? [],
+    };
+    if (error.response?.status === 401) {
+      if (window.location.pathname === "/login") {
+        store.dispatch({
+          type: SET_ERROR,
+          payload: errorPayload,
+        });
+        return Promise.reject(error);
+      } else {
+        localStorage.removeItem("token");
+
+        store.dispatch({ type: CLEAR_PROFILE });
+
+        window.location.replace("/login");
+      }
+    }
+    store.dispatch({
+      type: SET_ERROR,
+      payload: errorPayload,
+    });
+    return Promise.reject(error);
+  },
+);
