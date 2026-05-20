@@ -1,0 +1,26 @@
+.book-cover {
+  /* height: 15.5rem; */
+  width: 100%;
+  aspect-ratio: 3/4;
+  object-fit: cover;
+}
+
+.book-title {
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.book-card .overlay {
+  opacity: 0;
+  transition: opacity 0.3s ease;
+  background: linear-gradient(to top, rgba(0, 0, 0, 0.85), rgba(0, 0, 0, 0));
+  pointer-events: none;
+}
+
+@media (min-width: 992px) {
+  .book-card:hover .overlay {
+    opacity: 1;
+  }
+}
