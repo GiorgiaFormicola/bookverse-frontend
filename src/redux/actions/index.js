@@ -192,3 +192,30 @@ export const setBookPrivacy = (googleId, boolean) => {
       });
   };
 };
+
+export const updateBookStatus = (googleId, statusValue) => {
+  return (dispatch) => {
+    instance
+      .patch("/me/books/" + googleId + "/status", { status: statusValue })
+      .then((response) => {
+        console.log(response);
+        const googleId = response.data.book.googleId;
+        const isPublic = response.data.public;
+        const status = response.data.status;
+        const updatedBookMap = {
+          [googleId]: {
+            public: isPublic,
+            status: status,
+          },
+        };
+
+        dispatch({
+          type: UPDATE_BOOK,
+          payload: updatedBookMap,
+        });
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
+};

@@ -4,7 +4,7 @@ import { useState, useEffect } from "react";
 import { instance } from "../../config/api";
 import { useSelector } from "react-redux";
 import BookSaveComponent from "../BookSaveComponent/BookSaveComponent";
-import BookStatusButton from "../BookStatusButton/BookStatusButton";
+import BookStatusComponent from "../BookStatusComponent/BookStatusComponent";
 import BookPrivacyComponent from "../BookPrivacyComponent/BookPrivacyComponent";
 import BookReviewButton from "../BookReviewButton/BookReviewButton";
 
@@ -84,7 +84,6 @@ const BookDetail = () => {
                       <div className="d-flex flex-column h-100">
                         <div className="d-flex align-items-center gap-2 py-3 flex-shrink-0">
                           <BookSaveComponent book={book} />
-                          {/* <p className="mb-0">Save to your library</p> */}
                         </div>
                         <div className="small d-flex flex-column gap-1 flex-grow-1 justify-content-between">
                           <p className="mb-0">X users have already saved this book on their library!</p>
@@ -99,12 +98,10 @@ const BookDetail = () => {
                       <div className="d-flex flex-column h-100">
                         <div className="d-flex align-items-center gap-2 py-3 flex-shrink-0">
                           <BookSaveComponent book={book} />
-                          {/* <p className="mb-0">Unsave from library</p> */}
                         </div>
                         <div className="small d-flex flex-column gap-1 flex-grow-1 justify-content-between">
                           <div className="d-flex align-items-center gap-2 py-3 flex-shrink-0">
-                            <BookStatusButton />
-                            <p className="mb-0">Unsave from library</p>
+                            <BookStatusComponent bookId={book.googleId} />
                           </div>
                           <div className="d-flex align-items-center gap-2 py-3 flex-shrink-0">
                             <BookPrivacyComponent bookId={book.googleId} />
