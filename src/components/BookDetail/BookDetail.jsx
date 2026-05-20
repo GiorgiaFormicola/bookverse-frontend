@@ -3,9 +3,9 @@ import { useParams } from "react-router-dom";
 import { useState, useEffect } from "react";
 import { instance } from "../../config/api";
 import { useSelector } from "react-redux";
-import BookSaveButton from "../BookSaveButton/BookSaveButton";
+import BookSaveComponent from "../BookSaveComponent/BookSaveComponent";
 import BookStatusButton from "../BookStatusButton/BookStatusButton";
-import BookPrivacyButton from "../BookPrivacyButton/BookPrivacyButton";
+import BookPrivacyComponent from "../BookPrivacyComponent/BookPrivacyComponent";
 import BookReviewButton from "../BookReviewButton/BookReviewButton";
 
 //gestire loading e errore
@@ -83,8 +83,8 @@ const BookDetail = () => {
                     {!userSavedBooks[bookDetailsMapped.googleId] && (
                       <div className="d-flex flex-column h-100">
                         <div className="d-flex align-items-center gap-2 py-3 flex-shrink-0">
-                          <BookSaveButton book={book} />
-                          <p className="mb-0">Save to your library</p>
+                          <BookSaveComponent book={book} />
+                          {/* <p className="mb-0">Save to your library</p> */}
                         </div>
                         <div className="small d-flex flex-column gap-1 flex-grow-1 justify-content-between">
                           <p className="mb-0">X users have already saved this book on their library!</p>
@@ -98,8 +98,8 @@ const BookDetail = () => {
                     {userSavedBooks[bookDetailsMapped.googleId] && (
                       <div className="d-flex flex-column h-100">
                         <div className="d-flex align-items-center gap-2 py-3 flex-shrink-0">
-                          <BookSaveButton book={book} />
-                          <p className="mb-0">Unsave from library</p>
+                          <BookSaveComponent book={book} />
+                          {/* <p className="mb-0">Unsave from library</p> */}
                         </div>
                         <div className="small d-flex flex-column gap-1 flex-grow-1 justify-content-between">
                           <div className="d-flex align-items-center gap-2 py-3 flex-shrink-0">
@@ -107,8 +107,7 @@ const BookDetail = () => {
                             <p className="mb-0">Unsave from library</p>
                           </div>
                           <div className="d-flex align-items-center gap-2 py-3 flex-shrink-0">
-                            <BookPrivacyButton />
-                            <p className="mb-0">Unsave from library</p>
+                            <BookPrivacyComponent bookId={book.googleId} />
                           </div>
                           <div className="d-flex align-items-center gap-2 py-3 flex-shrink-0">
                             <BookReviewButton />

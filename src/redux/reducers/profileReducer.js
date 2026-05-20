@@ -1,4 +1,4 @@
-import { ADD_BOOK, CLEAR_PROFILE, GET_PROFILE, REMOVE_BOOK, UPDATE_PROFILE } from "../actions";
+import { ADD_BOOK, CLEAR_PROFILE, GET_PROFILE, REMOVE_BOOK, UPDATE_PROFILE, UPDATE_BOOK } from "../actions";
 
 const initialState = {
   user: null,
@@ -42,6 +42,16 @@ const profileReducer = (currentState = initialState, action) => {
       return {
         ...currentState,
         savedBooks: newSavedBooks,
+      };
+    }
+
+    case UPDATE_BOOK: {
+      return {
+        ...currentState,
+        savedBooks: {
+          ...currentState.savedBooks,
+          ...action.payload,
+        },
       };
     }
 

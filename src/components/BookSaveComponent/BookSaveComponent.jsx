@@ -2,7 +2,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { SuitHeart, SuitHeartFill } from "react-bootstrap-icons";
 import { addBookToLibrary, removeBookFromLibrary } from "../../redux/actions";
 
-const BookSaveButton = (props) => {
+const BookSaveComponent = (props) => {
   const dispatch = useDispatch();
   const savedBook = useSelector((currentState) => currentState.profile.savedBooks?.[props.book.googleId]);
   const isSaved = Boolean(savedBook);
@@ -17,7 +17,22 @@ const BookSaveButton = (props) => {
     console.log("libro aggiunto");
   };
 
-  return <>{isSaved ? <SuitHeartFill size={50} onClick={() => removeBook()} /> : <SuitHeart size={50} onClick={() => addBook()} />}</>;
+  return (
+    <>
+      {isSaved && (
+        <>
+          <SuitHeartFill size={50} onClick={() => removeBook()} />
+          <p className="mb-0">Unsave from library</p>
+        </>
+      )}
+      {!isSaved && (
+        <>
+          <SuitHeart size={50} onClick={() => addBook()} />
+          <p className="mb-0">Save to your library</p>
+        </>
+      )}
+    </>
+  );
 };
 
-export default BookSaveButton;
+export default BookSaveComponent;

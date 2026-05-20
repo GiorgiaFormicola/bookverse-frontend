@@ -6,6 +6,7 @@ export const SET_ERROR = "SET_ERROR";
 export const CLEAR_ERROR = "CLEAR_ERROR";
 export const ADD_BOOK = "ADD_BOOK";
 export const REMOVE_BOOK = "REMOVE_BOOK";
+export const UPDATE_BOOK = "UPDATE_BOOK";
 
 export const getProfileInfo = () => {
   return (dispatch) => {
@@ -157,6 +158,33 @@ export const removeBookFromLibrary = (googleId) => {
         dispatch({
           type: REMOVE_BOOK,
           payload: googleId,
+        });
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
+};
+
+export const setBookPrivacy = (googleId, boolean) => {
+  return (dispatch) => {
+    instance
+      .patch("/me/books/" + googleId + "/visibility", { isPublic: boolean })
+      .then((response) => {
+        console.log(response);
+        const googleId = response.data.book.googleId;
+        const isPublic = response.data.public;
+        const status = response.data.status;
+        const updatedBookMap = {
+          [googleId]: {
+            public: isPublic,
+            status: status,
+          },
+        };
+
+        dispatch({
+          type: UPDATE_BOOK,
+          payload: updatedBookMap,
         });
       })
       .catch((error) => {
