@@ -1,9 +1,4 @@
 import "./App.scss";
-<<<<<<< Updated upstream
-
-function App() {
-  return <></>;
-=======
 import "./App.css";
 import { useEffect } from "react";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
@@ -33,7 +28,6 @@ function App() {
       </BrowserRouter>
     </Provider>
   );
->>>>>>> Stashed changes
 }
 
 export default App;
