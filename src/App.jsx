@@ -9,6 +9,8 @@ import { Provider } from "react-redux";
 import store from "./redux/store";
 import ProfileLoader from "./components/ProfileLoader/ProfileLoader";
 import BookDetail from "./components/BookDetail/BookDetail";
+import SearchPage from "./components/SearchPage/SearchPage";
+import LibraryPage from "./components/LibraryPage/LibraryPage";
 
 function App() {
   useEffect(() => {
@@ -24,6 +26,8 @@ function App() {
           <Route path="/signIn" element={<SignInPage />} />
           <Route path="/" element={<HomePage />} />
           <Route path="/books/:googleId" element={<BookDetail />} />
+          <Route path="/search" element={<SearchPage />} />
+          <Route path="/library" element={<LibraryPage />} />
         </Routes>
       </BrowserRouter>
     </Provider>
