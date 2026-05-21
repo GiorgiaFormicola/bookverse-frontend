@@ -11,10 +11,10 @@ const LibraryPage = () => {
   const [loading, setLoading] = useState(true);
   const [currentPage, setCurrentPage] = useState(0);
   const [hasNext, setHasNext] = useState(false);
-  const [readingStatus, setReadingStatus] = useState("ALL");
+  const [readingStatus, setReadingStatus] = useState(null);
 
   const getAllBooks = (pageNumber, append) => {
-    const readingStatusParam = readingStatus !== "ALL" ? `&status=${readingStatus}` : "";
+    const readingStatusParam = readingStatus ? `&status=${readingStatus}` : "";
     instance
       .get(`/me/books?page=${pageNumber}&size=10${readingStatusParam}`)
       .then((response) => {
@@ -33,7 +33,7 @@ const LibraryPage = () => {
   };
 
   const searchBooks = (query, filter, pageNumber, append) => {
-    const readingStatusParam = readingStatus !== "ALL" ? `&status=${readingStatus}` : "";
+    const readingStatusParam = readingStatus ? `&status=${readingStatus}` : "";
     instance
       .get(`/me/books?page=${pageNumber}&size=10&${filter}=${query}${readingStatusParam}`)
       .then((response) => {
@@ -62,6 +62,10 @@ const LibraryPage = () => {
   const loadNextPage = () => {
     const nextPage = currentPage + 1;
     handleSearch(query, filter, nextPage, true);
+  };
+
+  const handleStatusToggle = (value) => {
+    setReadingStatus((prev) => (prev === value ? null : value));
   };
 
   useEffect(() => {
@@ -120,25 +124,35 @@ const LibraryPage = () => {
           <ToggleButtonGroup
             type="radio"
             name="readingStatus"
-            value={readingStatus}
-            onChange={(value) => {
+            value={readingStatus || ""}
+            /* onChange={(value) => {
               setCurrentPage(0);
-              setReadingStatus(value);
-            }}
+              setReadingStatus(value.length ? value[0] : null);
+            }} */
           >
-            <ToggleButton id="tbg-btn-5" value={"ALL"}>
+            {/* <ToggleButton id="tbg-btn-5" value={"ALL"}>
               All
-            </ToggleButton>
-            <ToggleButton id="tbg-btn-6" value={"TO_READ"}>
+            </ToggleButton> */}
+            <ToggleButton id="tbg-btn-6" value={"TO_READ"} onClick={() => handleStatusToggle("TO_READ")}>
               To read
             </ToggleButton>
-            <ToggleButton id="tbg-btn-7" value={"READING"}>
+            <ToggleButton id="tbg-btn-7" value={"READING"} onClick={() => handleStatusToggle("READING")}>
               Reading
             </ToggleButton>
-            <ToggleButton id="tbg-btn-8" value={"READ"}>
+            <ToggleButton id="tbg-btn-8" value={"READ"} onClick={() => handleStatusToggle("READ")}>
               Read
             </ToggleButton>
           </ToggleButtonGroup>
+
+          {/*  <Button active={readingStatus === "TO_READ"} onClick={() => handleStatusToggle("TO_READ")}>
+            To read
+          </Button>
+          <Button active={readingStatus === "READING"} onClick={() => handleStatusToggle("READING")}>
+            Reading
+          </Button>
+          <Button active={readingStatus === "READ"} onClick={() => handleStatusToggle("READ")}>
+            Read
+          </Button> */}
         </Col>
       </Row>
 
