@@ -11,10 +11,12 @@ const LibraryPage = () => {
   const [loading, setLoading] = useState(true);
   const [currentPage, setCurrentPage] = useState(0);
   const [hasNext, setHasNext] = useState(false);
+  const [readingStatus, setReadingStatus] = useState("ALL");
 
   const getAllBooks = (pageNumber, append) => {
+    const readingStatusParam = readingStatus !== "ALL" ? `&status=${readingStatus}` : "";
     instance
-      .get(`/me/books?page=${pageNumber}&size=10`)
+      .get(`/me/books?page=${pageNumber}&size=10${readingStatusParam}`)
       .then((response) => {
         if (append) {
           setBooks((prev) => [...prev, ...response.data.content]);
@@ -31,8 +33,9 @@ const LibraryPage = () => {
   };
 
   const searchBooks = (query, filter, pageNumber, append) => {
+    const readingStatusParam = readingStatus !== "ALL" ? `&status=${readingStatus}` : "";
     instance
-      .get(`/me/books?page=${pageNumber}&size=10&${filter}=${query}`)
+      .get(`/me/books?page=${pageNumber}&size=10&${filter}=${query}${readingStatusParam}`)
       .then((response) => {
         if (append) {
           setBooks((prev) => [...prev, ...response.data.content]);
@@ -69,6 +72,10 @@ const LibraryPage = () => {
     if (!query.trim()) return;
     searchBooks(query, filter, 0, false);
   }, [filter]);
+
+  useEffect(() => {
+    handleSearch(query, filter, 0, false);
+  }, [readingStatus]);
 
   return (
     <Container fluid className="py-4 d-flex flex-column gap-4">
@@ -108,6 +115,28 @@ const LibraryPage = () => {
             </ToggleButton>
             <ToggleButton id="tbg-btn-4" value={"publisher"}>
               Publisher
+            </ToggleButton>
+          </ToggleButtonGroup>
+          <ToggleButtonGroup
+            type="radio"
+            name="readingStatus"
+            value={readingStatus}
+            onChange={(value) => {
+              setCurrentPage(0);
+              setReadingStatus(value);
+            }}
+          >
+            <ToggleButton id="tbg-btn-5" value={"ALL"}>
+              All
+            </ToggleButton>
+            <ToggleButton id="tbg-btn-6" value={"TO_READ"}>
+              To read
+            </ToggleButton>
+            <ToggleButton id="tbg-btn-7" value={"READING"}>
+              Reading
+            </ToggleButton>
+            <ToggleButton id="tbg-btn-8" value={"READ"}>
+              Read
             </ToggleButton>
           </ToggleButtonGroup>
         </Col>
