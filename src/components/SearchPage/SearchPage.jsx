@@ -9,41 +9,18 @@ const SearchPage = () => {
   const [filter, setFilter] = useState("title");
   const [books, setBooks] = useState([]);
   const [loading, setLoading] = useState(true);
-  const [currentPage, setCurrentPage] = useState(0);
-  const [hasNext, setHasNext] = useState(false);
 
-  /* const getAllBooks = (pageNumber, append) => {
-    const readingStatusParam = readingStatus ? `&status=${readingStatus}` : "";
+  const [visibleBooksCount, setVisibleBooksCount] = useState(10);
+  const visibleBooks = books.slice(0, visibleBooksCount);
+  const hasNext = visibleBooksCount < books.length;
+
+  const searchBooks = (query, filter) => {
     instance
-      .get(`/me/books?page=${pageNumber}&size=10${readingStatusParam}`)
+      .get(`/books/search?&${filter}=${query}`)
       .then((response) => {
         console.log(response);
-        if (append) {
-          setBooks((prev) => [...prev, ...response.data.content]);
-        } else {
-          setBooks(response.data.content);
-        }
-        setCurrentPage(response.data.number);
-        setHasNext(!response.data.last);
-      })
-      .catch((err) => {
-        console.log(err);
-      })
-      .finally(() => setLoading(false));
-  }; */
-
-  const searchBooks = (query, filter, pageNumber, append) => {
-    instance
-      .get(`/books/search?page=${pageNumber}&size=40&${filter}=${query}`)
-      .then((response) => {
-        console.log(response);
-        if (append) {
-          setBooks((prev) => [...prev, ...response.data.content]);
-        } else {
-          setBooks(response.data.content);
-        }
-        setCurrentPage(response.data.number);
-        setHasNext(!response.data.last);
+        setVisibleBooksCount(10);
+        setBooks(response.data);
       })
       .catch((err) => {
         console.log(err);
@@ -51,26 +28,23 @@ const SearchPage = () => {
       .finally(() => setLoading(false));
   };
 
-  const handleSearch = (query, filter, pageNumber, append) => {
+  const handleSearch = (query, filter) => {
     if (!query.trim()) {
+      setBooks([]);
+      setVisibleBooksCount(10);
       return;
     } else {
-      searchBooks(query, filter, pageNumber, append);
+      searchBooks(query, filter);
     }
   };
 
   const loadNextPage = () => {
-    const nextPage = currentPage + 1;
-    handleSearch(query, filter, nextPage, true);
+    setVisibleBooksCount((prev) => prev + 10);
   };
-
-  /*  useEffect(() => {
-
-  }, []); */
 
   useEffect(() => {
     if (!query.trim()) return;
-    searchBooks(query, filter, 0, false);
+    searchBooks(query, filter);
   }, [filter]);
 
   return (
@@ -80,8 +54,7 @@ const SearchPage = () => {
           <Form
             onSubmit={(e) => {
               e.preventDefault();
-              setCurrentPage(0);
-              handleSearch(query, filter, 0, false);
+              handleSearch(query, filter);
             }}
           >
             <InputGroup>
@@ -96,8 +69,13 @@ const SearchPage = () => {
             name="filters"
             value={filter}
             onChange={(value) => {
-              setCurrentPage(0);
-              setFilter(value);
+              if (!query.trim()) {
+                setBooks([]);
+                setVisibleBooksCount(10);
+                setFilter(value);
+              } else {
+                setFilter(value);
+              }
             }}
           >
             <ToggleButton id="tbg-btn-1" value={"title"}>
@@ -129,7 +107,7 @@ const SearchPage = () => {
         <Col xs={12}>
           <ListGroup>
             {!loading &&
-              books.map((book) => {
+              visibleBooks.map((book) => {
                 return <BookCard key={book.googleId} book={book}></BookCard>;
               })}
           </ListGroup>
