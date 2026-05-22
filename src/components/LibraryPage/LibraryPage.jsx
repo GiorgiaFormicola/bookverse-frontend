@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { instance } from "../../config/api";
 import { Container, Row, Col, ListGroup, Form, InputGroup, Button, ToggleButtonGroup, ToggleButton } from "react-bootstrap";
 import BookCard from "../BookCard/BookCard";
@@ -12,12 +12,14 @@ const LibraryPage = () => {
   const [currentPage, setCurrentPage] = useState(0);
   const [hasNext, setHasNext] = useState(false);
   const [readingStatus, setReadingStatus] = useState(null);
+  const firstRender = useRef(true);
 
   const getAllBooks = (pageNumber, append) => {
     const readingStatusParam = readingStatus ? `&status=${readingStatus}` : "";
     instance
       .get(`/me/books?page=${pageNumber}&size=10${readingStatusParam}`)
       .then((response) => {
+        console.log(response);
         if (append) {
           setBooks((prev) => [...prev, ...response.data.content]);
         } else {
@@ -78,6 +80,10 @@ const LibraryPage = () => {
   }, [filter]);
 
   useEffect(() => {
+    if (firstRender.current) {
+      firstRender.current = false;
+      return;
+    }
     handleSearch(query, filter, 0, false);
   }, [readingStatus]);
 
@@ -161,7 +167,7 @@ const LibraryPage = () => {
           <ListGroup>
             {!loading &&
               books.map((book) => {
-                return <BookCard key={book.id} book={book}></BookCard>;
+                return <BookCard key={book.id} book={book.info}></BookCard>;
               })}
           </ListGroup>
         </Col>

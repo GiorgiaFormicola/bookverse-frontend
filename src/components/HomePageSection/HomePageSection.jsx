@@ -34,7 +34,7 @@ const HomePageSection = (props) => {
       <Col className="overflow-auto hide-scrollbar">
         <Row className="flex-nowrap pe-5 pe-lg-0 g-3">
           {books.map((book) => {
-            return <BookCard key={book.id} book={book} />;
+            return <BookCard key={book.id} book={book.info} />;
           })}
         </Row>
       </Col>

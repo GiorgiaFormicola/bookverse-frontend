@@ -16,6 +16,7 @@ const BookDetail = () => {
   const [bookDetailsMapped, setBookDetailsMapped] = useState(null);
   const [reviews, setReviews] = useState(null);
   const userSavedBooks = useSelector((currentState) => currentState.profile.savedBooks);
+  const defaultCover = "https://neelkanthpublishers.com/assets/bookcover_cover.png";
 
   const mapBookDetails = (data) => {
     return {
@@ -29,7 +30,7 @@ const BookDetail = () => {
       isbn13: data.isbn13 ? data.isbn13 : "Not available",
       pages: data.pages ? data.pages : "Not available",
       categories: data.categories.length > 0 ? data.categories.join(", ") : "Not available",
-      coverURL: data.coverURL,
+      coverURL: data.coverURL ? data.coverURL : defaultCover,
     };
   };
 
@@ -37,6 +38,7 @@ const BookDetail = () => {
     instance
       .get("/books/search/" + params.googleId)
       .then((response) => {
+        console.log(response.data);
         setBook(response.data);
         setBookDetailsMapped(mapBookDetails(response.data));
         setLoading(false);

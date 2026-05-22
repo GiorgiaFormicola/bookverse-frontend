@@ -38,6 +38,33 @@ const BookSaveComponent = (props) => {
         </>
       )}
 
+      {location.pathname === "/search" && (
+        <>
+          {isSaved && (
+            <>
+              <SuitHeartFill
+                size={30}
+                onClick={(e) => {
+                  e.stopPropagation();
+                  removeBook();
+                }}
+              />
+            </>
+          )}
+          {!isSaved && (
+            <>
+              <SuitHeart
+                size={30}
+                onClick={(e) => {
+                  e.stopPropagation();
+                  addBook();
+                }}
+              />
+            </>
+          )}
+        </>
+      )}
+
       {/* {location.pathname === "/library" && (
         <>
           {isSaved && (
