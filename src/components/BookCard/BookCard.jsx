@@ -43,17 +43,25 @@ const BookCard = (props) => {
             <Col xs={1}>
               {location.pathname === "/library" && <ChevronRight size={25} />}
               {location.pathname === "/search" && <BookSaveComponent book={props.book} />}
-
-              {/* <SuitHeartFill
-                size={25}
-                onClick={(e) => {
-                  e.stopPropagation();
-                  removeBook();
-                }}
-              /> */}
             </Col>
           </Row>
         </ListGroup.Item>
+      )}
+
+      {location.pathname === "/me" && (
+        <Col xs={4} sm={3} lg={2}>
+          <Card className="bg-dark text-white border-0 book-card">
+            <Card.Img
+              className="book-cover"
+              src={props.book.coverURL ? props.book.coverURL : defaultCover}
+              alt={props.book.title}
+              onClick={() => navigate("/books/" + props.book.googleId)}
+            />
+            <Card.ImgOverlay className="d-none d-lg-flex align-items-end py-0 px-2 overlay">
+              <Card.Title className="fs-6">{props.book.title}</Card.Title>
+            </Card.ImgOverlay>
+          </Card>
+        </Col>
       )}
     </>
   );

@@ -91,15 +91,6 @@ const SearchPage = () => {
               Publisher
             </ToggleButton>
           </ToggleButtonGroup>
-          {/*  <Button active={readingStatus === "TO_READ"} onClick={() => handleStatusToggle("TO_READ")}>
-            To read
-          </Button>
-          <Button active={readingStatus === "READING"} onClick={() => handleStatusToggle("READING")}>
-            Reading
-          </Button>
-          <Button active={readingStatus === "READ"} onClick={() => handleStatusToggle("READ")}>
-            Read
-          </Button> */}
         </Col>
       </Row>
 

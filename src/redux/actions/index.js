@@ -35,7 +35,7 @@ export const getProfileInfo = () => {
   };
 };
 
-export const updateProfiloInfo = (body) => {
+export const updateProfileInfo = (body) => {
   return (dispatch) => {
     instance
       .put("/users/me", body)
