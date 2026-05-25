@@ -1,14 +1,21 @@
-import { useSelector } from "react-redux";
-import { XCircle, CheckCircle, Pen, PenFill } from "react-bootstrap-icons";
+import { Pen, PenFill } from "react-bootstrap-icons";
 
-const BookReviewComponent = () => {
-  const userSavedBooks = useSelector((currentState) => currentState.profile.savedBooks);
+const BookReviewComponent = (props) => {
   return (
     <>
-      {/* {<Pen size={50} />
-      <p className="mb-0">Add your review</p>
-      <PenFill size={50} />
-      <p className="mb-0">Modify your review</p>} */}
+      {props.isReviewed && (
+        <>
+          <PenFill size={50} onClick={props.onClick} />
+          <p className="mb-0">Modify your review</p>
+        </>
+      )}
+
+      {!props.isReviewed && (
+        <>
+          <Pen size={50} onClick={props.onClick} />
+          <p className="mb-0">Add your review</p>
+        </>
+      )}
     </>
   );
 };

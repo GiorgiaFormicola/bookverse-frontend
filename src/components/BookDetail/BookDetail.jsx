@@ -1,6 +1,6 @@
 import { Container, Row, Col, ListGroup, InputGroup, Form, Spinner, Button } from "react-bootstrap";
 import { useParams } from "react-router-dom";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { instance } from "../../config/api";
 import { useSelector } from "react-redux";
 import BookSaveComponent from "../BookSaveComponent/BookSaveComponent";
@@ -35,6 +35,8 @@ const BookDetail = () => {
   const [hasNext, setHasNext] = useState(true);
 
   const componentLoading = booksLoading || reviewsLoading;
+
+  const reviewFormRef = useRef(null);
 
   const mapBookDetails = (data) => {
     return {
@@ -136,6 +138,24 @@ const BookDetail = () => {
       });
   };
 
+  const handleReviewClick = () => {
+    if (currentUserReview) {
+      setUserReview({
+        rating: currentUserReview.rating,
+        comment: currentUserReview.comment,
+      });
+    }
+
+    setEditingReview(true);
+
+    setTimeout(() => {
+      reviewFormRef.current?.scrollIntoView({
+        behavior: "smooth",
+        block: "start",
+      });
+    }, 100);
+  };
+
   useEffect(() => {
     getBookDetails();
     getBookReviews(0, false);
@@ -188,9 +208,9 @@ const BookDetail = () => {
                             <div className="d-flex align-items-center gap-2 py-3 flex-shrink-0">
                               <BookPrivacyComponent bookId={book.googleId} />
                             </div>
-                            {/* <div className="d-flex align-items-center gap-2 py-3 flex-shrink-0">
-                            <BookReviewComponent />
-                          </div> */}
+                            <div className="d-flex align-items-center gap-2 py-3 flex-shrink-0">
+                              <BookReviewComponent isReviewed={!!currentUserReview} onClick={handleReviewClick} />
+                            </div>
                           </div>
                         </div>
                       )}
@@ -249,7 +269,7 @@ const BookDetail = () => {
               </ListGroup>
             </Col>
             {shouldShowReviewForm && (
-              <Col>
+              <Col ref={reviewFormRef}>
                 <div className=" p-3 shadow-sm">
                   <h5 className="fw-semibold mb-3">{currentUserReview ? "Edit" : "Leave"} your review</h5>
                   <div className="d-flex gap-2 mb-3">
