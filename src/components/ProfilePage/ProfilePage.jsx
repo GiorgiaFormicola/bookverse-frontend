@@ -4,6 +4,7 @@ import { useState, useEffect } from "react";
 import { instance } from "../../config/api";
 import BookCard from "../BookCard/BookCard";
 import { useNavigate } from "react-router-dom";
+import { ThreeDots } from "react-bootstrap-icons";
 
 const ProfilePage = () => {
   const profile = useSelector((currentState) => currentState.profile);
@@ -12,13 +13,21 @@ const ProfilePage = () => {
   const [loading, setLoading] = useState(true);
   const [publicBooks, setPublicBooks] = useState([]);
   const navigate = useNavigate();
+  const [currentPage, setCurrentPage] = useState(0);
+  const [hasNext, setHasNext] = useState(true);
 
-  const getUserPublicBooks = () => {
+  const getUserPublicBooks = (pageNumber, append) => {
     instance
-      .get(`/me/books?isPublic=true`)
+      .get(`/me/books?isPublic=true&page=${pageNumber}&size=20`)
       .then((response) => {
         console.log(response.data.content);
-        setPublicBooks(response.data.content);
+        if (append) {
+          setPublicBooks((prev) => [...prev, ...response.data.content]);
+        } else {
+          setPublicBooks(response.data.content);
+        }
+        setCurrentPage(response.data.number);
+        setHasNext(!response.data.last);
       })
       .catch((err) => {
         console.log(err);
@@ -26,8 +35,13 @@ const ProfilePage = () => {
       .finally(() => setLoading(false));
   };
 
+  const loadNextPage = () => {
+    const nextPage = currentPage + 1;
+    getUserPublicBooks(nextPage, true);
+  };
+
   useEffect(() => {
-    getUserPublicBooks();
+    getUserPublicBooks(currentPage, false);
   }, []);
 
   return (
@@ -36,7 +50,7 @@ const ProfilePage = () => {
         {user && userBooks && (
           <>
             <Col xs={4}>
-              <img src={user.profilePictureURL} alt={user.username} className=" img-fluid rounded-circle" />
+              <img src={user.profilePictureURL} alt={user.username} className="avatar" />
             </Col>
             <Col xs={8}>
               <div className="d-flex gap-3">
@@ -61,6 +75,11 @@ const ProfilePage = () => {
           publicBooks.map((book) => {
             return <BookCard key={book.id} book={book.info} />;
           })}
+        {hasNext && (
+          <Col xs={12} className="text-center">
+            <ThreeDots size={50} style={{ cursor: "pointer" }} onClick={() => loadNextPage()}></ThreeDots>
+          </Col>
+        )}
       </Row>
     </Container>
   );

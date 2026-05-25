@@ -52,15 +52,9 @@ const UpdateProfilePage = () => {
           </Col>
         </Row>
         <Row className=" justify-content-center g-3 py-3">
-          <Col xs={12} className="d-flex justify-content-center">
-            <div
-              className="position-relative rounded-circle"
-              style={{
-                width: 200,
-                height: 200,
-              }}
-            >
-              <img src={user.profilePictureURL} alt={user.username} className="rounded-circle w-100 h-100 object-fit-cover" />
+          <Col xs={5} className="d-flex justify-content-center">
+            <div className="position-relative rounded-circle">
+              <img src={user.profilePictureURL} alt={user.username} className="avatar" />
               <div
                 className="position-absolute bottom-0 end-0 translate-middle-x translate-middle-y bg-primary rounded-circle d-flex align-items-center justify-content-center"
                 onClick={() => handleShow()}
@@ -163,17 +157,8 @@ const UpdateProfilePage = () => {
         <Modal.Header closeButton className="d-flex align-items-center px-4">
           <Modal.Title className="fs-5">Upload profile picture</Modal.Title>
         </Modal.Header>
-        <Modal.Body className="px-5 mx-3  my-3 text-center">
-          <img
-            src={user.profilePictureURL}
-            alt={user.username}
-            className=" img-fluid rounded-circle my-4 "
-            style={{
-              width: 200,
-              height: 200,
-              objectFit: "cover",
-            }}
-          />
+        <Modal.Body className="px-5 mx-3 my-3 text-center">
+          <img src={user.profilePictureURL} alt={user.username} className="avatar" />
         </Modal.Body>
         <Modal.Footer className="justify-content-end px-4">
           <div className="d-flex">
