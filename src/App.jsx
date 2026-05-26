@@ -13,6 +13,7 @@ import SearchPage from "./components/SearchPage/SearchPage";
 import LibraryPage from "./components/LibraryPage/LibraryPage";
 import ProfilePage from "./components/ProfilePage/ProfilePage";
 import UpdateProfilePage from "./components/UpdateProfilePage/UpdateProfilePage";
+import AdminPage from "./components/AdminPage/AdminPage";
 function App() {
   useEffect(() => {
     document.documentElement.setAttribute("data-bs-theme", "dark");
@@ -31,6 +32,7 @@ function App() {
           <Route path="/library" element={<LibraryPage />} />
           <Route path="/me" element={<ProfilePage />} />
           <Route path="/me/edit" element={<UpdateProfilePage />} />
+          <Route path="/admin" element={<AdminPage />} />
         </Routes>
       </BrowserRouter>
     </Provider>
