@@ -1,6 +1,6 @@
 import { Modal, Button } from "react-bootstrap";
 
-const DeleteConfirmModal = ({ show, onHide, onConfirm, username }) => {
+const DeleteConfirmModal = ({ show, onHide, onConfirm, username, bookId }) => {
   return (
     <Modal show={show} onHide={onHide} centered>
       <Modal.Header closeButton>
@@ -8,7 +8,16 @@ const DeleteConfirmModal = ({ show, onHide, onConfirm, username }) => {
       </Modal.Header>
 
       <Modal.Body>
-        Are you sure you want to delete user <strong>{username}</strong>? <br /> This operation is irreversible.
+        {username && (
+          <>
+            Are you sure you want to delete user <strong>{username}</strong>? <br /> This operation is irreversible.
+          </>
+        )}
+        {bookId && (
+          <>
+            Are you sure you want to delete book <strong>{bookId}</strong>? <br /> This operation is irreversible.
+          </>
+        )}
       </Modal.Body>
 
       <Modal.Footer>

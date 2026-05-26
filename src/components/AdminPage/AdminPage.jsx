@@ -17,9 +17,9 @@ const AdminPage = () => {
           <UsersSection />
         </Tab>
 
-        {/* <Tab eventKey="books" title="Books">
+        <Tab eventKey="books" title="Books">
           <BooksSection />
-        </Tab> */}
+        </Tab>
       </Tabs>
     </Container>
   );

@@ -171,7 +171,10 @@ const UsersSection = () => {
         </Card.Body>
       </Card>
 
-      <EditUserModal key={selectedUser?.id} show={showModal} onHide={() => setShowModal(false)} user={selectedUser} handleSaveUser={handleSaveUser} />
+      {showModal && (
+        <EditUserModal key={selectedUser?.id} show={showModal} onHide={() => setShowModal(false)} user={selectedUser} handleSaveUser={handleSaveUser} />
+      )}
+
       <DeleteConfirmModal show={!!userToDelete} onHide={handleDeleteCancel} onConfirm={handleDeleteUser} username={userToDelete?.username} />
     </>
   );
