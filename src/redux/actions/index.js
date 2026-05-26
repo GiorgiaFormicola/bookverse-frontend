@@ -7,6 +7,7 @@ export const CLEAR_ERROR = "CLEAR_ERROR";
 export const ADD_BOOK = "ADD_BOOK";
 export const REMOVE_BOOK = "REMOVE_BOOK";
 export const UPDATE_BOOK = "UPDATE_BOOK";
+export const SET_AUTH_CHECKED = "SET_AUTH_CHECKED";
 
 export const getProfileInfo = () => {
   return (dispatch) => {
@@ -27,6 +28,10 @@ export const getProfileInfo = () => {
             user: response.data.user,
             savedBooks: savedBooksMap,
           },
+        });
+
+        dispatch({
+          type: SET_AUTH_CHECKED,
         });
       })
       .catch((error) => {

@@ -1,8 +1,9 @@
-import { ADD_BOOK, CLEAR_PROFILE, GET_PROFILE, REMOVE_BOOK, UPDATE_PROFILE, UPDATE_BOOK } from "../actions";
+import { ADD_BOOK, CLEAR_PROFILE, GET_PROFILE, REMOVE_BOOK, UPDATE_PROFILE, UPDATE_BOOK, SET_AUTH_CHECKED } from "../actions";
 
 const initialState = {
   user: null,
   savedBooks: null,
+  authChecked: false,
 };
 
 const profileReducer = (currentState = initialState, action) => {
@@ -25,6 +26,7 @@ const profileReducer = (currentState = initialState, action) => {
         ...currentState,
         user: null,
         savedBooks: null,
+        authChecked: false,
       };
 
     case ADD_BOOK:
@@ -54,6 +56,12 @@ const profileReducer = (currentState = initialState, action) => {
         },
       };
     }
+
+    case SET_AUTH_CHECKED:
+      return {
+        ...currentState,
+        authChecked: true,
+      };
 
     default:
       return currentState;
