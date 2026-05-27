@@ -15,7 +15,7 @@ import BookDetail from "./components/BookDetail/BookDetail";
 import ProfilePage from "./components/ProfilePage/ProfilePage";
 import UpdateProfilePage from "./components/UpdateProfilePage/UpdateProfilePage";
 import AdminPage from "./components/AdminPage/AdminPage";
-import { Tooltip } from "bootstrap";
+import AppLayout from "./components/AppLayout";
 
 function App() {
   useEffect(() => {
@@ -33,7 +33,9 @@ function App() {
             path="/"
             element={
               <ProtectedRoute>
-                <HomePage />
+                <AppLayout>
+                  <HomePage />
+                </AppLayout>
               </ProtectedRoute>
             }
           />

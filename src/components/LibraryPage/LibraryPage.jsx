@@ -3,15 +3,17 @@ import { instance } from "../../config/api";
 import { Container, Row, Col, ListGroup, Form, InputGroup, Button, ToggleButtonGroup, ToggleButton } from "react-bootstrap";
 import BookCard from "../BookCard/BookCard";
 import { Search, ThreeDots } from "react-bootstrap-icons";
+import { useSearchParams } from "react-router-dom";
 
 const LibraryPage = () => {
+  const [searchParams] = useSearchParams();
   const [query, setQuery] = useState("");
   const [filter, setFilter] = useState("title");
   const [books, setBooks] = useState([]);
   const [loading, setLoading] = useState(true);
   const [currentPage, setCurrentPage] = useState(0);
   const [hasNext, setHasNext] = useState(false);
-  const [readingStatus, setReadingStatus] = useState(null);
+  const [readingStatus, setReadingStatus] = useState(searchParams.get("status") || null);
   const firstRender = useRef(true);
 
   const getAllBooks = (pageNumber, append) => {

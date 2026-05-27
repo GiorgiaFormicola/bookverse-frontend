@@ -4,7 +4,7 @@ import { Eye, EyeSlash, Book } from "react-bootstrap-icons";
 import { Link, useNavigate } from "react-router-dom";
 import { instance } from "../../config/api";
 import { useDispatch } from "react-redux";
-import { CLEAR_PROFILE, getProfileInfo } from "../../redux/actions";
+import { getProfileInfo } from "../../redux/actions";
 
 const LoginPage = () => {
   const navigate = useNavigate();
@@ -64,12 +64,7 @@ const LoginPage = () => {
 
   useEffect(() => {
     const token = localStorage.getItem("token");
-    if (token) {
-      localStorage.removeItem("token");
-      dispatch({
-        type: CLEAR_PROFILE,
-      });
-    }
+    if (token) navigate("/");
   }, []);
 
   return (

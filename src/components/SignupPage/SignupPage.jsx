@@ -1,19 +1,15 @@
 import { useState, useEffect } from "react";
 import { Container, Row, Col, Form, Button, InputGroup, Card, OverlayTrigger, Tooltip } from "react-bootstrap";
-import { Eye, EyeSlash, Book, People, Star, BarChartLine, InfoCircle, InfoCircleFill, Stars, Search, SearchHeart } from "react-bootstrap-icons";
+import { Eye, EyeSlash, Book, People, Star, BarChartLine, InfoCircleFill, Search } from "react-bootstrap-icons";
 import { Link, useNavigate } from "react-router-dom";
 import { instance } from "../../config/api";
-import { useDispatch } from "react-redux";
-import { CLEAR_PROFILE } from "../../redux/actions";
 
 const SignupPage = () => {
   const navigate = useNavigate();
-  const dispatch = useDispatch();
   const [showPassword, setShowPassword] = useState(false);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
   /*  const [autoDisplayName, setAutoDisplayName] = useState(true); */
-
   const [signUpCredentials, setSignUpCredentials] = useState({
     username: "",
     email: "",
@@ -23,32 +19,14 @@ const SignupPage = () => {
     birthdate: "",
   });
 
-  /* const validateSignUpCredentials = (signUpCredentials) => {
-    if (
-      signUpCredentials.username.trim() === "" ||
-      signUpCredentials.email.trim() === "" ||
-      signUpCredentials.password.trim() === "" ||
-      signUpCredentials.confirmPassword.trim() === "" ||
-      signUpCredentials.displayName.trim() === "" ||
-      signUpCredentials.birthdate === ""
-    ) {
-      setError({
-        status: 400,
-        message: "To continue you must provide all the required info",
-        errorsList: [],
-      });
-      return false;
-    }
-    if (signUpCredentials.password !== signUpCredentials.confirmPassword) {
-      setError({
-        status: 400,
-        message: "To continue passwords must match",
-        errors: [],
-      });
-      return false;
-    }
-    return true;
-  }; */
+  const minAge = 13;
+  const maxAge = 120;
+  const maxBirthdate = new Date();
+  maxBirthdate.setFullYear(maxBirthdate.getFullYear() - minAge);
+  const minBirthdate = new Date();
+  minBirthdate.setFullYear(minBirthdate.getFullYear() - maxAge);
+  const maxDateInput = maxBirthdate.toISOString().split("T")[0];
+  const minDateInput = minBirthdate.toISOString().split("T")[0];
 
   const validateForm = () => {
     const username = signUpCredentials.username;
@@ -61,6 +39,7 @@ const SignupPage = () => {
     const usernameRegex = /^(?!.*\.\.)(?!.*\.$)[a-z0-9_][a-z0-9_.]{1,29}$/;
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/;
     const passwordRegex = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[a-zA-Z]).{8,}$/;
+    const birthdateValue = new Date(birthdate);
 
     if (username === null || username.trim() === "" || !usernameRegex.test(username)) {
       setError("Provide a valid username");
@@ -77,8 +56,13 @@ const SignupPage = () => {
       return false;
     }
 
-    if (birthdate === null || birthdate.trim() === "" || isNaN(new Date(birthdate).getTime()) || new Date(birthdate) > new Date().setHours(0, 0, 0, 0)) {
+    if (birthdate === null || birthdate.trim() === "" || isNaN(birthdateValue.getTime()) || birthdateValue < minBirthdate) {
       setError("Provide a valid date");
+      return false;
+    }
+
+    if (birthdateValue > maxBirthdate) {
+      setError("To continue you must be at least 13 years old");
       return false;
     }
 
@@ -125,12 +109,7 @@ const SignupPage = () => {
 
   useEffect(() => {
     const token = localStorage.getItem("token");
-    if (token) {
-      localStorage.removeItem("token");
-      dispatch({
-        type: CLEAR_PROFILE,
-      });
-    }
+    if (token) navigate("/");
   }, []);
 
   return (
@@ -306,6 +285,8 @@ const SignupPage = () => {
                     <Form.Label>Birthdate</Form.Label>
                     <Form.Control
                       type="date"
+                      min={minDateInput}
+                      max={maxDateInput}
                       placeholder="Enter your email"
                       value={signUpCredentials.birthdate}
                       onClick={() => setError("")}

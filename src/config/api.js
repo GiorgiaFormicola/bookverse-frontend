@@ -38,6 +38,7 @@ instance.interceptors.response.use(
         store.dispatch({ type: CLEAR_PROFILE });
 
         window.location.replace("/login");
+        return Promise.reject(error);
       }
     }
     store.dispatch({
