@@ -19,7 +19,7 @@ const HomePage = () => {
               <h1 className="mb-0">Your Dashboard</h1>
             </Col>
           </Row>
-          {/* DASHBOARD */}
+          {/* DASHBOARDS */}
           <Row className="g-2 d-sm-none">
             <Dashboard size="xs" />
           </Row>
@@ -29,7 +29,7 @@ const HomePage = () => {
           <Row className="g-3 mb-3 d-none d-lg-flex">
             <Dashboard size="lg" />
           </Row>
-          {/* DASHBOARD */}
+          {/* DASHBOARDS */}
         </div>
         <HomePageSection filter="TO_READ" title="Start reading" loading={isLoading} setLoading={setLoadingSection1}></HomePageSection>
         <HomePageSection filter="READING" title="Continue reading" loading={isLoading} setLoading={setLoadingSection2}></HomePageSection>

@@ -1,13 +1,13 @@
 import { useEffect, useState } from "react";
 import { instance } from "../../config/api";
-import { Row, Col, Card } from "react-bootstrap";
+import { Row, Col, Alert, Card } from "react-bootstrap";
 import { Link } from "react-router-dom";
-import { ChevronRight } from "react-bootstrap-icons";
+import { ArrowClockwise, ChevronRight } from "react-bootstrap-icons";
 import BookCard from "../BookCard/BookCard";
 
-//gestire loading e errore
 const HomePageSection = ({ filter, title, loading, setLoading }) => {
   const [books, setBooks] = useState([]);
+  const [error, setError] = useState(true);
 
   const getSectionBooks = () => {
     instance
@@ -17,6 +17,7 @@ const HomePageSection = ({ filter, title, loading, setLoading }) => {
       })
       .catch((err) => {
         console.log(err);
+        setError(true);
       })
       .finally(() => setLoading(false));
   };
@@ -30,18 +31,41 @@ const HomePageSection = ({ filter, title, loading, setLoading }) => {
       <Col xs={12}>
         <div className="d-flex align-items-center justify-content-between">
           <h2>{title}</h2>
-          <Link to={`/library?status=${filter}`} className="text-muted text-decoration-none d-flex align-items-center gap-1">
-            View more
-            <span>
-              <ChevronRight size={18}></ChevronRight>
-            </span>
-          </Link>
+          {!loading && !error && (
+            <Link to={`/library?status=${filter}`} className="text-muted text-decoration-none d-flex align-items-center gap-1">
+              View more
+              <span>
+                <ChevronRight size={18}></ChevronRight>
+              </span>
+            </Link>
+          )}
         </div>
       </Col>
 
       <Col className="overflow-auto hide-scrollbar">
         <Row className="flex-nowrap pe-5 pe-lg-0 g-3 pt-1">
-          {loading &&
+          {error ? (
+            <Col xs={8} lg={12} className="mx-auto">
+              <Alert
+                variant="secondary"
+                className="d-flex flex-column align-items-center justify-content-between mb-0 rounded-3 gap-3 py-4 bg-transparent border-0"
+              >
+                <span>Something went wrong loading this section.</span>
+                <div className="d-flex flex-column align-items-center gap-2">
+                  <span className="fw-bold">Try again</span>
+                  <ArrowClockwise
+                    size={30}
+                    onClick={() => {
+                      setError(false);
+                      setLoading(true);
+                      getSectionBooks();
+                    }}
+                    style={{ cursor: "pointer" }}
+                  />
+                </div>
+              </Alert>
+            </Col>
+          ) : loading ? (
             Array.from({ length: 6 }).map((_, i) => (
               <Col key={i} xs={6} sm={5} md={3} lg={2}>
                 <Card className="bg-transparent border-0">
@@ -53,12 +77,12 @@ const HomePageSection = ({ filter, title, loading, setLoading }) => {
                   </Card.Body>
                 </Card>
               </Col>
-            ))}
-          {!loading &&
+            ))
+          ) : (
             books.map((book) => {
               return <BookCard key={book.id} book={book.info} />;
-            })}
-          {}
+            })
+          )}
         </Row>
       </Col>
     </Row>
