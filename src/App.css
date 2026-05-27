@@ -18,3 +18,16 @@
 .auth-gradient {
   background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
 }
+
+.custom-tooltip .tooltip-inner {
+  background-color: #667eea;
+  color: white;
+  font-size: 0.875em;
+  max-width: 30em;
+  padding: 0.875em;
+  border-radius: 1em;
+}
+
+.custom-tooltip .tooltip-arrow::before {
+  border-right-color: #667eea;
+}

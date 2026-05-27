@@ -27,3 +27,5 @@ dist-ssr
 .env
 
 # Tests
+LoginPageOld.jsx
+SignupPageOld.jsx

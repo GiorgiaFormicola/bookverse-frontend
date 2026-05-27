@@ -6,7 +6,7 @@ import store from "./redux/store";
 import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import ProfileLoader from "./components/ProfileLoader/ProfileLoader";
 import LoginPage from "./components/LoginPage/LoginPage";
-import SignInPage from "./components/SignInPage/SignInPage";
+import SignupPage from "./components/SignupPage/SignupPage";
 import ProtectedRoute from "./components/ProtectedRoute";
 import HomePage from "./components/HomePage/HomePage";
 import LibraryPage from "./components/LibraryPage/LibraryPage";
@@ -15,6 +15,7 @@ import BookDetail from "./components/BookDetail/BookDetail";
 import ProfilePage from "./components/ProfilePage/ProfilePage";
 import UpdateProfilePage from "./components/UpdateProfilePage/UpdateProfilePage";
 import AdminPage from "./components/AdminPage/AdminPage";
+import { Tooltip } from "bootstrap";
 
 function App() {
   useEffect(() => {
@@ -27,7 +28,7 @@ function App() {
         <ProfileLoader />
         <Routes>
           <Route path="/login" element={<LoginPage />} />
-          <Route path="/signIn" element={<SignInPage />} />
+          <Route path="/signup" element={<SignupPage />} />
           <Route
             path="/"
             element={

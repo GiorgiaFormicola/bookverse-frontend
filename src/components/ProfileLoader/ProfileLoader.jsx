@@ -11,7 +11,7 @@ const ProfileLoader = () => {
 
   useEffect(() => {
     const token = localStorage.getItem("token");
-    /* if (location.pathname !== "/login" && location.pathname !== "/signIn") { */
+    /* if (location.pathname !== "/login" && location.pathname !== "/signup") { */
     if (token && !user) {
       dispatch(getProfileInfo());
     }
