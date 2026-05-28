@@ -86,3 +86,19 @@
 .hide-scrollbar::-webkit-scrollbar {
   display: none;
 }
+
+.list-group-item-action:hover {
+  background-color: rgba(255, 255, 255, 0.08) !important;
+}
+
+.btn-secondary:not(.active):hover {
+  filter: brightness(1.2);
+}
+
+.btn-light {
+  filter: brightness(1.2);
+}
+
+.btn-light:hover {
+  filter: brightness(1.2);
+}

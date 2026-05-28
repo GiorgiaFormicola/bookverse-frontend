@@ -43,7 +43,9 @@ function App() {
             path="/library"
             element={
               <ProtectedRoute>
-                <LibraryPage />
+                <AppLayout>
+                  <LibraryPage />
+                </AppLayout>
               </ProtectedRoute>
             }
           />
