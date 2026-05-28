@@ -153,11 +153,6 @@ const SearchPage = () => {
             </>
           )}
         </Col>
-        {/* {hasNext && (
-          <Col xs={12} className="text-center">
-            <ThreeDots size={50} style={{ cursor: "pointer" }} onClick={() => loadNextPage()}></ThreeDots>
-          </Col>
-        )} */}
       </Row>
     </Container>
   );
