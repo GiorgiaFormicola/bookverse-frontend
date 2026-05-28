@@ -231,7 +231,7 @@ const LibraryPage = () => {
 
       <Row className="g-3">
         <Col xs={12}>
-          <ListGroup variant="flush" className="bg-dark rounded-3">
+          <ListGroup variant="flush" className="rounded-3">
             {!loading &&
               books.map((book) => {
                 return <BookCard key={book.id} book={book.info} status={book.status} isPublic={book.public}></BookCard>;

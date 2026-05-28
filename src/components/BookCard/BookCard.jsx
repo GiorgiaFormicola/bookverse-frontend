@@ -7,7 +7,6 @@ const BookCard = ({ book, status, isPublic }) => {
   const navigate = useNavigate();
   const location = useLocation();
   const defaultCover = "https://neelkanthpublishers.com/assets/bookcover_cover.png";
-  console.log(status);
   return (
     <>
       {/* HOMEPAGE BOOK CARD */}
@@ -88,7 +87,7 @@ const BookCard = ({ book, status, isPublic }) => {
               </div>
             </Col>
             <Col xs={1}>
-              <div className="d-flex flex-column h-100  justify-content-center align-items-center">
+              <div className="d-flex flex-column h-100  justify-content-center align-items-end">
                 {location.pathname === "/library" && <ChevronRight size={25} />}
                 {location.pathname === "/search" && <BookSaveComponent book={book} />}
               </div>

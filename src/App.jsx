@@ -54,7 +54,9 @@ function App() {
             path="/search"
             element={
               <ProtectedRoute>
-                <SearchPage />
+                <AppLayout>
+                  <SearchPage />
+                </AppLayout>
               </ProtectedRoute>
             }
           />
