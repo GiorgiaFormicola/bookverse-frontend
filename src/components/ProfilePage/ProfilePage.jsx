@@ -13,7 +13,7 @@ const ProfilePage = () => {
   const library = useSelector((currentState) => currentState.profile.savedBooks);
   const [bookshelf, setBookshelf] = useState([]);
   const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(true);
+  const [error, setError] = useState(false);
   const [currentPage, setCurrentPage] = useState(0);
   const [hasNext, setHasNext] = useState(true);
 

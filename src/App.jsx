@@ -13,7 +13,7 @@ import LibraryPage from "./components/LibraryPage/LibraryPage";
 import SearchPage from "./components/SearchPage/SearchPage";
 import BookDetailPage from "./components/BookDetailPage/BookDetailPage";
 import ProfilePage from "./components/ProfilePage/ProfilePage";
-import UpdateProfilePage from "./components/UpdateProfilePage/UpdateProfilePage";
+import EditProfilePage from "./components/EditProfilePage/EditProfilePage";
 import AdminPage from "./components/AdminPage/AdminPage";
 import AppLayout from "./components/AppLayout";
 
@@ -86,7 +86,7 @@ function App() {
             path="/me/edit"
             element={
               <ProtectedRoute>
-                <UpdateProfilePage />
+                <EditProfilePage />
               </ProtectedRoute>
             }
           />

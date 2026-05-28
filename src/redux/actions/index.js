@@ -42,35 +42,33 @@ export const getProfileInfo = () => {
 
 export const updateProfileInfo = (body) => {
   return (dispatch) => {
-    instance
-      .put("/users/me", body)
-      .then((response) => {
-        console.log(response.data);
-        dispatch({
-          type: UPDATE_PROFILE,
-          payload: response.data,
-        });
-      })
-      .catch((error) => {
-        console.log(error);
+    return instance.put("/users/me", body).then((response) => {
+      console.log(response.data);
+      dispatch({
+        type: UPDATE_PROFILE,
+        payload: response.data,
       });
+      return response.data;
+    });
+    /* .catch((error) => {
+        console.log(error);
+      }); */
   };
 };
 
 export const updateProfilePicture = (formData) => {
   return (dispatch) => {
-    instance
-      .patch("/users/me/picture", formData)
-      .then((response) => {
-        console.log(response.data);
-        dispatch({
-          type: UPDATE_PROFILE,
-          payload: response.data,
-        });
-      })
-      .catch((error) => {
-        console.log(error);
+    return instance.patch("/users/me/picture", formData).then((response) => {
+      console.log(response.data);
+      dispatch({
+        type: UPDATE_PROFILE,
+        payload: response.data,
       });
+      return response.data;
+    });
+    /* .catch((error) => {
+        console.log(error);
+      }); */
   };
 };
 
