@@ -16,8 +16,6 @@ import ProfilePage from "./components/ProfilePage/ProfilePage";
 import UpdateProfilePage from "./components/UpdateProfilePage/UpdateProfilePage";
 import AdminPage from "./components/AdminPage/AdminPage";
 import AppLayout from "./components/AppLayout";
-import BookDetailPageOld from "./components/BookDetailPage/BookDetailPageOld";
-import BookDetailPageTest from "./components/BookDetailPage/BookDetailPageTest";
 
 function App() {
   useEffect(() => {
@@ -64,9 +62,7 @@ function App() {
             element={
               <ProtectedRoute>
                 <AppLayout>
-                  {/* <BookDetailPageTest /> */}
                   <BookDetailPage />
-                  {/* <BookDetailPageOld /> */}
                 </AppLayout>
               </ProtectedRoute>
             }
