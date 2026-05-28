@@ -139,18 +139,25 @@ const SearchPage = () => {
               <p className="mb-0 small">Search for a book by title, author, category or publisher</p>
             </div>
           ) : (
-            <ListGroup variant="flush" className="rounded-3">
-              {visibleBooks.map((book) => (
-                <BookCard key={book.googleId} book={book} />
-              ))}
-            </ListGroup>
+            <>
+              <ListGroup variant="flush" className="rounded-3">
+                {visibleBooks.map((book) => (
+                  <BookCard key={book.googleId} book={book} />
+                ))}
+              </ListGroup>
+              {hasNext && (
+                <div xs={12} className="text-center">
+                  <ThreeDots size={50} style={{ cursor: "pointer" }} onClick={() => loadNextPage()}></ThreeDots>
+                </div>
+              )}
+            </>
           )}
         </Col>
-        {hasNext && (
+        {/* {hasNext && (
           <Col xs={12} className="text-center">
             <ThreeDots size={50} style={{ cursor: "pointer" }} onClick={() => loadNextPage()}></ThreeDots>
           </Col>
-        )}
+        )} */}
       </Row>
     </Container>
   );
