@@ -32,7 +32,7 @@ const BookCard = ({ book, status, isPublic }) => {
 
       {/* PROFILE PAGE BOOK CARD */}
       {location.pathname === "/me" && (
-        <Col xs={4} sm={3} lg={2}>
+        <Col className="mb-3">
           <Card className="bg-transparent border-0 book-card">
             <Card.Img
               className="book-cover rounded-3"

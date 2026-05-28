@@ -50,7 +50,7 @@ const AppNavbar = () => {
               id="user-dropdown"
               align="end"
             >
-              <NavDropdown.Item as={Link} to="/profile">
+              <NavDropdown.Item as={Link} to="/me">
                 <User size={16} className="me-2" />
                 Profile
               </NavDropdown.Item>

@@ -436,7 +436,7 @@ const LibraryPage = () => {
               </ListGroup>
               {hasNext && (
                 <div className="text-center">
-                  <ThreeDots size={50} style={{ cursor: "pointer" }} onClick={loadNextPage} />
+                  <ThreeDots size={50} style={{ cursor: "pointer" }} onClick={() => loadNextPage()} />
                 </div>
               )}
             </>
