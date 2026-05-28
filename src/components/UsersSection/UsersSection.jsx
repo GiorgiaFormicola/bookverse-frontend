@@ -114,7 +114,7 @@ const UsersSection = () => {
             <thead>
               <tr>
                 <th>Username</th>
-                <th>Email</th>
+                <th className="d-none d-md-table-cell">Email</th>
                 <th>Role</th>
                 <th>Status</th>
                 <th>Actions</th>
@@ -125,9 +125,9 @@ const UsersSection = () => {
               {users.map((user) => (
                 <tr key={user.id}>
                   <td>{user.username}</td>
-                  <td>{user.email}</td>
+                  <td className="d-none d-md-table-cell">{user.email}</td>
                   <td>
-                    <Badge bg="dark">{user.role}</Badge>
+                    <Badge bg={user.role === "ADMIN" ? "danger" : "dark"}>{user.role}</Badge>
                   </td>
                   <td>
                     <Badge bg={user.active === true ? "success" : "warning"}>{user.active ? "Active" : "Suspended"}</Badge>
@@ -156,7 +156,7 @@ const UsersSection = () => {
             </tbody>
           </Table>
 
-          <div className="d-flex justify-content-end mt-3">
+          <div className="d-flex justify-content-center mt-3">
             <Pagination>
               <Pagination.Prev disabled={queryFilters.page === 0} onClick={() => handlePageChange(queryFilters.page - 1)} />
               {[...Array(totalPages)].map((_, i) => (

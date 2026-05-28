@@ -44,7 +44,7 @@ const AppNavbar = () => {
               title={
                 <span className="d-flex align-items-center gap-2">
                   <User size={18} />
-                  <span className="d-none d-lg-inline">{user?.username}</span>
+                  <span className="d-none d-lg-inline">{user?.displayName}</span>
                 </span>
               }
               id="user-dropdown"
@@ -54,7 +54,7 @@ const AppNavbar = () => {
                 <User size={16} className="me-2" />
                 Profile
               </NavDropdown.Item>
-              {user?.isAdmin && (
+              {user?.role === "ADMIN" && (
                 <NavDropdown.Item as={Link} to="/admin">
                   <Shield size={16} className="me-2" />
                   Admin Panel

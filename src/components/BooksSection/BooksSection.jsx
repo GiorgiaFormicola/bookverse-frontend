@@ -12,6 +12,7 @@ const BooksSection = () => {
   const [bookToDelete, setBookToDelete] = useState(null);
   /* const [loading, setLoading] = useState(false); */
   const [totalPages, setTotalPages] = useState(1);
+  const defaultCover = "https://neelkanthpublishers.com/assets/bookcover_cover.png";
 
   const [filters, setFilters] = useState({
     title: "",
@@ -135,14 +136,14 @@ const BooksSection = () => {
               <tr>
                 <th>Cover</th>
                 <th>Title</th>
-                <th>Authors</th>
-                <th>Publisher</th>
-                <th>Published Date</th>
-                <th>Categories</th>
-                <th>Description</th>
-                <th>Pages</th>
-                <th>Identifiers</th>
-                <th>Issues</th>
+                <th className="d-none d-sm-table-cell">Authors</th>
+                <th className="d-none d-md-table-cell">Publisher</th>
+                <th className="d-none d-xl-table-cell">Published Date</th>
+                <th className="d-none d-md-table-cell">Categories</th>
+                <th className="d-none">Description</th>
+                <th className="d-none d-xxl-table-cell">Pages</th>
+                <th className="d-none d-lg-table-cell">Identifiers</th>
+                <th className="d-none d-sm-table-cell">Issues</th>
                 <th>Actions</th>
               </tr>
             </thead>
@@ -163,26 +164,24 @@ const BooksSection = () => {
                 return (
                   <tr key={book.id}>
                     <td>
-                      {book.coverURL ? (
-                        <img src={book.coverURL} alt={book.title} width={50} className="book-cover" />
-                      ) : (
-                        <div className="text-muted small">No Cover</div>
-                      )}
+                      <img src={book.coverURL ? book.coverURL : defaultCover} alt={book.title} className="book-cover rounded-3" />
                     </td>
 
                     <td>{book.title}</td>
-                    <td>{book.authors.length ? book.authors.join(", ") : "-"}</td>
-                    <td>{book.publisher || "-"}</td>
-                    <td>{book.publishedDate || "-"}</td>
+                    <td className="d-none d-sm-table-cell">{book.authors.length ? book.authors.join(", ") : "-"}</td>
+                    <td className="d-none d-md-table-cell">{book.publisher || "-"}</td>
+                    <td className="d-none d-xl-table-cell">{book.publishedDate || "-"}</td>
 
-                    <td>{book.categories.length ? book.categories.join(", ") : "-"}</td>
-                    <td className="text-truncate" title={book.description}>
+                    <td className="d-none d-md-table-cell">{book.categories.length ? book.categories.join(", ") : "-"}</td>
+                    <td className="text-truncate d-none" title={book.description}>
                       {book.description ? `${book.description.slice(0, 30)}${book.description.length > 30 ? "..." : ""}` : "-"}
                     </td>
-                    <td>{book.pages || "-"}</td>
-                    <td>{[book.isbn10, book.isbn13].filter(Boolean).length ? [book.isbn10, book.isbn13].filter(Boolean).join(", ") : "-"}</td>
+                    <td className="d-none d-xxl-table-cell">{book.pages || "-"}</td>
+                    <td className="d-none d-lg-table-cell">
+                      {[book.isbn10, book.isbn13].filter(Boolean).length ? [book.isbn10, book.isbn13].filter(Boolean).join(", ") : "-"}
+                    </td>
 
-                    <td>
+                    <td className="d-none d-sm-table-cell">
                       <div className="d-flex flex-wrap gap-1">
                         {issues.map((issue) => (
                           <Badge key={issue} bg="warning" text="dark">
@@ -193,7 +192,7 @@ const BooksSection = () => {
                     </td>
 
                     <td>
-                      <div className="d-flex gap-2">
+                      <div className="d-flex flex-column gap-3">
                         <Button
                           size="sm"
                           variant="outline-primary"
@@ -215,7 +214,7 @@ const BooksSection = () => {
               })}
             </tbody>
           </Table>
-          <div className="d-flex justify-content-end mt-3">
+          <div className="d-flex justify-content-center mt-3">
             <Pagination>
               <Pagination.Prev disabled={queryFilters.page === 0} onClick={() => handlePageChange(queryFilters.page - 1)} />
               {[...Array(totalPages)].map((_, i) => (

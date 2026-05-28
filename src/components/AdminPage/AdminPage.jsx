@@ -4,7 +4,7 @@ import BooksSection from "../BooksSection/BooksSection";
 
 const AdminPage = () => {
   return (
-    <Container fluid className="py-4 px-4 min-vh-100">
+    <Container fluid className="py-4 min-vh-100 container-lg">
       <Row className="mb-4">
         <Col>
           <h1 className="fw-bold">Admin Dashboard</h1>
@@ -12,13 +12,12 @@ const AdminPage = () => {
         </Col>
       </Row>
 
-      <Tabs defaultActiveKey="users" className="mb-4">
-        <Tab eventKey="users" title="Users">
-          <UsersSection />
-        </Tab>
-
+      <Tabs defaultActiveKey="books" className="mb-4">
         <Tab eventKey="books" title="Books">
           <BooksSection />
+        </Tab>
+        <Tab eventKey="users" title="Users">
+          <UsersSection />
         </Tab>
       </Tabs>
     </Container>

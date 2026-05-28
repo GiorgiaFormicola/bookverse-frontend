@@ -125,14 +125,7 @@ const EditBookModal = ({ show, onHide, book, handleSaveBook }) => {
 
       <Modal.Body>
         <Row className="g-3">
-          <Col md={6}>
-            <Form.Group>
-              <Form.Label>Title</Form.Label>
-              <Form.Control value={form.title ?? ""} onChange={(e) => updateField("title", e.target.value)} />
-            </Form.Group>
-          </Col>
-
-          <Col md={6}>
+          <Col md={6} className="mb-4">
             <Form.Group>
               <Form.Label>Cover</Form.Label>
               <div className="mb-2">
@@ -154,13 +147,26 @@ const EditBookModal = ({ show, onHide, book, handleSaveBook }) => {
               {coverFile && <Form.Text className="text-muted">Nuovo file: {coverFile.name}</Form.Text>}
             </Form.Group>
           </Col>
-          <Col md={12}>
+          <Col md={6} className="mb-4">
             <Form.Group>
               <Form.Label>Description</Form.Label>
-              <Form.Control as="textarea" rows={4} value={form.description ?? ""} onChange={(e) => updateField("description", e.target.value)} />
+              <Form.Control
+                className="py-2"
+                as="textarea"
+                rows={22}
+                value={form.description ?? ""}
+                onChange={(e) => updateField("description", e.target.value)}
+              />
             </Form.Group>
           </Col>
-          <Col md={6}>
+          <Col md={6} className="mb-2">
+            <Form.Group>
+              <Form.Label>Title</Form.Label>
+              <Form.Control value={form.title ?? ""} onChange={(e) => updateField("title", e.target.value)} />
+            </Form.Group>
+          </Col>
+
+          <Col md={6} className="mb-2">
             <Form.Group>
               <Form.Label>Authors</Form.Label>
 
@@ -178,7 +184,16 @@ const EditBookModal = ({ show, onHide, book, handleSaveBook }) => {
               />
             </Form.Group>
           </Col>
-          <Col md={6}>
+          <Col md={6} className="mb-2">
+            <Form.Group>
+              <Form.Label>
+                Publisher
+                {/* {isLocked("publisher") && <span className="text-muted ms-1 small">(already setted)</span>} */}
+              </Form.Label>
+              <Form.Control value={form.publisher ?? ""} onChange={(e) => updateField("publisher", e.target.value)} />
+            </Form.Group>
+          </Col>
+          <Col md={6} className="mb-2">
             <Form.Group>
               <Form.Label>Categories</Form.Label>
               <Form.Control
@@ -196,17 +211,7 @@ const EditBookModal = ({ show, onHide, book, handleSaveBook }) => {
             </Form.Group>
           </Col>
 
-          <Col md={4}>
-            <Form.Group>
-              <Form.Label>
-                Publisher
-                {/* {isLocked("publisher") && <span className="text-muted ms-1 small">(already setted)</span>} */}
-              </Form.Label>
-              <Form.Control value={form.publisher ?? ""} onChange={(e) => updateField("publisher", e.target.value)} />
-            </Form.Group>
-          </Col>
-
-          <Col md={4}>
+          <Col md={6} className="mb-2">
             <Form.Group>
               <Form.Label>
                 Published date
@@ -221,14 +226,14 @@ const EditBookModal = ({ show, onHide, book, handleSaveBook }) => {
             </Form.Group>
           </Col>
 
-          <Col md={4}>
+          <Col md={6}>
             <Form.Group>
               <Form.Label>Pages</Form.Label>
               <Form.Control type="number" min={1} value={form.pages ?? ""} onChange={(e) => updateField("pages", e.target.value)} />
             </Form.Group>
           </Col>
 
-          <Col md={6}>
+          <Col md={6} className="mb-2">
             <Form.Group>
               <Form.Label>ISBN-10</Form.Label>
               <Form.Control
@@ -241,7 +246,7 @@ const EditBookModal = ({ show, onHide, book, handleSaveBook }) => {
             </Form.Group>
           </Col>
 
-          <Col md={6}>
+          <Col md={6} className="mb-2">
             <Form.Group>
               <Form.Label>ISBN-13</Form.Label>
               <Form.Control
