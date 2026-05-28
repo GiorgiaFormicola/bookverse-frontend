@@ -7,7 +7,7 @@ import BookCard from "../BookCard/BookCard";
 
 const HomePageSection = ({ filter, title, loading, setLoading }) => {
   const [books, setBooks] = useState([]);
-  const [error, setError] = useState(true);
+  const [error, setError] = useState(false);
 
   const getSectionBooks = () => {
     instance

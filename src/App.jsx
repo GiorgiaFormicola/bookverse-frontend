@@ -11,11 +11,13 @@ import ProtectedRoute from "./components/ProtectedRoute";
 import HomePage from "./components/HomePage/HomePage";
 import LibraryPage from "./components/LibraryPage/LibraryPage";
 import SearchPage from "./components/SearchPage/SearchPage";
-import BookDetail from "./components/BookDetail/BookDetail";
+import BookDetailPage from "./components/BookDetailPage/BookDetailPage";
 import ProfilePage from "./components/ProfilePage/ProfilePage";
 import UpdateProfilePage from "./components/UpdateProfilePage/UpdateProfilePage";
 import AdminPage from "./components/AdminPage/AdminPage";
 import AppLayout from "./components/AppLayout";
+import BookDetailPageOld from "./components/BookDetailPage/BookDetailPageOld";
+import BookDetailPageTest from "./components/BookDetailPage/BookDetailPageTest";
 
 function App() {
   useEffect(() => {
@@ -61,7 +63,11 @@ function App() {
             path="/books/:googleId"
             element={
               <ProtectedRoute>
-                <BookDetail />
+                <AppLayout>
+                  {/* <BookDetailPageTest /> */}
+                  <BookDetailPage />
+                  {/* <BookDetailPageOld /> */}
+                </AppLayout>
               </ProtectedRoute>
             }
           />
