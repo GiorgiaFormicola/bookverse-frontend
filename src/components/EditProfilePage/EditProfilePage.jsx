@@ -3,13 +3,12 @@ import { useDispatch, useSelector } from "react-redux";
 import { ChevronLeft, PlusCircleFill, InfoCircleFill, ArrowClockwise } from "react-bootstrap-icons";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { CLEAR_ERROR, SET_ERROR, updateProfilePicture, updateProfileInfo } from "../../redux/actions";
+import { updateProfilePicture, updateProfileInfo } from "../../redux/actions";
 
 const EditProfilePage = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const user = useSelector((currentState) => currentState.profile.user);
-  /*   const error = useSelector((currentState) => currentState.error); */
 
   const [form, setForm] = useState({ username: user?.username, displayName: user?.displayName, bio: user?.bio });
   const [loading, setLoading] = useState(false);
@@ -23,14 +22,6 @@ const EditProfilePage = () => {
   const handleShow = () => setShow(true);
 
   const originalUser = { username: user?.username, displayName: user?.displayName, bio: user?.bio };
-
-  /* const deleteError = () => {
-    if (error.isPresent) {
-      dispatch({
-        type: CLEAR_ERROR,
-      });
-    }
-  }; */
 
   const validateForm = (form) => {
     const usernameRegex = /^(?!.*\.\.)(?!.*\.$)[a-z0-9_][a-z0-9_.]{1,29}$/;
@@ -89,10 +80,12 @@ const EditProfilePage = () => {
             <div className="position-relative rounded-circle">
               <img src={user.profilePictureURL} alt={user.username} className="avatar" />
               <div
-                className="position-absolute bottom-0 end-0 translate-middle-x translate-middle-y bg-dark rounded-circle d-flex align-items-center justify-content-center"
+                className="position-absolute bottom-0 end-0 translate-middle-x translate-middle-y bg-dark rounded-circle d-flex align-items-center justify-content-center me-sm-3"
                 onClick={() => handleShow()}
               >
-                <PlusCircleFill size={30} />
+                <PlusCircleFill className="me-3 d-sm-none" size={30} />
+                <PlusCircleFill className="me-3 d-none d-sm-block d-md-none" size={40} />
+                <PlusCircleFill className="me-4 d-none d-md-block" size={50} />
               </div>
             </div>
           </Col>
@@ -105,44 +98,8 @@ const EditProfilePage = () => {
               onSubmit={(e) => {
                 e.preventDefault();
                 editProfileInfo();
-                /* setLoading(true);
-                if (validateForm(form) === false) {
-                  setLoading(false);
-                  return;
-                } */
-                /* dispatch(updateProfileInfo({ username: form.username, displayName: form.displayName, bio: form.bio || "" })); */
               }}
             >
-              {/* <Form.Group className="mb-3">
-                <Form.Label>Name</Form.Label>
-                <Form.Control
-                  type="text"
-                  placeholder="Type your display name here"
-                  value={form.displayName}
-                  onClick={() => setError("")}
-                  onChange={(e) => {
-                    const value = e.target.value;
-                    setForm((prev) => ({
-                      ...prev,
-                      displayName: value,
-                    }));
-                  }}
-                /> */}
-
-              {/* <Form.Label>Username</Form.Label>
-                <Form.Control
-                  type="text"
-                  placeholder="Type your username here"
-                  value={form.username}
-                  onClick={() => deleteError()}
-                  onChange={(e) => {
-                    const value = e.target.value;
-                    setForm((prev) => ({
-                      ...prev,
-                      username: value,
-                    }));
-                  }}
-                /> */}
               <Form.Group className="mb-4" controlId="profileName">
                 <Form.Label className="d-flex align-items-center gap-2 fs-4">
                   Profile Name
@@ -268,32 +225,6 @@ const EditProfilePage = () => {
             </div>
           </Col>
         </Row>
-        {/* <Row>
-          <div
-            className="small text-center d-flex flex-column flex-grow-1 justify-content-center"
-            style={{
-              visibility: error.isPresent ? "visible" : "hidden",
-            }}
-          >
-            {error.errorsList?.length > 0 &&
-              error.errorsList.map((error, i) => {
-                return (
-                  <p key={`error-${i}`} className="my-0">
-                    {error}
-                  </p>
-                );
-              })}
-            {error.errorsList?.length == 0 && <p className="my-0">{error.message}</p>}
-            {!error.message && (
-              <>
-                <p className="my-0">placeholder</p>
-                <p className="my-0">placeholder</p>
-                <p className="my-0">placeholder</p>
-                <p className="my-0">placeholder</p>
-              </>
-            )}
-          </div>
-        </Row> */}
       </Container>
       <Modal show={show} onHide={handleClose} centered>
         <Modal.Header closeButton className="d-flex align-items-center px-4">
@@ -338,6 +269,7 @@ const EditProfilePage = () => {
                       await dispatch(updateProfilePicture(data));
                       handleClose();
                     } catch (err) {
+                      console.log(err);
                       setUploadError(true);
                     } finally {
                       setUploadLoading(false);
