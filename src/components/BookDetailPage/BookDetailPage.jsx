@@ -175,7 +175,7 @@ const BookDetailPage = () => {
             className="d-flex align-items-center gap-1 text-muted view-more-link text-muted"
             style={{ cursor: "pointer", width: "fit-content" }}
             /* onClick={() => navigate(-1)} */
-            onClick={() => navigate("/library", { state: location.state })}
+            onClick={() => navigate(location.state?.from || "/", { state: location.state })}
           >
             <ChevronLeft size={20} />
             <span>Back</span>

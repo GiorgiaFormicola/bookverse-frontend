@@ -109,7 +109,7 @@ const BookCard = ({ book, status, isPublic, navigationState }) => {
             </Col> */}
             {location.pathname === "/search" && (
               <Col xs={1} className=" offset-2 offset-sm-1">
-                <div className="d-flex flex-column h-100 justify-content-center">
+                <div className="d-flex flex-column h-100 justify-content-center align-items-center">
                   <BookSaveComponent book={book} />
                 </div>
               </Col>

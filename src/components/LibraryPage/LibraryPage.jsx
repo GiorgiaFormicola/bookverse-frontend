@@ -440,7 +440,7 @@ const LibraryPage = () => {
               <Spinner animation="grow" />
             </div>
           ) : error ? (
-            <div className="d-flex align-items-center justify-content-center gap-3 py-5">
+            <div className="d-flex align-items-center justify-content-center gap-3 py-5 my-5">
               <Alert
                 variant="secondary"
                 className="d-flex flex-column align-items-center justify-content-between mb-0 rounded-3 gap-3 py-4 bg-transparent border-0"
@@ -490,7 +490,7 @@ const LibraryPage = () => {
                     book={book.info}
                     status={book.status}
                     isPublic={book.public}
-                    navigationState={{ query, filter, books, currentPage, hasNext, readingStatus }}
+                    navigationState={{ query, filter, books, currentPage, hasNext, readingStatus, from: "/library" }}
                   />
                 ))}
               </ListGroup>
