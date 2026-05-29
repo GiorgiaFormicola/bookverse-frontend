@@ -7,7 +7,7 @@ const AdminPage = () => {
     <Container fluid className="py-4 min-vh-100 container-lg">
       <Row className="mb-4">
         <Col>
-          <h1 className="fw-bold">Admin Dashboard</h1>
+          <h1 className="fw-bold">Admin Panel</h1>
           <p className="text-muted mb-0">Manage users and books from a single panel</p>
         </Col>
       </Row>

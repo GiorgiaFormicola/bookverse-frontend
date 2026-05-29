@@ -16,7 +16,7 @@ const ProfilePage = () => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(false);
   const [currentPage, setCurrentPage] = useState(0);
-  const [hasNext, setHasNext] = useState(true);
+  const [hasNext, setHasNext] = useState(false);
   const [showEditModal, setShowEditModal] = useState(false);
 
   const stats = Object.values(library).reduce(
@@ -132,6 +132,7 @@ const ProfilePage = () => {
                           size={30}
                           onClick={() => {
                             setError(false);
+                            setHasNext(false);
                             getUserBookshelf(0, false);
                           }}
                           style={{ cursor: "pointer" }}

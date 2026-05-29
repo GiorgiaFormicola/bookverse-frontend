@@ -10,7 +10,6 @@ const BooksSection = () => {
   const [selectedBook, setSelectedBook] = useState(null);
   const [showModal, setShowModal] = useState(false);
   const [bookToDelete, setBookToDelete] = useState(null);
-  /* const [loading, setLoading] = useState(false); */
   const [totalPages, setTotalPages] = useState(1);
   const defaultCover = "https://neelkanthpublishers.com/assets/bookcover_cover.png";
 

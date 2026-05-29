@@ -12,7 +12,7 @@ const HomePage = () => {
 
   return (
     <>
-      <Container fluid className="py-4 p-3 px-lg-4 px-xl-5 container-lg d-flex flex-column gap-3 gap-sm-2 gap-lg-3">
+      <Container fluid className="py-4 py-xxl-5 p-3 px-lg-4 px-xl-5 container-lg d-flex flex-column gap-3 gap-sm-2 gap-lg-3">
         <div className="mb-3 mb-sm-4 mb-lg-3">
           <Row className="mb-3 mb-lg-4">
             <Col>
