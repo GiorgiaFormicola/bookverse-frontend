@@ -1,4 +1,4 @@
-import { useNavigate, useParams } from "react-router-dom";
+import { useLocation, useNavigate, useParams } from "react-router-dom";
 import { useSelector } from "react-redux";
 import { useState, useEffect, useRef } from "react";
 import { instance } from "../../config/api";
@@ -15,6 +15,7 @@ import { ChevronLeft } from "lucide-react";
 const BookDetailPage = () => {
   const params = useParams();
   const navigate = useNavigate();
+  const location = useLocation();
   const reviewFormRef = useRef(null);
   const library = useSelector((currentState) => currentState.profile.savedBooks);
   const user = useSelector((currentState) => currentState.profile.user);
@@ -54,7 +55,6 @@ const BookDetailPage = () => {
     instance
       .get("/books/search/" + params.googleId)
       .then((response) => {
-        console.log(response.data);
         setBook(response.data);
       })
       .catch((err) => {
@@ -170,18 +170,19 @@ const BookDetailPage = () => {
   return (
     <>
       <Container fluid className="d-flex flex-column container-lg py-4 px-3 px-lg-4 gap-4 gap-lg-3 position-relative">
-        <div className="position-absolute top-0 mt-2 pt-1 mt-lg-3 pt-lg-0">
+        <div className="position-absolute top-0 mt-2 pt-1 mt-lg-3">
           <span
             className="d-flex align-items-center gap-1 text-muted view-more-link text-muted"
             style={{ cursor: "pointer", width: "fit-content" }}
-            onClick={() => navigate(-1)}
+            /* onClick={() => navigate(-1)} */
+            onClick={() => navigate("/library", { state: location.state })}
           >
             <ChevronLeft size={20} />
             <span>Back</span>
           </span>
         </div>
         {mappedBook && (
-          <Row className="justify-content-center gap-4 gap-lg-0 pt-4 pt-lg-4 mt-lg-1">
+          <Row className="justify-content-center gap-4 gap-lg-0 pt-4 pt-lg-4 mt-lg-1 mt-xxl-2">
             <Col xs={12} sm={12} md={12} lg={3}>
               <Row className="g-2 g-sm-4 g-lg-3 ">
                 <Col xs={6} sm={5} md={4} lg={12} xl={11}>
@@ -286,7 +287,7 @@ const BookDetailPage = () => {
                   {!reviewsLoading && !reviewsError && totalReviews === 0 && (
                     <div className="text-center text-muted py-4">
                       <Book size={40} className="mb-2 opacity-50" />
-                      <p className="mb-1">No reviews yet.</p>
+                      <p className="mb-1">No reviews yet</p>
                       <span className="small">Be the first to review this book!</span>
                     </div>
                   )}
