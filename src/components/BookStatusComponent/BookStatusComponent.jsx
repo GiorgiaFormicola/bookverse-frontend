@@ -18,13 +18,13 @@ const BookStatusComponent = ({ bookId }) => {
 
   return (
     <>
-      <div className="d-flex align-items-center px-2 px-sm-4 py-1 px-lg-3 py-lg-2 rounded-3 gap-1 bg-body w-100 flex-grow-1">
-        {savedBookStatus === "TO_READ" && <Book size={44} className="d-lg-none" />}
-        {savedBookStatus === "READING" && <BookHalf size={44} className="d-lg-none" />}
-        {savedBookStatus === "READ" && <BookFill size={44} className="d-lg-none" />}
-        {savedBookStatus === "TO_READ" && <Book size={34} className="d-none d-lg-block" />}
+      <div className="d-flex align-items-center px-2 px-sm-4 py-1 px-lg-3 py-lg-2 rounded-3 gap-2 bg-transparent w-100 flex-grow-1">
+        {savedBookStatus === "TO_READ" && <Book size={38} className="d-lg-none" />}
+        {savedBookStatus === "READING" && <BookHalf size={38} className="d-lg-none" />}
+        {savedBookStatus === "READ" && <BookFill size={38} className="d-lg-none" />}
+        {/*  {savedBookStatus === "TO_READ" && <Book size={34} className="d-none d-lg-block" />}
         {savedBookStatus === "READING" && <BookHalf size={34} className="d-none d-lg-block" />}
-        {savedBookStatus === "READ" && <BookFill size={34} className="d-none d-lg-block" />}
+        {savedBookStatus === "READ" && <BookFill size={34} className="d-none d-lg-block" />} */}
         <Form.Select value={savedBookStatus} onChange={(e) => updateStatus(e.target.value)}>
           <option value="TO_READ">{statusLabels["TO_READ"]}</option>
           <option value="READING">{statusLabels["READING"]}</option>

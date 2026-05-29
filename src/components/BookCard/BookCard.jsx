@@ -11,7 +11,7 @@ const BookCard = ({ book, status, isPublic }) => {
     <>
       {/* HOMEPAGE BOOK CARD */}
       {location.pathname === "/" && (
-        <Col xs={6} sm={5} md={3} lg={2}>
+        <Col xs={5} sm={4} md={3} lg={2}>
           <Card className="bg-transparent border-0 book-card ">
             <Card.Img
               className="book-cover rounded-3"

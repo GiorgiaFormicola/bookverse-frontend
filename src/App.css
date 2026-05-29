@@ -102,3 +102,7 @@
 .btn-light:hover {
   filter: brightness(1.2);
 }
+
+.view-more-link:hover {
+  color: white !important;
+}

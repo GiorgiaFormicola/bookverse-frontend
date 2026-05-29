@@ -2,7 +2,8 @@ import { useEffect, useState } from "react";
 import { instance } from "../../config/api";
 import { Row, Col, Alert, Card } from "react-bootstrap";
 import { Link } from "react-router-dom";
-import { ArrowClockwise, ChevronRight } from "react-bootstrap-icons";
+import { ArrowClockwise } from "react-bootstrap-icons";
+import { ChevronRight } from "lucide-react";
 import BookCard from "../BookCard/BookCard";
 
 const HomePageSection = ({ filter, title, loading, setLoading }) => {
@@ -32,10 +33,10 @@ const HomePageSection = ({ filter, title, loading, setLoading }) => {
         <div className="d-flex align-items-center justify-content-between">
           <h2>{title}</h2>
           {!loading && !error && (
-            <Link to={`/library?status=${filter}`} className="text-muted text-decoration-none d-flex align-items-center gap-1">
+            <Link to={`/library?status=${filter}`} className="view-more-link text-muted text-decoration-none d-flex align-items-center gap-1">
               View more
               <span>
-                <ChevronRight size={18}></ChevronRight>
+                <ChevronRight size={20} strokeWidth={2} />
               </span>
             </Link>
           )}
@@ -43,7 +44,7 @@ const HomePageSection = ({ filter, title, loading, setLoading }) => {
       </Col>
 
       <Col className="overflow-auto hide-scrollbar">
-        <Row className="flex-nowrap pe-5 pe-lg-0 g-3 pt-1">
+        <Row className="flex-nowrap pe-sm-5 pe-lg-0 g-3 pt-1">
           {error ? (
             <Col xs={8} lg={12} className="mx-auto">
               <Alert

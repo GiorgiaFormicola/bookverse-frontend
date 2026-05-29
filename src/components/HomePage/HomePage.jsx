@@ -12,8 +12,8 @@ const HomePage = () => {
 
   return (
     <>
-      <Container fluid className="py-4 py-xxl-5 p-3 px-lg-4 px-xl-5 container-lg d-flex flex-column gap-3 gap-sm-2 gap-lg-3">
-        <div className="mb-3 mb-sm-4 mb-lg-3">
+      <Container fluid className="d-flex flex-column container-lg py-4 px-3 px-lg-4 gap-4 gap-lg-3">
+        <div className="mb-2 mt-lg-2">
           <Row className="mb-3 mb-lg-4">
             <Col>
               <h1 className="mb-0">Your Dashboard</h1>

@@ -26,7 +26,7 @@ const AppNavbar = () => {
   return (
     <>
       <Navbar bg="dark" variant="dark" sticky="top" className="shadow-sm">
-        <Container fluid className="px-3 px-lg-4">
+        <Container fluid className="px-3 container-lg px-lg-4">
           <Navbar.Brand as={Link} to="/" className="d-flex align-items-center gap-3 gap-lg-2 me-lg-4 ms-lg-2">
             <Book size={30} className="d-none d-lg-block" />
             <Book size={40} className="d-lg-none" />

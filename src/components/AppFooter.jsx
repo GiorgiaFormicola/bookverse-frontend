@@ -1,33 +1,3 @@
-/* import { Container } from "react-bootstrap";
-import { Book } from "react-bootstrap-icons";
-
-const AppFooter = () => {
-  return (
-    <>
-      <footer className="bg-dark text-white py-4 mt-auto sticky-bottom d-none d-lg-block">
-        <Container>
-          <div className="row">
-            <div className="col-md-6">
-              <div className="d-flex align-items-center gap-2 mb-2">
-                <Book size={24} />
-                <span className="display-font h5 mb-0">BookVerse</span>
-              </div>
-              <p className="text-muted small mb-0">Your personal reading companion</p>
-            </div>
-            <div className="col-md-6 text-md-end">
-              <p className="text-muted small mb-0">© 2026 BookVerse. All rights reserved.</p>
-            </div>
-          </div>
-        </Container>
-      </footer>
-    </>
-  );
-};
-
-export default AppFooter; */
-
-/* import { Book, Github, Twitter, Instagram, Heart } from "lucide-react"; */
-
 import { Navbar, Nav, Container, Row, Col } from "react-bootstrap";
 import { Link } from "react-router-dom";
 import { Github, TwitterX, Instagram, Heart, Book } from "react-bootstrap-icons";
@@ -67,11 +37,13 @@ const AppFooter = () => {
         <Container className="py-4">
           <Row className="row align-items-center gy-3">
             <Col lg={6}>
-              <div className="d-flex align-items-center gap-2 mb-1">
-                <Book size={22} />
-                <span className="display-font h5 mb-0">BookVerse</span>
+              <div className="ms-2">
+                <div className="d-flex align-items-center gap-2 mb-1">
+                  <Book size={22} />
+                  <span className="display-font h5 mb-0">BookVerse</span>
+                </div>
+                <p className="text-muted small mb-0">Where every story finds its shelf.</p>
               </div>
-              <p className="text-muted small mb-0">Where every story finds its shelf.</p>
             </Col>
 
             <Col lg={6} className="d-flex flex-column align-items-lg-end gap-2">
