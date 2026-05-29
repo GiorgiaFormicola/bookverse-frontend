@@ -65,7 +65,7 @@ const BookCard = ({ book, status, isPublic }) => {
                 {status === "READ" ? "Read" : status === "READING" ? "Reading" : status === "TO_READ" ? "To read" : "—"}
               </Badge>
 
-              <Badge className="rounded-pill d-inline-flex align-items-center justify-content-center px-2" bg={isPublic ? "primary" : "secondary"}>
+              <Badge className="rounded-pill d-inline-flex align-items-center justify-content-center px-2" bg="transparent">
                 {isPublic ? <Globe size={20} /> : <LockFill size={20} />}
               </Badge>
             </div>

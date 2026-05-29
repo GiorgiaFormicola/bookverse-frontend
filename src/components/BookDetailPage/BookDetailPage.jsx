@@ -1,4 +1,4 @@
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { useSelector } from "react-redux";
 import { useState, useEffect, useRef } from "react";
 import { instance } from "../../config/api";
@@ -10,9 +10,11 @@ import BookPrivacyComponent from "../BookPrivacyComponent/BookPrivacyComponent";
 import BookStat from "../BookStat";
 import Review from "../Review/Review";
 import { BookFill, BookHalf, People, Star, ThreeDots, StarFill, Book } from "react-bootstrap-icons";
+import { ChevronLeft } from "lucide-react";
 
 const BookDetailPage = () => {
   const params = useParams();
+  const navigate = useNavigate();
   const reviewFormRef = useRef(null);
   const library = useSelector((currentState) => currentState.profile.savedBooks);
   const user = useSelector((currentState) => currentState.profile.user);
@@ -165,251 +167,27 @@ const BookDetailPage = () => {
     );
   }
 
-  /* return (
-    <>
-      <Container fluid className="py-4 p-3 px-lg-4 px-xl-5 container-lg d-flex flex-column gap-3 gap-sm-2 gap-lg-3 ">
-        {mappedBook && (
-          <Row className="justify-content-center gap-4 gap-lg-0">
-            <Col xs={12} sm={11} md={10} lg={3}>
-              <Row className="g-2 g-sm-3">
-                <Col xs={6} sm={5} lg={12} xl={11}>
-                  <img src={mappedBook.coverURL} className="book-cover rounded-3"></img>
-                </Col>
-                <Col xs={6} sm={7} lg={12} xl={11}>
-                  <div className="d-flex flex-column justify-content-between h-100 gap-2">
-                    <BookSaveComponent book={book} />
-                    {isInLibrary && (
-                      <>
-                        <BookStatusComponent bookId={book.googleId} />
-                        <BookPrivacyComponent bookId={book.googleId} />
-                      </>
-                    )}
-                    {!isInLibrary && (
-                      <>
-                        <div className="d-flex align-items-center rounded-3 gap-2 flex-grow-1">
-                          <BookStat statValue="1.9K" statName="saved">
-                            <People size={25} className="text-primary" />
-                          </BookStat>
-                          <BookStat statValue="1.3K" statName="read">
-                            <BookFill size={25} className="text-success" />
-                          </BookStat>
-                        </div>
-                        <div className="d-flex align-items-center rounded-3 gap-2  flex-grow-1">
-                          <BookStat statValue="1K" statName="reading">
-                            <BookHalf size={25} className="text-info" />
-                          </BookStat>
-                          <BookStat statValue="1.7K" statName="reviews">
-                            <Star size={25} className="text-warning" />
-                          </BookStat>
-                        </div>
-                      </>
-                    )}
-                    <BookReviewComponent isReviewed={!!currentUserReview} handleReviewClick={handleReviewClick} />
-                  </div>
-                </Col>
-              </Row>
-            </Col>
-            <Col xs={12} sm={11} md={10} lg={9}>
-              <Row>
-                <Col xs={12} className="order-lg-0">
-                  <div>
-                    <h1 className="display-font mb-2" >{mappedBook.title}</h1>
-                    <h4 className="text-muted mb-3">by {mappedBook.authors}</h4>
-                  </div>
-                  <div className="d-flex flex-wrap gap-2 mb-3">
-                    {mappedBook.categories.map((category, i) => (
-                      <Badge key={i} bg="primary rounded-pill">
-                        {category}
-                      </Badge>
-                    ))}
-                  </div>
-                </Col>
-                <Col xs={12} className="order-lg-2">
-                  {mappedBook.description && (
-                    <div className="mb-2">
-                      <Card className="border-0 shadow-sm mb-2 mb-lg-4">
-                        <Card.Body>
-                          <h5 className="mb-3">Description</h5>
-                          <p className="text-muted mb-1">{mappedBook.description}</p>
-                        </Card.Body>
-                      </Card>
-                    </div>
-                  )}
-                </Col>
-
-                <Col xs={12} className="order-lg-1 ">
-                  <div className="text-muted small d-flex flex-wrap gap-3 justify-content-between mb-lg-2">
-                    {mappedBook.publisher && (
-                      <p className="mb-1">
-                        Publisher: <br className="d-lg-none" />
-                        <span className="text-light">{mappedBook.publisher}</span>
-                      </p>
-                    )}
-                    {mappedBook.publishedDate && (
-                      <p className="mb-1">
-                        Published: <br className="d-lg-none" />
-                        <span className="text-light">{mappedBook.publishedDate}</span>
-                      </p>
-                    )}
-                    {mappedBook.pages && (
-                      <p className="mb-1">
-                        Pages: <br className="d-lg-none" />
-                        <span className="text-light">{mappedBook.pages}</span>
-                      </p>
-                    )}
-                    {(mappedBook.isbn10 || mappedBook.isbn13) && (
-                      <p className="mb-1">
-                        ISBN: <br className="d-lg-none" />
-                        <span className="text-light">{mappedBook.isbn10 ? mappedBook.isbn10 : mappedBook.isbn13}</span>
-                      </p>
-                    )}
-                  </div>
-                </Col>
-                <Col xs={12} className=" order-last">
-                  <Card className="border-0 shadow-sm mt-3 mt-lg-0">
-                    <Card.Body>
-                      <h5 className="mb-3">Rewiews ({totalReviews})</h5>
-                      {reviewsError ? (
-                        <Col xs={12}>
-                          <Alert variant="danger">
-                            Something went wrong loading reviews.{" "}
-                            <Alert.Link
-                              onClick={() => {
-                                setReviewsError(false);
-                                setReviewsLoading(true);
-                                getBookReviews(0, false);
-                              }}
-                            >
-                              Try again
-                            </Alert.Link>
-                          </Alert>
-                        </Col>
-                      ) : (
-                        <Col xs={12}>
-                          <ListGroup variant="flush" className="border-top">
-                            {reviews
-                              .filter((review) => review.user?.id !== user?.id)
-                              .map((review) => (
-                                <Review key={review.id} review={review} isUserReview={false} />
-                              ))}
-                            {hasNext && (
-                              <Col xs={12} className="text-center">
-                                <ThreeDots size={50} style={{ cursor: "pointer" }} onClick={loadNextPage} />
-                              </Col>
-                            )}
-                            {currentUserReview && !editingReview && (
-                              <Review
-                                key={currentUserReview.id}
-                                review={currentUserReview}
-                                isUserReview={true}
-                                handleReviewClick={handleReviewClick}
-                                setUserReview={setUserReview}
-                              />
-                            )}
-                          </ListGroup>
-                        </Col>
-                      )}
-
-                      {showForm && (
-                        <Col ref={reviewFormRef}>
-                          <div className="pb-3 pt-4 px-2 shadow-sm border-top">
-                            <h5 className="fw-semibold mb-3">{currentUserReview ? "Edit" : "Leave"} your review</h5>
-                            <div className="d-flex gap-2 mb-3">
-                              {[1, 2, 3, 4, 5].map((star) => (
-                                <StarFill
-                                  key={star}
-                                  size={28}
-                                  role="button"
-                                  className={star <= (hoveredRating || userReview.rating) ? "text-primary" : "text-secondary opacity-25"}
-                                  style={{ cursor: "pointer" }}
-                                  onMouseEnter={() => setHoveredRating(star)}
-                                  onMouseLeave={() => setHoveredRating(0)}
-                                  onClick={() => setUserReview({ ...userReview, rating: star })}
-                                />
-                              ))}
-                            </div>
-                            <Form
-                              onSubmit={(e) => {
-                                e.preventDefault();
-                                if (userReview.rating === 0 || userReview.comment.trim() === "") return;
-                                if (currentUserReview) {
-                                  updateReview(currentUserReview.id, userReview);
-                                } else {
-                                  addReview(params.googleId, userReview);
-                                }
-                                setShowForm(false);
-                                setEditingReview(false);
-                                setUserReview({ rating: 0, comment: "" });
-                              }}
-                            >
-                              <Form.Group className="mb-3">
-                                <Form.Control
-                                  as="textarea"
-                                  rows={5}
-                                  placeholder="Share with other readers your opinion..."
-                                  className="rounded-3 border-secondary-subtle shadow-none"
-                                  value={userReview.comment}
-                                  onChange={(e) => setUserReview({ ...userReview, comment: e.target.value })}
-                                />
-                              </Form.Group>
-                              <div className="d-flex justify-content-between align-items-center">
-                                <small className="text-muted">{userReview.rating > 0 ? `${userReview.rating}/5 selected` : "Select a rating"}</small>
-                                <div className="d-flex gap-2">
-                                  <Button
-                                    type="button"
-                                    variant="secondary"
-                                    className="px-4 fw-semibold"
-                                    onClick={() => {
-                                      setShowForm(false);
-                                      setEditingReview(false);
-                                      setUserReview({ rating: 0, comment: "" });
-                                    }}
-                                  >
-                                    Close
-                                  </Button>
-                                  <Button
-                                    type="submit"
-                                    disabled={userReview.rating === 0 || userReview.comment.trim() === "" || (currentUserReview && !isFormDirty)}
-                                    className="px-4 fw-semibold"
-                                  >
-                                    {currentUserReview ? "Edit" : "Publish"}
-                                  </Button>
-                                  {currentUserReview && (
-                                    <Button
-                                      type="button"
-                                      className="px-4 fw-semibold bg-danger border-danger"
-                                      onClick={() => deleteReview(currentUserReview.id)}
-                                    >
-                                      Delete
-                                    </Button>
-                                  )}
-                                </div>
-                              </div>
-                            </Form>
-                          </div>
-                        </Col>
-                      )}
-                    </Card.Body>
-                  </Card>
-                </Col>
-              </Row>
-            </Col>
-          </Row>
-        )}
-      </Container>
-    </>
-  ); */
   return (
     <>
-      <Container fluid className="d-flex flex-column container-lg py-4 px-3 px-lg-4 gap-4 gap-lg-3">
+      <Container fluid className="d-flex flex-column container-lg py-4 px-3 px-lg-4 gap-4 gap-lg-3 position-relative">
+        <div className="position-absolute top-0 mt-2 pt-1 mt-lg-3 pt-lg-0">
+          <span
+            className="d-flex align-items-center gap-1 text-muted view-more-link text-muted"
+            style={{ cursor: "pointer", width: "fit-content" }}
+            onClick={() => navigate(-1)}
+          >
+            <ChevronLeft size={20} />
+            <span>Back</span>
+          </span>
+        </div>
         {mappedBook && (
-          <Row className="justify-content-center gap-4 gap-lg-0 pt-2">
+          <Row className="justify-content-center gap-4 gap-lg-0 pt-4 pt-lg-4 mt-lg-1">
             <Col xs={12} sm={12} md={12} lg={3}>
-              <Row className="g-2 g-sm-4">
+              <Row className="g-2 g-sm-4 g-lg-3 ">
                 <Col xs={6} sm={5} md={4} lg={12} xl={11}>
                   <img src={mappedBook.coverURL} className="book-cover rounded-3"></img>
                 </Col>
-                <Col xs={6} sm={6} md={8} lg={12} xl={11} className="flex-grow-1 px-4 px-lg-2">
+                <Col xs={6} sm={6} md={8} lg={12} xl={11} className="flex-grow-1 px-4 px-lg-2 me-xl-4">
                   <div className="d-flex flex-column justify-content-between h-100 gap-3">
                     <BookSaveComponent book={book} />
                     {isInLibrary && (
@@ -460,7 +238,7 @@ const BookDetailPage = () => {
                     ))}
                   </div>
                 </Col>
-                <Col xs={12} className="order-lg-2">
+                <Col xs={12} className="order-lg-2 pt-xxl-4 pb-xxl-3">
                   {mappedBook.description && (
                     <div className="mb-2">
                       {/* <Card className="border-0 shadow-sm mb-2 mb-lg-4">
@@ -474,34 +252,34 @@ const BookDetailPage = () => {
                 </Col>
 
                 <Col xs={12} className="order-lg-1 ">
-                  <div className="text-muted small d-flex flex-wrap gap-3 justify-content-between mb-lg-2">
+                  <div className="text-muted small d-flex flex-wrap gap-3 justify-content-between">
                     {mappedBook.publisher && (
-                      <p className="mb-1">
+                      <p className="mb-1 mb-lg-0">
                         Publisher: <br className="d-lg-none" />
                         <span className="text-light">{mappedBook.publisher}</span>
                       </p>
                     )}
                     {mappedBook.publishedDate && (
-                      <p className="mb-1">
+                      <p className="mb-1 mb-lg-0">
                         Published: <br className="d-lg-none" />
                         <span className="text-light">{mappedBook.publishedDate}</span>
                       </p>
                     )}
                     {mappedBook.pages && (
-                      <p className="mb-1">
+                      <p className="mb-1 mb-lg-0">
                         Pages: <br className="d-lg-none" />
                         <span className="text-light">{mappedBook.pages}</span>
                       </p>
                     )}
                     {(mappedBook.isbn10 || mappedBook.isbn13) && (
-                      <p className="mb-1">
+                      <p className="mb-1 mb-lg-0">
                         ISBN: <br className="d-lg-none" />
                         <span className="text-light">{mappedBook.isbn10 ? mappedBook.isbn10 : mappedBook.isbn13}</span>
                       </p>
                     )}
                   </div>
                 </Col>
-                <Col xs={12} className=" order-last pt-2">
+                <Col xs={12} className=" order-last pt-2 pt-lg-0">
                   {/* <Card className="border-0 shadow-sm mt-3 mt-lg-0">
                     <Card.Body> */}
                   <h5 className="mb-3">Rewiews ({totalReviews})</h5>
@@ -601,7 +379,7 @@ const BookDetailPage = () => {
                               <Button
                                 type="button"
                                 variant="secondary"
-                                className="px-4 fw-semibold rounded-pill"
+                                className="px-4 fw-semibold rounded-3"
                                 onClick={() => {
                                   setShowForm(false);
                                   setEditingReview(false);
@@ -613,14 +391,14 @@ const BookDetailPage = () => {
                               <Button
                                 type="submit"
                                 disabled={userReview.rating === 0 || userReview.comment.trim() === "" || (currentUserReview && !isFormDirty)}
-                                className="px-4 fw-semibold rounded-pill"
+                                className="px-4 fw-semibold rounded-3"
                               >
                                 {currentUserReview ? "Edit" : "Publish"}
                               </Button>
                               {currentUserReview && (
                                 <Button
                                   type="button"
-                                  className="px-4 fw-semibold bg-danger border-danger rounded-pill"
+                                  className="px-4 fw-semibold bg-danger border-danger rounded-3"
                                   onClick={() => deleteReview(currentUserReview.id)}
                                 >
                                   Delete

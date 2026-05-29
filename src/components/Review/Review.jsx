@@ -42,7 +42,7 @@ const Review = ({ review, isUserReview, handleReviewClick }) => {
         <p className="mb-0 fst-italic">"{review.comment}"</p>
 
         {isUserReview && (
-          <Button className="position-absolute bottom-0 end-0 me-1 me-lg-2 mb-3 px-4 px-lg-4 rounded-pill" size="md" onClick={handleReviewClick}>
+          <Button className="position-absolute bottom-0 end-0 me-1 me-lg-2 mb-2 px-4 px-lg-4 rounded-3" size="sm" onClick={handleReviewClick}>
             Edit
           </Button>
         )}

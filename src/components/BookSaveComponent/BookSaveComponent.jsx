@@ -34,8 +34,7 @@ const BookSaveComponent = ({ book }) => {
           className="d-flex align-items-center px-2 px-sm-4 py-lg-2 px-lg-3 rounded-3 gap-1 w-100 flex-grow-1"
           onClick={() => handleClick()}
         >
-          {isSaved ? <SuitHeartFill size={28} className="d-lg-none" /> : <SuitHeart size={28} className="d-lg-none" />}
-          {/* {isSaved ? <SuitHeartFill size={28} className="d-none d-lg-block" /> : <SuitHeart size={28} className="d-none d-lg-block" />} */}
+          {isSaved ? <SuitHeartFill size={28} className="" /> : <SuitHeart size={28} className="" />}
           <p className="mb-0 flex-grow-1" style={{ letterSpacing: "-0.025em" }}>
             {isSaved ? "Remove from library" : "Add to library"}
           </p>
