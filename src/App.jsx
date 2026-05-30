@@ -16,6 +16,7 @@ import ProfilePage from "./components/ProfilePage/ProfilePage";
 import EditProfilePage from "./components/EditProfilePage/EditProfilePage";
 import AdminPage from "./components/AdminPage/AdminPage";
 import AppLayout from "./components/AppLayout";
+import DisabledPage from "./components/DisabledPage";
 
 function App() {
   useEffect(() => {
@@ -100,6 +101,7 @@ function App() {
               </ProtectedRoute>
             }
           />
+          <Route path="/disabled" element={<DisabledPage />} />
           <Route path="*" element={<Navigate to="/" replace />} />
         </Routes>
       </BrowserRouter>
