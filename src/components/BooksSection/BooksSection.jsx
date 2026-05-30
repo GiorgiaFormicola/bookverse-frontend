@@ -190,7 +190,7 @@ const BooksSection = () => {
                       </div>
                     </td>
 
-                    <td>
+                    <td className="align-middle text-center">
                       <div className="d-flex flex-column gap-3">
                         <Button
                           size="sm"

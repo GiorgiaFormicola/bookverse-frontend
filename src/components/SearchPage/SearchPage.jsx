@@ -164,7 +164,7 @@ import { useState } from "react";
 import { instance } from "../../config/api";
 import { Container, Row, Col, ListGroup, Form, InputGroup, Button, ToggleButtonGroup, ToggleButton, Spinner, Alert } from "react-bootstrap";
 import BookCard from "../BookCard/BookCard";
-import { Search, ThreeDots, ArrowClockwise, BookHalf } from "react-bootstrap-icons";
+import { Search, ThreeDots, ArrowClockwise, BookHalf, Book } from "react-bootstrap-icons";
 
 const SearchPage = () => {
   const location = useLocation();
@@ -303,20 +303,13 @@ const SearchPage = () => {
               <p className="mb-0 small">Search for a book by title, author, category or publisher</p>
             </div>
           ) : books.length === 0 && hasSearched ? (
-            <div className="d-flex align-items-center justify-content-center gap-3 py-5">
-              <Alert
-                variant="secondary"
-                className="d-flex flex-column align-items-center justify-content-between mb-0 rounded-3 gap-3 py-4 bg-transparent border-0"
-              >
-                <span className="text-center">
-                  Looks like there are no books matching your research. <br />
-                  Try changing your search filters!
-                </span>
-                <div className="d-flex flex-column align-items-center gap-2">
-                  <Search size={30} />
-                </div>
-              </Alert>
-            </div>
+            <>
+              <div className="d-flex flex-column align-items-center justify-content-center gap-3 py-5 text-muted">
+                <Search size={50} />
+                <h5 className="mb-0">No books matching your research</h5>
+                <p className="mb-0 small">Try changing your search filters</p>
+              </div>
+            </>
           ) : (
             <>
               <ListGroup variant="flush" className="rounded-3">

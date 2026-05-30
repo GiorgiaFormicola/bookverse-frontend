@@ -132,12 +132,12 @@ const UsersSection = () => {
                   <td>
                     <Badge bg={user.active === true ? "success" : "warning"}>{user.active ? "Active" : "Suspended"}</Badge>
                   </td>
-                  <td>
-                    <div className="d-flex gap-2">
+                  <td className="align-middle text-center">
+                    <div className="d-flex flex-column gap-3">
                       <Button
                         disabled={user.id === currentUserId}
                         size="sm"
-                        variant="outline-primary"
+                        variant={user.id === currentUserId ? "outline-secondary" : "outline-primary"}
                         onClick={() => {
                           setSelectedUser(user);
                           setShowModal(true);
@@ -146,7 +146,12 @@ const UsersSection = () => {
                         Edit
                       </Button>
 
-                      <Button disabled={user.id === currentUserId} size="sm" variant="outline-danger" onClick={() => handleDeleteClick(user)}>
+                      <Button
+                        disabled={user.id === currentUserId}
+                        size="sm"
+                        variant={user.id === currentUserId ? "outline-secondary" : "outline-danger"}
+                        onClick={() => handleDeleteClick(user)}
+                      >
                         Delete
                       </Button>
                     </div>

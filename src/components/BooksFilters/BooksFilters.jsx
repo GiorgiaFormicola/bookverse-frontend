@@ -1,7 +1,7 @@
 import { Card, Row, Col, Form, Button } from "react-bootstrap";
 const BooksFilters = ({ filters, handleFilterChange, handleSearch }) => {
   return (
-    <Card className="mb-3 shadow-sm border-0 rounded-4 p-2">
+    <Card className="mb-3 shadow-sm border-0 rounded-bottom-4 rounded-top-0 p-2">
       <Card.Body>
         <Row className="g-3 g-md-4">
           <Col md={4}>

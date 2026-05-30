@@ -6,7 +6,7 @@ import { ArrowClockwise } from "react-bootstrap-icons";
 import { ChevronRight } from "lucide-react";
 import BookCard from "../BookCard/BookCard";
 
-const HomePageSection = ({ filter, title, loading, setLoading }) => {
+const HomePageSection = ({ filter, title, loading, setLoading, onEmpty }) => {
   const [books, setBooks] = useState([]);
   const [error, setError] = useState(false);
 
@@ -15,6 +15,7 @@ const HomePageSection = ({ filter, title, loading, setLoading }) => {
       .get("/me/books?size=6&order=title&status=" + filter)
       .then((response) => {
         setBooks(response.data.content);
+        if (response.data.content.length === 0) onEmpty?.();
       })
       .catch((err) => {
         console.log(err);
@@ -27,8 +28,10 @@ const HomePageSection = ({ filter, title, loading, setLoading }) => {
     getSectionBooks();
   }, []);
 
+  if (!loading && !error && books.length === 0) return null;
+
   return (
-    <Row className="g-2 mb-lg-4">
+    <Row className="g-2 mb-lg-4 home-section-fade">
       <Col xs={12}>
         <div className="d-flex align-items-center justify-content-between">
           <h2>{title}</h2>

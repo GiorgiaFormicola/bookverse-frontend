@@ -2,13 +2,19 @@ import { Container, Row, Col } from "react-bootstrap";
 import HomePageSection from "../HomePageSection/HomePageSection";
 import Dashboard from "../Dashboard";
 import { useState } from "react";
+import { BookHalf } from "react-bootstrap-icons";
+import { useNavigate, Link } from "react-router-dom";
 
 const HomePage = () => {
   const [loadingSection1, setLoadingSection1] = useState(true);
   const [loadingSection2, setLoadingSection2] = useState(true);
   const [loadingSection3, setLoadingSection3] = useState(true);
+  const [emptySection1, setEmptySection1] = useState(false);
+  const [emptySection2, setEmptySection2] = useState(false);
+  const [emptySection3, setEmptySection3] = useState(false);
 
   const isLoading = loadingSection1 || loadingSection2 || loadingSection3;
+  const allEmpty = !isLoading && emptySection1 && emptySection2 && emptySection3;
 
   return (
     <>
@@ -31,9 +37,42 @@ const HomePage = () => {
           </Row>
           {/* DASHBOARDS */}
         </div>
-        <HomePageSection filter="TO_READ" title="Start reading" loading={isLoading} setLoading={setLoadingSection1}></HomePageSection>
-        <HomePageSection filter="READING" title="Continue reading" loading={isLoading} setLoading={setLoadingSection2}></HomePageSection>
-        <HomePageSection filter="READ" title="Leave a review" loading={isLoading} setLoading={setLoadingSection3}></HomePageSection>
+        <HomePageSection
+          filter="TO_READ"
+          title="Start reading"
+          loading={isLoading}
+          setLoading={setLoadingSection1}
+          onEmpty={() => setEmptySection1(true)}
+        ></HomePageSection>
+        <HomePageSection
+          filter="READING"
+          title="Continue reading"
+          loading={isLoading}
+          setLoading={setLoadingSection2}
+          onEmpty={() => setEmptySection2(true)}
+        ></HomePageSection>
+        <HomePageSection
+          filter="READ"
+          title="Leave a review"
+          loading={isLoading}
+          setLoading={setLoadingSection3}
+          onEmpty={() => setEmptySection3(true)}
+        ></HomePageSection>
+        {allEmpty && (
+          <>
+            <div className="d-flex flex-column align-items-center justify-content-center text-center text-muted py-5 gap-3">
+              <BookHalf size={60} className="opacity-50" />
+              <h4 className="mb-0">Start your adventure</h4>
+
+              <p className="mb-0">Search and discover books to add to your library</p>
+              <div className="d-flex flex-column align-items-center gap-2">
+                <Link to="/search" className="fw-bold text-light opacity-75 text-decoration-none">
+                  Go to Search page
+                </Link>
+              </div>
+            </div>
+          </>
+        )}
       </Container>
     </>
   );

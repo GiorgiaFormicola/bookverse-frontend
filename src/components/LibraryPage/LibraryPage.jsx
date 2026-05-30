@@ -251,8 +251,8 @@ import { useState, useEffect } from "react";
 import { instance } from "../../config/api";
 import { Container, Row, Col, ListGroup, Form, InputGroup, Button, ToggleButtonGroup, ToggleButton, Spinner, Alert } from "react-bootstrap";
 import BookCard from "../BookCard/BookCard";
-import { Search, ThreeDots, ArrowClockwise } from "react-bootstrap-icons";
-import { useLocation, useNavigate, useSearchParams } from "react-router-dom";
+import { Search, ThreeDots, ArrowClockwise, Book } from "react-bootstrap-icons";
+import { useLocation, useNavigate, useSearchParams, Link } from "react-router-dom";
 
 const LibraryPage = () => {
   const navigate = useNavigate();
@@ -460,27 +460,41 @@ const LibraryPage = () => {
               </Alert>
             </div>
           ) : books.length === 0 ? (
-            <div className="d-flex align-items-center justify-content-center gap-3 py-5">
-              <Alert
-                variant="secondary"
-                className="d-flex flex-column align-items-center justify-content-between mb-0 rounded-3 gap-3 py-4 bg-transparent border-0"
-              >
-                <span className="text-center">
-                  Looks like there are no books matching in your library. <br />
-                  Try changing your search filters or explore the Search page to discover something new!
-                </span>
-                <div className="d-flex flex-column align-items-center gap-2">
-                  <span className="fw-bold">Go to Search page</span>
+            <>
+              {query || readingStatus ? (
+                <div className="d-flex flex-column align-items-center justify-content-center gap-3 py-5 text-muted">
+                  <h5 className="mb-0">No books matching your research</h5>
+                  <p className="mb-0 small">Try changing your search filters or explore the Search Page to discover something new</p>
+                  <Link to="/search" className="fw-bold text-light opacity-75 text-decoration-none">
+                    Go to Search page
+                  </Link>
                   <Search
-                    size={30}
+                    className="text-light opacity-75"
+                    size={40}
                     onClick={() => {
                       navigate("/search");
                     }}
                     style={{ cursor: "pointer" }}
                   />
                 </div>
-              </Alert>
-            </div>
+              ) : (
+                <div className="d-flex flex-column align-items-center justify-content-center gap-3 py-5 text-muted">
+                  <h5 className="mb-0">Looks like your library is empty!</h5>
+                  <p className="mb-0 small">Discover new books and start building your collection</p>
+                  <Link to="/search" className="fw-bold text-light opacity-75 text-decoration-none">
+                    Go to Search page
+                  </Link>
+                  <Search
+                    className="text-light opacity-75"
+                    size={40}
+                    onClick={() => {
+                      navigate("/search");
+                    }}
+                    style={{ cursor: "pointer" }}
+                  />
+                </div>
+              )}
+            </>
           ) : (
             <>
               <ListGroup variant="flush" className="rounded-3">

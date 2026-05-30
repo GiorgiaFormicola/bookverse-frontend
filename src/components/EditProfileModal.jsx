@@ -1,10 +1,12 @@
 import { Modal, Form, Button, Spinner, OverlayTrigger, Tooltip } from "react-bootstrap";
 import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { PlusCircleFill, InfoCircleFill, ArrowClockwise } from "react-bootstrap-icons";
-import { updateProfileInfo, updateProfilePicture } from "../redux/actions";
+import { PlusCircleFill, InfoCircleFill, ArrowClockwise, Trash3Fill } from "react-bootstrap-icons";
+import { updateProfileInfo, updateProfilePicture, deleteProfile } from "../redux/actions";
+import { useNavigate } from "react-router-dom";
 
 const EditProfileModal = ({ show, handleClose }) => {
+  const navigate = useNavigate();
   const dispatch = useDispatch();
   const user = useSelector((state) => state.profile.user);
 
@@ -13,6 +15,9 @@ const EditProfileModal = ({ show, handleClose }) => {
   const [error, setError] = useState(false);
   const [uploadLoading, setUploadLoading] = useState(false);
   const [uploadError, setUploadError] = useState(false);
+  const [showDeleteConfirm, setShowDeleteConfirm] = useState(false);
+  const [deleteLoading, setDeleteLoading] = useState(false);
+  const [deleteError, setDeleteError] = useState(false);
 
   const originalUser = { username: user?.username, displayName: user?.displayName, bio: user?.bio };
 
@@ -47,137 +52,178 @@ const EditProfileModal = ({ show, handleClose }) => {
     }
   };
 
+  const handleDeleteAccount = async () => {
+    setDeleteLoading(true);
+    setDeleteLoading(true);
+    dispatch(deleteProfile());
+  };
+
   return (
-    <Modal show={show} onHide={handleClose} centered size="lg">
-      <Modal.Header closeButton className="px-4">
-        <Modal.Title>Edit profile</Modal.Title>
-      </Modal.Header>
-      <Modal.Body className="px-4">
-        {/* Sezione immagine profilo */}
-        <div className="d-flex justify-content-center my-3">
-          <div className="position-relative d-inline-block">
-            {uploadLoading ? (
-              <div className="d-flex justify-content-center align-items-center" style={{ height: 200, width: 200 }}>
-                <Spinner animation="border" />
-              </div>
-            ) : uploadError ? (
-              <div className="d-flex flex-column align-items-center gap-3 py-3" style={{ width: 200 }}>
-                <p className="text-danger mb-0 text-center">Something went wrong uploading the picture.</p>
-                <ArrowClockwise size={30} style={{ cursor: "pointer" }} onClick={() => setUploadError(false)} />
-              </div>
-            ) : (
-              <>
-                <img src={user.profilePictureURL} alt={user.username} className="avatar" style={{ width: 200 }} />
-                <Form.Label
-                  htmlFor="modal-file-upload"
-                  className="position-absolute bottom-0 end-0 bg-dark rounded-circle d-flex align-items-center justify-content-center mb-0"
-                  style={{ cursor: "pointer", width: 30, height: 30 }}
+    <>
+      <Modal show={show} onHide={handleClose} centered size="lg">
+        <Modal.Header closeButton className="px-4">
+          <Modal.Title>Edit profile</Modal.Title>
+        </Modal.Header>
+        <Modal.Body className="px-4">
+          {/* Sezione immagine profilo */}
+          <div className="d-flex justify-content-center my-3">
+            <div className="position-relative d-inline-block">
+              {uploadLoading ? (
+                <div className="d-flex justify-content-center align-items-center" style={{ height: 200, width: 200 }}>
+                  <Spinner animation="border" />
+                </div>
+              ) : uploadError ? (
+                <div className="d-flex flex-column align-items-center gap-3 py-3" style={{ width: 200 }}>
+                  <p className="text-danger mb-0 text-center">Something went wrong uploading the picture.</p>
+                  <ArrowClockwise size={30} style={{ cursor: "pointer" }} onClick={() => setUploadError(false)} />
+                </div>
+              ) : (
+                <>
+                  <img src={user.profilePictureURL} alt={user.username} className="avatar" style={{ width: 200 }} />
+                  <Form.Label
+                    htmlFor="modal-file-upload"
+                    className="position-absolute bottom-0 end-0 bg-dark rounded-circle d-flex align-items-center justify-content-center mb-0"
+                    style={{ cursor: "pointer", width: 30, height: 30 }}
+                  >
+                    <PlusCircleFill size={30} />
+                    <Form.Control
+                      className="d-none"
+                      type="file"
+                      accept="image/*"
+                      id="modal-file-upload"
+                      onChange={async (e) => {
+                        const data = new FormData();
+                        data.append("profile_picture", e.target.files[0]);
+                        setUploadLoading(true);
+                        setUploadError(false);
+                        try {
+                          await dispatch(updateProfilePicture(data));
+                        } catch {
+                          setUploadError(true);
+                        } finally {
+                          setUploadLoading(false);
+                        }
+                      }}
+                    />
+                  </Form.Label>
+                </>
+              )}
+            </div>
+          </div>
+
+          {/* Form */}
+          <Form
+            noValidate
+            onSubmit={(e) => {
+              e.preventDefault();
+              editProfileInfo();
+            }}
+          >
+            <Form.Group className="mb-3" controlId="modalDisplayName">
+              <Form.Label className="fw-semibold d-flex align-items-center gap-2 fs-5">
+                Profile Name
+                <OverlayTrigger
+                  placement="right"
+                  overlay={
+                    <Tooltip>
+                      <strong>Profile name</strong> must be 2–50 characters long.
+                    </Tooltip>
+                  }
                 >
-                  <PlusCircleFill size={30} />
-                  <Form.Control
-                    className="d-none"
-                    type="file"
-                    accept="image/*"
-                    id="modal-file-upload"
-                    onChange={async (e) => {
-                      const data = new FormData();
-                      data.append("profile_picture", e.target.files[0]);
-                      setUploadLoading(true);
-                      setUploadError(false);
-                      try {
-                        await dispatch(updateProfilePicture(data));
-                      } catch {
-                        setUploadError(true);
-                      } finally {
-                        setUploadLoading(false);
-                      }
-                    }}
-                  />
-                </Form.Label>
-              </>
-            )}
-          </div>
-        </div>
+                  <span style={{ display: "inline-flex", flexShrink: 0, cursor: "pointer" }}>
+                    <InfoCircleFill />
+                  </span>
+                </OverlayTrigger>
+              </Form.Label>
+              <Form.Control
+                type="text"
+                placeholder="Choose your profile name"
+                value={form.displayName}
+                onFocus={() => setError(false)}
+                onChange={(e) => setForm((prev) => ({ ...prev, displayName: e.target.value }))}
+              />
+            </Form.Group>
 
-        {/* Form */}
-        <Form
-          noValidate
-          onSubmit={(e) => {
-            e.preventDefault();
-            editProfileInfo();
-          }}
-        >
-          <Form.Group className="mb-3" controlId="modalDisplayName">
-            <Form.Label className="fw-semibold d-flex align-items-center gap-2 fs-5">
-              Profile Name
-              <OverlayTrigger
-                placement="right"
-                overlay={
-                  <Tooltip>
-                    <strong>Profile name</strong> must be 2–50 characters long.
-                  </Tooltip>
-                }
-              >
-                <span style={{ display: "inline-flex", flexShrink: 0, cursor: "pointer" }}>
-                  <InfoCircleFill />
-                </span>
-              </OverlayTrigger>
-            </Form.Label>
-            <Form.Control
-              type="text"
-              placeholder="Choose your profile name"
-              value={form.displayName}
-              onFocus={() => setError(false)}
-              onChange={(e) => setForm((prev) => ({ ...prev, displayName: e.target.value }))}
-            />
-          </Form.Group>
+            <Form.Group className="mb-3" controlId="modalUsername">
+              <Form.Label className="fw-semibold d-flex align-items-center gap-2 fs-5">
+                Username
+                <OverlayTrigger
+                  placement="right"
+                  overlay={
+                    <Tooltip>
+                      <strong>Username</strong> must be 2–30 characters long.
+                    </Tooltip>
+                  }
+                >
+                  <span style={{ display: "inline-flex", flexShrink: 0, cursor: "pointer" }}>
+                    <InfoCircleFill />
+                  </span>
+                </OverlayTrigger>
+              </Form.Label>
+              <Form.Control
+                type="text"
+                placeholder="Choose a username"
+                value={form.username}
+                onFocus={() => setError(false)}
+                onChange={(e) => setForm((prev) => ({ ...prev, username: e.target.value }))}
+              />
+            </Form.Group>
 
-          <Form.Group className="mb-3" controlId="modalUsername">
-            <Form.Label className="fw-semibold d-flex align-items-center gap-2 fs-5">
-              Username
-              <OverlayTrigger
-                placement="right"
-                overlay={
-                  <Tooltip>
-                    <strong>Username</strong> must be 2–30 characters long.
-                  </Tooltip>
-                }
-              >
-                <span style={{ display: "inline-flex", flexShrink: 0, cursor: "pointer" }}>
-                  <InfoCircleFill />
-                </span>
-              </OverlayTrigger>
-            </Form.Label>
-            <Form.Control
-              type="text"
-              placeholder="Choose a username"
-              value={form.username}
-              onFocus={() => setError(false)}
-              onChange={(e) => setForm((prev) => ({ ...prev, username: e.target.value }))}
-            />
-          </Form.Group>
+            <Form.Group className="mb-3" controlId="modalBio">
+              <Form.Label className="fw-semibold fs-5">Biography</Form.Label>
+              <Form.Control
+                as="textarea"
+                rows={5}
+                placeholder="Let other readers know something about you!"
+                value={form.bio}
+                onFocus={() => setError(false)}
+                onChange={(e) => setForm((prev) => ({ ...prev, bio: e.target.value }))}
+              />
+            </Form.Group>
+            <div className={"alert alert-danger text-center bg-transparent border-0 p-0 mb-2" + (error ? "" : " invisible")} role="alert">
+              {error || "Error placeholder"}
+            </div>
 
-          <Form.Group className="mb-3" controlId="modalBio">
-            <Form.Label className="fw-semibold fs-5">Biography</Form.Label>
-            <Form.Control
-              as="textarea"
-              rows={5}
-              placeholder="Let other readers know something about you!"
-              value={form.bio}
-              onFocus={() => setError(false)}
-              onChange={(e) => setForm((prev) => ({ ...prev, bio: e.target.value }))}
-            />
-          </Form.Group>
-
-          <Button disabled={!hasChanged() || loading} className="w-100 fw-semibold mt-4 mb-3 fs-4" type="submit">
-            {loading ? "Updating profile..." : "Save"}
+            <Button disabled={!hasChanged() || loading} className="w-100 fw-semibold my-2 fs-4" type="submit">
+              {loading ? "Updating profile..." : "Save"}
+            </Button>
+          </Form>
+          <Button
+            variant="outline-danger"
+            disabled={deleteLoading}
+            className="w-100 fw-semibold mt-2 mb-3 fs-4"
+            type="botton"
+            onClick={() => {
+              handleClose();
+              setShowDeleteConfirm(true);
+            }}
+          >
+            {loading ? "Deleting account..." : "Delete account"}
           </Button>
-          <div className={"alert alert-danger text-center bg-transparent border-0 p-0 mb-2" + (error ? "" : " invisible")} role="alert">
-            {error || "Error placeholder"}
-          </div>
-        </Form>
-      </Modal.Body>
-    </Modal>
+        </Modal.Body>
+      </Modal>
+      <Modal show={showDeleteConfirm} onHide={() => setShowDeleteConfirm(false)} centered>
+        <Modal.Header closeButton className="px-4">
+          <Modal.Title className="text-danger">Delete account</Modal.Title>
+        </Modal.Header>
+        <Modal.Body className="px-4 text-center py-4">
+          <Trash3Fill size={48} className="text-danger mb-3" />
+          <h5>Are you sure?</h5>
+          <p className="text-muted mb-0">
+            This action is <strong>irreversible</strong>. <br /> Your account, library and reviews will be permanently deleted.
+          </p>
+          {deleteError && <p className="text-danger mt-3 mb-0 small">Something went wrong. Try again.</p>}
+        </Modal.Body>
+        <Modal.Footer className="px-4 d-flex gap-2">
+          <Button variant="secondary" className="flex-grow-1" onClick={() => setShowDeleteConfirm(false)} disabled={deleteLoading}>
+            Cancel
+          </Button>
+          <Button variant="danger" className="flex-grow-1" onClick={handleDeleteAccount} disabled={deleteLoading}>
+            {deleteLoading ? <Spinner animation="border" size="sm" /> : "Yes, delete my account"}
+          </Button>
+        </Modal.Footer>
+      </Modal>
+    </>
   );
 };
 

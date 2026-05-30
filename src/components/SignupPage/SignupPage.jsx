@@ -376,7 +376,7 @@ const SignupPage = () => {
 
                   <div className="text-center">
                     <p className="text-muted mb-0">Already have an account?</p>
-                    <Link to="/login" className="text-decoration-none">
+                    <Link to="/login" className="text-decoration-none text-light fw-semibold">
                       Log In
                     </Link>
                   </div>

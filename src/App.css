@@ -106,3 +106,32 @@
 .view-more-link:hover {
   color: white !important;
 }
+
+.nav-tabs .nav-link {
+  padding-block: 0.8em;
+  color: #f8f9fa;
+  font-weight: 600;
+  border: none;
+}
+
+.nav-tabs .nav-link:not(.active) {
+  filter: brightness(0.8);
+}
+
+.nav-tabs .nav-link:not(.active):hover {
+  background-color: #6c757d;
+  filter: brightness(1.1);
+}
+
+.home-section-fade {
+  animation: fadeIn 0.2s ease-in;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}

@@ -60,8 +60,8 @@ const ProfilePage = () => {
 
   return (
     <>
-      <Container fluid className="px-3 px-lg-4 px-xl-5 container-lg d-flex flex-column gap-3 gap-sm-2 gap-lg-3 gap-xl-5 min-vh-100 py-3 py-md-5">
-        <Row className=" justify-content-center align-items-end mb-lg-5 mb-xl-2 g-2 g-md-5 g-lg-4">
+      <Container fluid className="d-flex flex-column container-lg py-4 px-3 px-lg-4 px-xl-5  gap-3 gap-sm-2 gap-lg-3 gap-xl-5">
+        <Row className=" justify-content-center align-items-end pt-md-2 pt-lg-3 mb-lg-5 mb-xl-2 g-2 g-md-5 g-lg-4">
           <Col xs={12} className="d-md-none text-end">
             <Button onClick={() => navigate("/me/edit")}>Edit profile</Button>
           </Col>
@@ -75,7 +75,7 @@ const ProfilePage = () => {
           </Col>
           <Col xs={12} md={8} lg={9} xl={8}>
             <div className="d-flex flex-column h-100">
-              <div className="d-none d-md-flex justify-content-between align-items-end pb-md-4 pb-lg-4 pb-xl-3 mb-4 flex-grow-1">
+              <div className="d-none d-md-flex justify-content-between align-items-end pb-lg-4 pb-xl-2 mb-3 mb-xl-2 flex-grow-1">
                 <h1 className="mb-0">{user.displayName}</h1>
                 <Button onClick={() => setShowEditModal(true)}>Edit profile</Button>
               </div>
@@ -99,12 +99,14 @@ const ProfilePage = () => {
           </Col>
         </Row>
         <Row className=" justify-content-center gap-sm-2 gap-md-3 mt-2 mt-sm-4 mt-md-5 mt-lg-0">
-          <Col xl={10}>
-            <div>
-              <h3 className="mb-3">Biography</h3>
-              <p>{user.bio}</p>
-            </div>
-          </Col>
+          {user.bio && (
+            <Col xl={10}>
+              <div>
+                <h3 className="mb-3">Biography</h3>
+                <p>{user.bio}</p>
+              </div>
+            </Col>
+          )}
           <Col xl={10}>
             <div>
               <h3 className="mt-2 mb-3">Bookshelf</h3>
@@ -139,6 +141,15 @@ const ProfilePage = () => {
                         />
                       </div>
                     </Alert>
+                  </div>
+                ) : bookshelf.length === 0 ? (
+                  <div className="d-flex flex-column align-items-center justify-content-center text-center text-muted py-5 w-100 gap-3">
+                    <Book size={50} className="opacity-50" />
+                    <h5 className="mb-0">Your bookshelf is empty</h5>
+                    <p className="mb-0 small">To add a saved book to your bookshelf change its privacy to public</p>
+                    <Button variant="outline-secondary" className="rounded-pill px-4" onClick={() => navigate("/library")}>
+                      Go to your library
+                    </Button>
                   </div>
                 ) : (
                   <>
