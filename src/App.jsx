@@ -17,6 +17,8 @@ import EditProfilePage from "./components/EditProfilePage/EditProfilePage";
 import AdminPage from "./components/AdminPage/AdminPage";
 import AppLayout from "./components/AppLayout";
 import DisabledPage from "./components/DisabledPage";
+import ForgotPasswordPage from "./components/ForgotPasswordPage";
+import ResetPasswordPage from "./components/ResetPasswordPage";
 
 function App() {
   useEffect(() => {
@@ -102,6 +104,8 @@ function App() {
             }
           />
           <Route path="/disabled" element={<DisabledPage />} />
+          <Route path="/forgot-password" element={<ForgotPasswordPage />} />
+          <Route path="/reset-password" element={<ResetPasswordPage />} />
           <Route path="*" element={<Navigate to="/" replace />} />
         </Routes>
       </BrowserRouter>

@@ -1,17 +1,25 @@
 import { useState, useEffect } from "react";
 import { Container, Row, Col, Form, Button, InputGroup, Card } from "react-bootstrap";
 import { Eye, EyeSlash, Book } from "react-bootstrap-icons";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useNavigate, useLocation } from "react-router-dom";
 import { instance } from "../../config/api";
 import { useDispatch } from "react-redux";
 import { getProfileInfo } from "../../redux/actions";
 
 const LoginPage = () => {
   const navigate = useNavigate();
+  const location = useLocation();
   const dispatch = useDispatch();
   const [showPassword, setShowPassword] = useState(false);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
+
+  const clearMessages = () => {
+    setError("");
+    if (location.state?.passwordReset) {
+      navigate(location.pathname, { replace: true, state: {} });
+    }
+  };
 
   const [loginCredentials, setLoginCredentials] = useState({
     email: "",
@@ -118,21 +126,21 @@ const LoginPage = () => {
                       type="email"
                       placeholder="Enter your email"
                       value={loginCredentials.email}
-                      onClick={() => setError("")}
+                      onClick={() => clearMessages()}
                       onChange={(e) => setLoginCredentials({ ...loginCredentials, email: e.target.value })}
                       required
                       size="lg"
                     />
                   </Form.Group>
 
-                  <Form.Group className="mb-3" controlId="password">
+                  <Form.Group className="mb-2" controlId="password">
                     <Form.Label>Password</Form.Label>
                     <InputGroup>
                       <Form.Control
                         type={showPassword ? "text" : "password"}
                         placeholder="Enter your password"
                         value={loginCredentials.password}
-                        onClick={() => setError("")}
+                        onClick={() => clearMessages()}
                         onChange={(e) =>
                           setLoginCredentials({
                             ...loginCredentials,
@@ -148,8 +156,21 @@ const LoginPage = () => {
                     </InputGroup>
                   </Form.Group>
 
-                  <div className={"alert alert-danger text-center bg-transparent border-0 p-0" + (error ? "" : " invisible")} role="alert">
-                    {error ? error : "Error placeholder"}
+                  <div className="text-end mb-3">
+                    <Link to="/forgot-password" className="text-decoration-none text-muted small view-more-link">
+                      Forgot your password?
+                    </Link>
+                  </div>
+
+                  <div
+                    className={
+                      "alert text-center bg-transparent border-0 p-0" +
+                      (error || location.state?.passwordReset ? "" : " invisible") +
+                      (error ? " alert-danger" : " alert-success")
+                    }
+                    role="alert"
+                  >
+                    {error ? error : location.state?.passwordReset ? "Password reset successfully!" : "placeholder"}
                   </div>
 
                   <div className="gap-2 mb-3">
