@@ -59,6 +59,7 @@ const EditProfilePage = () => {
       navigate("/me");
     } catch (err) {
       console.log(err);
+      if (err.response?.data?.error === "ACCOUNT_DISABLED") return;
       if (err.response?.data?.message) {
         setError(err.response.data.message);
       } else {
@@ -284,6 +285,7 @@ const EditProfilePage = () => {
                       handleClose();
                     } catch (err) {
                       console.log(err);
+                      if (err.response?.data?.error === "ACCOUNT_DISABLED") return;
                       setUploadError(true);
                     } finally {
                       setUploadLoading(false);

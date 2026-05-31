@@ -192,6 +192,7 @@ const SearchPage = () => {
       })
       .catch((err) => {
         console.log(err);
+        if (err.response?.data?.error === "ACCOUNT_DISABLED") return;
         setError(true);
       })
       .finally(() => setLoading(false));

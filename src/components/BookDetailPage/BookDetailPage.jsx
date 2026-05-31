@@ -2,7 +2,7 @@ import { useLocation, useNavigate, useParams } from "react-router-dom";
 import { useSelector } from "react-redux";
 import { useState, useEffect, useRef } from "react";
 import { instance } from "../../config/api";
-import { Container, Row, Col, Badge, Card, Alert, ListGroup, Spinner, Form, Button } from "react-bootstrap";
+import { Container, Row, Col, Badge, Alert, ListGroup, Spinner, Form, Button } from "react-bootstrap";
 import BookSaveComponent from "../BookSaveComponent/BookSaveComponent";
 import BookStatusComponent from "../BookStatusComponent/BookStatusComponent";
 import BookReviewComponent from "../BookReviewComponent/BookReviewComponent";
@@ -59,6 +59,7 @@ const BookDetailPage = () => {
       })
       .catch((err) => {
         console.log(err);
+        if (err.response?.data?.error === "ACCOUNT_DISABLED") return;
         setBookError(true);
       })
       .finally(() => setBookLoading(false));
@@ -79,6 +80,7 @@ const BookDetailPage = () => {
       })
       .catch((err) => {
         console.log(err);
+        if (err.response?.data?.error === "ACCOUNT_DISABLED") return;
         setReviewsError(true);
       })
       .finally(() => setReviewsLoading(false));
@@ -92,14 +94,20 @@ const BookDetailPage = () => {
     instance
       .put("/reviews/" + reviewId, body)
       .then(() => getBookReviews(0, false))
-      .catch((err) => console.log(err));
+      .catch((err) => {
+        if (err.response?.data?.error === "ACCOUNT_DISABLED") return;
+        console.log(err);
+      });
   };
 
   const addReview = (bookId, body) => {
     instance
       .post("/books/" + bookId + "/reviews", body)
       .then(() => getBookReviews(0, false))
-      .catch((err) => console.log(err));
+      .catch((err) => {
+        if (err.response?.data?.error === "ACCOUNT_DISABLED") return;
+        console.log(err);
+      });
   };
 
   const deleteReview = (reviewId) => {
@@ -111,7 +119,10 @@ const BookDetailPage = () => {
         setShowForm(false);
         setEditingReview(false);
       })
-      .catch((err) => console.log(err));
+      .catch((err) => {
+        if (err.response?.data?.error === "ACCOUNT_DISABLED") return;
+        console.log(err);
+      });
   };
 
   useEffect(() => {

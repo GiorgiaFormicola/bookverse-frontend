@@ -49,6 +49,7 @@ const LoginPage = () => {
         navigate("/");
       })
       .catch((err) => {
+        if (err.response?.data?.error === "ACCOUNT_DISABLED") return;
         if (err.response) {
           if (err.response.status === 400) {
             setError("Wrong credentials supplied");
