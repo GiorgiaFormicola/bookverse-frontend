@@ -54,7 +54,6 @@ const EditProfileModal = ({ show, handleClose }) => {
 
   const handleDeleteAccount = async () => {
     setDeleteLoading(true);
-    setDeleteLoading(true);
     dispatch(deleteProfile());
   };
 
@@ -198,7 +197,7 @@ const EditProfileModal = ({ show, handleClose }) => {
               setShowDeleteConfirm(true);
             }}
           >
-            {loading ? "Deleting account..." : "Delete account"}
+            {deleteLoading ? "Deleting account..." : "Delete account"}
           </Button>
         </Modal.Body>
       </Modal>

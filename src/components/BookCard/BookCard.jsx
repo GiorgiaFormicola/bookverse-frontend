@@ -2,7 +2,6 @@ import { useLocation, useNavigate } from "react-router-dom";
 import { Row, Col, Card, ListGroup, Badge } from "react-bootstrap";
 import { Book, BookFill, BookHalf, Globe, LockFill } from "react-bootstrap-icons";
 import BookSaveComponent from "../BookSaveComponent/BookSaveComponent";
-import { ChevronRight } from "lucide-react";
 
 const BookCard = ({ book, status, isPublic, navigationState }) => {
   const navigate = useNavigate();

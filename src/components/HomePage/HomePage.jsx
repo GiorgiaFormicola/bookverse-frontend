@@ -3,7 +3,7 @@ import HomePageSection from "../HomePageSection/HomePageSection";
 import Dashboard from "../Dashboard";
 import { useState } from "react";
 import { BookHalf } from "react-bootstrap-icons";
-import { useNavigate, Link } from "react-router-dom";
+import { Link } from "react-router-dom";
 
 const HomePage = () => {
   const [loadingSection1, setLoadingSection1] = useState(true);
