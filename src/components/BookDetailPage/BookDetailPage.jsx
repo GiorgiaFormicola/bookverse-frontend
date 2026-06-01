@@ -26,6 +26,7 @@ const BookDetailPage = () => {
   const [totalReviews, setTotalReviews] = useState(null);
   const [reviewsLoading, setReviewsLoading] = useState(true);
   const [reviewsError, setReviewsError] = useState(false);
+  const [currentUserReview, setCurrentUserReview] = useState(null);
   const [userReview, setUserReview] = useState({ rating: 0, comment: "" });
   const [hoveredRating, setHoveredRating] = useState(0);
   const [editingReview, setEditingReview] = useState(false);
@@ -86,6 +87,16 @@ const BookDetailPage = () => {
       .finally(() => setReviewsLoading(false));
   };
 
+  const getUserReview = () => {
+    instance
+      .get(`/books/${params.googleId}/reviews/me`)
+      .then((response) => setCurrentUserReview(response.data))
+      .catch((err) => {
+        if (err.response?.data?.error === "ACCOUNT_DISABLED") return;
+        if (err.response?.status === 404) setCurrentUserReview(null);
+      });
+  };
+
   const loadNextPage = () => {
     getBookReviews(currentPage + 1, true);
   };
@@ -93,7 +104,10 @@ const BookDetailPage = () => {
   const updateReview = (reviewId, body) => {
     instance
       .put("/reviews/" + reviewId, body)
-      .then(() => getBookReviews(0, false))
+      .then(() => {
+        getBookReviews(0, false);
+        getUserReview();
+      })
       .catch((err) => {
         if (err.response?.data?.error === "ACCOUNT_DISABLED") return;
         console.log(err);
@@ -103,7 +117,10 @@ const BookDetailPage = () => {
   const addReview = (bookId, body) => {
     instance
       .post("/books/" + bookId + "/reviews", body)
-      .then(() => getBookReviews(0, false))
+      .then(() => {
+        getBookReviews(0, false);
+        getUserReview();
+      })
       .catch((err) => {
         if (err.response?.data?.error === "ACCOUNT_DISABLED") return;
         console.log(err);
@@ -115,6 +132,8 @@ const BookDetailPage = () => {
       .delete("/reviews/" + reviewId)
       .then(() => {
         getBookReviews(0, false);
+
+        setCurrentUserReview(null);
         setUserReview({ rating: 0, comment: "" });
         setShowForm(false);
         setEditingReview(false);
@@ -128,11 +147,11 @@ const BookDetailPage = () => {
   useEffect(() => {
     getBookDetails();
     getBookReviews(0, false);
+    getUserReview();
   }, []);
 
   const mappedBook = book ? mapBookDetails() : null;
   const isInLibrary = mappedBook ? library[mappedBook.googleId] : false;
-  const currentUserReview = reviews.find((review) => review.user?.id === user?.id) ?? null;
   const isFormDirty = currentUserReview && (userReview.rating !== currentUserReview.rating || userReview.comment !== currentUserReview.comment);
 
   const handleReviewClick = () => {
