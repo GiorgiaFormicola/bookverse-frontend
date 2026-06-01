@@ -33,6 +33,7 @@ const BookDetailPage = () => {
   const [currentPage, setCurrentPage] = useState(0);
   const [hasNext, setHasNext] = useState(false);
   const [showForm, setShowForm] = useState(false);
+  const [bookStats, setBookStats] = useState(null);
 
   const defaultCover = "https://neelkanthpublishers.com/assets/bookcover_cover.png";
 
@@ -66,6 +67,15 @@ const BookDetailPage = () => {
       .finally(() => setBookLoading(false));
   };
 
+  const getBookStats = () => {
+    instance
+      .get(`/books/${params.googleId}/stats`)
+      .then((response) => setBookStats(response.data))
+      .catch((err) => {
+        if (err.response?.data?.error === "ACCOUNT_DISABLED") return;
+      });
+  };
+
   const getBookReviews = (pageNumber, append) => {
     instance
       .get(`/books/${params.googleId}/reviews?&page=${pageNumber}`)
@@ -88,12 +98,15 @@ const BookDetailPage = () => {
   };
 
   const getUserReview = () => {
+    const url = `/books/${params.googleId}/reviews/me`;
+    console.log("URL:", JSON.stringify(url));
     instance
-      .get(`/books/${params.googleId}/reviews/me`)
+      .get(url)
       .then((response) => setCurrentUserReview(response.data))
       .catch((err) => {
         if (err.response?.data?.error === "ACCOUNT_DISABLED") return;
-        if (err.response?.status === 404) setCurrentUserReview(null);
+
+        console.log(err);
       });
   };
 
@@ -120,6 +133,7 @@ const BookDetailPage = () => {
       .then(() => {
         getBookReviews(0, false);
         getUserReview();
+        getBookStats();
       })
       .catch((err) => {
         if (err.response?.data?.error === "ACCOUNT_DISABLED") return;
@@ -132,7 +146,7 @@ const BookDetailPage = () => {
       .delete("/reviews/" + reviewId)
       .then(() => {
         getBookReviews(0, false);
-
+        getBookStats();
         setCurrentUserReview(null);
         setUserReview({ rating: 0, comment: "" });
         setShowForm(false);
@@ -148,6 +162,7 @@ const BookDetailPage = () => {
     getBookDetails();
     getBookReviews(0, false);
     getUserReview();
+    getBookStats();
   }, []);
 
   const mappedBook = book ? mapBookDetails() : null;
@@ -227,21 +242,21 @@ const BookDetailPage = () => {
                         <BookPrivacyComponent bookId={book.googleId} />
                       </div>
                     )}
-                    {!isInLibrary && (
+                    {!isInLibrary && bookStats && (
                       <>
                         <div className="d-flex align-items-center rounded-3 gap-2 flex-grow-1">
-                          <BookStat statValue="1.9K" statName="saved">
+                          <BookStat statValue={bookStats.saved} statName="saved">
                             <People size={25} className="text-primary" />
                           </BookStat>
-                          <BookStat statValue="1.3K" statName="read">
+                          <BookStat statValue={bookStats.read} statName="read">
                             <BookFill size={25} className="text-success" />
                           </BookStat>
                         </div>
                         <div className="d-flex align-items-center rounded-3 gap-2  flex-grow-1">
-                          <BookStat statValue="1K" statName="reading">
+                          <BookStat statValue={bookStats.reading} statName="reading">
                             <BookHalf size={25} className="text-info" />
                           </BookStat>
-                          <BookStat statValue="1.7K" statName="reviews">
+                          <BookStat statValue={bookStats.reviews} statName="reviews">
                             <Star size={25} className="text-warning" />
                           </BookStat>
                         </div>

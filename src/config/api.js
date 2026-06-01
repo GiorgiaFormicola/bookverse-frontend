@@ -87,6 +87,7 @@ instance.interceptors.response.use(
         return Promise.reject(error);
       }
     }
+
     store.dispatch({
       type: SET_ERROR,
       payload: errorPayload,
