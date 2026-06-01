@@ -1,0 +1,266 @@
+// ============================================================
+//  BACKGROUND AMBIENT
+// ============================================================
+
+/* body {
+  background-color: var(--bg-deep);
+  background:
+    radial-gradient(60vw 50vh at 12% -5%, rgba(124, 58, 237, 0.22), transparent 60%),
+    radial-gradient(55vw 45vh at 95% 8%, rgba(168, 85, 247, 0.16), transparent 55%),
+    radial-gradient(40vw 40vh at 60% 110%, rgba(124, 58, 237, 0.18), transparent 60%);
+  background-attachment: fixed;
+  min-height: 100vh;
+} */
+body {
+  min-height: 100vh;
+  background:
+    radial-gradient(100vw 60vh at 50% -10%, rgba(124, 58, 237, 0.18), transparent 70%),
+    radial-gradient(60vw 50vh at 12% -5%, rgba(124, 58, 237, 0.22), transparent 60%),
+    radial-gradient(55vw 45vh at 95% 8%, rgba(168, 85, 247, 0.16), transparent 55%),
+    radial-gradient(40vw 40vh at 60% 110%, rgba(124, 58, 237, 0.18), transparent 60%), linear-gradient(to top, #09090f 0%, #0d0d1a 40%, #110d1f 100%);
+  background-attachment: fixed;
+}
+
+// ============================================================
+//  NAVBAR
+// ============================================================
+
+.bv-navbar {
+  background: rgba(13, 13, 26, 0.85);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border-bottom: 1px solid var(--border);
+  padding-block: 0.6rem;
+
+  // Nav link base
+  .nav-link {
+    color: var(--text-muted);
+    font-size: 0.9rem;
+    font-weight: 500;
+    padding: 0.4rem 0.75rem;
+    border-radius: var(--bs-border-radius);
+    transition:
+      color 0.15s ease,
+      background-color 0.15s ease;
+    position: relative;
+
+    &:hover {
+      color: var(--text-primary);
+      background-color: var(--surface-hover);
+    }
+
+    // Underline lime sull'attivo
+    &.active {
+      color: var(--text-primary);
+      background-color: transparent;
+
+      &::after {
+        content: "";
+        position: absolute;
+        bottom: -2px;
+        left: 50%;
+        transform: translateX(-50%);
+        width: 60%;
+        height: 2px;
+        background: var(--accent);
+        border-radius: 2px;
+      }
+    }
+  }
+}
+
+// Brand
+.bv-brand {
+  text-decoration: none;
+
+  /* &__icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 32px;
+    height: 32px;
+    background: var(--primary-grad);
+    border-radius: 8px;
+    color: #fff;
+    flex-shrink: 0;
+  } */
+
+  &__text {
+    font-family: "Space Grotesk", sans-serif;
+    font-weight: 700;
+    font-size: 1.1rem;
+    color: var(--text-primary);
+    letter-spacing: -0.02em;
+  }
+
+  &__accent {
+    color: var(--accent);
+  }
+}
+
+// Avatar navbar
+.bv-navbar .nav-link.active-user::after {
+  display: none;
+}
+
+.bv-navbar .nav-link.active-user {
+  color: var(--text-primary) !important;
+  background-color: var(--surface-hover);
+}
+
+.bv-nav__avatar {
+  border-radius: 50%;
+  object-fit: cover;
+  border: 2px solid var(--border);
+  transition: border-color 0.15s ease;
+
+  &:hover {
+    border-color: var(--primary-light);
+  }
+}
+
+// Username navbar
+.bv-nav__username {
+  font-size: 0.875rem;
+  font-weight: 500;
+  color: var(--text-muted);
+}
+
+.bv-dropdown-toggle .dropdown-toggle::after {
+  border-top-color: var(--text-muted);
+  opacity: 0.6;
+  margin-left: 4px;
+  transition: opacity 0.15s ease;
+}
+
+.bv-dropdown-toggle .dropdown-toggle:hover::after {
+  opacity: 1;
+  border-top-color: var(--text-primary);
+}
+
+.bv-dropdown-toggle .dropdown-toggle:hover,
+.bv-dropdown-toggle .dropdown-toggle:focus,
+.bv-dropdown-toggle .dropdown-toggle:active,
+.bv-dropdown-toggle .show .dropdown-toggle {
+  background-color: transparent !important;
+  box-shadow: none !important;
+}
+
+// ============================================================
+//  OFFCANVAS MOBILE
+// ============================================================
+
+.bv-offcanvas {
+  background: var(--surface-raised);
+  border-left: 1px solid var(--border);
+  max-width: 300px;
+
+  .offcanvas-header {
+    border-bottom: 1px solid var(--border);
+    padding: 1.25rem 1.25rem 1rem;
+
+    .btn-close {
+      filter: invert(1) opacity(0.6);
+
+      &:hover {
+        filter: invert(1) opacity(1);
+      }
+    }
+  }
+
+  .border-bottom {
+    border-bottom-color: var(--border) !important;
+  }
+
+  .offcanvas-body {
+    padding: 1rem 1.25rem;
+  }
+
+  .nav-link {
+    color: var(--text-muted);
+    font-weight: 500;
+    padding: 0.6rem 0.75rem;
+    border-radius: var(--bs-border-radius);
+    transition:
+      color 0.15s ease,
+      background-color 0.15s ease;
+
+    &:hover {
+      color: var(--text-primary);
+      background-color: var(--surface-hover);
+    }
+  }
+}
+
+html {
+  overflow-y: scroll;
+}
+
+// ============================================================
+//  BOTTOM NAV MOBILE
+// ============================================================
+
+.bv-bottom-nav {
+  position: sticky;
+  bottom: 0;
+  z-index: 1030;
+  background: rgba(13, 13, 26, 0.92);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border-top: 1px solid var(--border);
+  display: flex;
+  justify-content: space-evenly;
+  align-items: center;
+  padding: 0.6rem 0 calc(0.6rem + env(safe-area-inset-bottom));
+
+  &__link {
+    color: var(--text-faint);
+    text-decoration: none;
+    font-size: 0.7rem;
+    font-weight: 500;
+    padding: 0.25rem 1.5rem;
+    border-radius: var(--bs-border-radius);
+    transition: color 0.15s ease;
+    position: relative;
+
+    &:hover {
+      color: var(--text-muted);
+    }
+
+    &.active {
+      color: var(--accent);
+
+      // Dot indicator sotto l'icona
+      &::after {
+        content: "";
+        position: absolute;
+        bottom: -4px;
+        left: 50%;
+        transform: translateX(-50%);
+        width: 4px;
+        height: 4px;
+        background: var(--accent);
+        border-radius: 50%;
+      }
+    }
+  }
+}
+
+// ============================================================
+//  DESKTOP FOOTER
+// ============================================================
+
+.bv-footer {
+  background: var(--surface);
+  border-top: 1px solid var(--border);
+
+  &__social {
+    color: var(--text-faint);
+    transition: color 0.15s ease;
+    text-decoration: none;
+
+    &:hover {
+      color: var(--accent);
+    }
+  }
+}

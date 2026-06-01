@@ -6,7 +6,7 @@ const AppLayout = ({ children }) => {
     <div className="min-vh-100 d-flex flex-column">
       <AppNavbar />
 
-      <main className="flex-grow-1 ">{children}</main>
+      <main className="flex-grow-1">{children}</main>
 
       <AppFooter />
     </div>

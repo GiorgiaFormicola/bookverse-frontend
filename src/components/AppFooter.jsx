@@ -1,64 +1,65 @@
-import { Navbar, Nav, Container, Row, Col } from "react-bootstrap";
-import { Link } from "react-router-dom";
+import { Container, Row, Col } from "react-bootstrap";
+import { Nav } from "react-bootstrap";
+import { Link, useLocation } from "react-router-dom";
 import { Github, TwitterX, Instagram, Heart, Book } from "react-bootstrap-icons";
 import { Home, Library, Search } from "lucide-react";
 
-const navLinkClass = (path) => `nav-link d-flex align-items-center gap-2${location.pathname === path ? " active" : ""}`;
-
 const AppFooter = () => {
   const currentYear = new Date().getFullYear();
+  const location = useLocation();
+
+  const navLinkClass = (path) => `bv-bottom-nav__link d-flex flex-column align-items-center gap-1${location.pathname === path ? " active" : ""}`;
 
   return (
     <>
       {/* Bottom nav mobile */}
-      <Navbar bg="dark" variant="dark" sticky="bottom" className="shadow-sm d-lg-none">
-        <Container fluid className="px-3 pb-4 justify-content-center">
-          <Nav className="w-100 justify-content-evenly">
-            <Link to="/" className={navLinkClass("/")}>
-              <Home size={40} />
-              <span className="small">Home</span>
-            </Link>
-
-            <Link to="/library" className={navLinkClass("/library")}>
-              <Library size={40} />
-              <span className="small">My Library</span>
-            </Link>
-
-            <Link to="/search" className={navLinkClass("/search")}>
-              <Search size={40} />
-              <span className="small">Search</span>
-            </Link>
-          </Nav>
-        </Container>
-      </Navbar>
+      <Nav className="bv-bottom-nav d-lg-none pt-3 pb-4">
+        <Link to="/" className={navLinkClass("/")}>
+          <Home size={22} strokeWidth={2} />
+          <span>Home</span>
+        </Link>
+        <Link to="/library" className={navLinkClass("/library")}>
+          <Library size={22} strokeWidth={2} />
+          <span>Library</span>
+        </Link>
+        <Link to="/search" className={navLinkClass("/search")}>
+          <Search size={22} strokeWidth={2} />
+          <span>Search</span>
+        </Link>
+      </Nav>
 
       {/* Desktop footer */}
-      <footer className="bg-dark text-white mt-auto d-none d-lg-block border-top border-secondary">
+      <footer className="bv-footer d-none d-lg-block">
         <Container className="py-4">
-          <Row className="row align-items-center gy-3">
+          <Row className="align-items-center gy-3">
             <Col lg={6}>
-              <div className="ms-2">
-                <div className="d-flex align-items-center gap-2 mb-1">
-                  <Book size={22} />
-                  <span className="display-font h5 mb-0">BookVerse</span>
-                </div>
-                <p className="text-muted small mb-0">Where every story finds its shelf.</p>
+              <div className="d-flex align-items-center gap-2 mb-1">
+                <span className="bv-brand__accent">
+                  <Book size={25} />
+                </span>
+                <span className="bv-brand__text mt-1" style={{ fontSize: "1rem" }}>
+                  Book<span className="bv-brand__accent">Verse</span>
+                </span>
               </div>
+              <p className="mb-0" style={{ color: "var(--text-faint)", fontSize: "0.8rem" }}>
+                Where every story finds its shelf.
+              </p>
             </Col>
             <Col lg={6} className="d-flex flex-column align-items-lg-end gap-2">
               <div className="d-flex gap-3">
-                <a href="#" className="text-muted">
-                  <Github size={18} />
+                <a href="#" className="bv-footer__social">
+                  <Github size={17} />
                 </a>
-                <a href="#" className="text-muted">
-                  <TwitterX size={18} />
+                <a href="#" className="bv-footer__social">
+                  <TwitterX size={17} />
                 </a>
-                <a href="#" className="text-muted">
-                  <Instagram size={18} />
+                <a href="#" className="bv-footer__social">
+                  <Instagram size={17} />
                 </a>
               </div>
-              <p className="text-muted small mb-0">
-                © {currentYear} BookVerse — Made with <Heart size={12} className="text-danger mx-1" fill="currentColor" />
+              <p className="mb-0 d-flex align-items-center gap-1" style={{ color: "var(--text-faint)", fontSize: "0.8rem" }}>
+                © {currentYear} BookVerse — Made with
+                <Heart size={11} fill="currentColor" style={{ color: "var(--st-review)" }} />
               </p>
             </Col>
           </Row>

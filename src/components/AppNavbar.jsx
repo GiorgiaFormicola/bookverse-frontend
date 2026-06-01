@@ -14,6 +14,7 @@ const AppNavbar = () => {
   const [showOffcanvas, setShowOffcanvas] = useState(false);
 
   const navLinkClass = (path) => `nav-link d-flex align-items-center gap-2${location.pathname === path ? " active" : ""}`;
+  const userLinkClass = (path) => `nav-link d-flex align-items-center gap-2${location.pathname === path ? " active-user" : ""}`;
 
   const logout = () => {
     localStorage.removeItem("token");
@@ -25,59 +26,68 @@ const AppNavbar = () => {
 
   return (
     <>
-      <Navbar bg="dark" variant="dark" sticky="top" className="shadow-sm">
+      <Navbar sticky="top" className="bv-navbar">
         <Container fluid className="px-3 container-lg px-lg-4">
-          <Navbar.Brand as={Link} to="/" className="d-flex align-items-center gap-3 gap-lg-2 me-lg-4 ms-lg-2">
-            <Book size={30} className="d-none d-lg-block" />
-            <Book size={40} className="d-lg-none" />
-            <span className="display-font d-sm-inline">BookVerse</span>
+          {/* Brand — icona quadrata + Book Verse con Verse in lime */}
+          <Navbar.Brand as={Link} to="/" className="bv-brand d-flex align-items-center gap-2 me-lg-4">
+            {/*  <span className="bv-brand__icon"> */}
+            <Book size={30} className="bv-brand__accent me-1" />
+            {/*  </span> */}
+            <span className="bv-brand__text">
+              Book<span className="bv-brand__accent">Verse</span>
+            </span>
           </Navbar.Brand>
-          <Nav className="d-none d-lg-flex me-auto gap-2">
+
+          {/* Nav links desktop */}
+          <Nav className="d-none d-lg-flex me-auto gap-1">
             <Link to="/" className={navLinkClass("/")}>
-              <Home strokeWidth={2.5} />
+              <Home size={16} strokeWidth={2.5} />
               <span>Home</span>
             </Link>
-
             <Link to="/library" className={navLinkClass("/library")}>
-              <Library strokeWidth={2.5} />
+              <Library size={16} strokeWidth={2.5} />
               <span>My Library</span>
             </Link>
-
             <Link to="/search" className={navLinkClass("/search")}>
-              <Search strokeWidth={2.5} />
+              <Search size={16} strokeWidth={2.5} />
               <span>Search</span>
             </Link>
           </Nav>
-          <Nav className="align-items-center ms-auto">
-            <Link to="/me" className={`d-none d-lg-flex ${navLinkClass("/me")} gap-3`}>
-              <span>{user?.displayName}</span>
-              <img src={user?.profilePictureURL} alt={user?.username} className="rounded-circle" width={40} height={40} />
+
+          {/* User area desktop */}
+          <Nav className="align-items-center ms-auto gap-1">
+            <Link to="/me" className={`d-none d-lg-flex ${userLinkClass("/me")} gap-2`}>
+              <span className="bv-nav__username ps-1">{user?.displayName}</span>
+              <img src={user?.profilePictureURL} alt={user?.username} className="bv-nav__avatar" width={34} height={34} />
             </Link>
-            <NavDropdown id="user-dropdown" align="end" className="d-none d-lg-block">
+            <NavDropdown id="user-dropdown" align="end" className="d-none d-lg-block bv-dropdown-toggle">
               <NavDropdown.Item as={Link} to="/me">
-                <User size={18} className="me-2" />
+                <User size={16} className="me-2" />
                 Profile
               </NavDropdown.Item>
               <NavDropdown.Item as={Link} to="/me/account">
-                <Settings size={18} className="me-2" />
+                <Settings size={16} className="me-2" />
                 Account
               </NavDropdown.Item>
               {user?.role === "ADMIN" && (
                 <NavDropdown.Item as={Link} to="/admin">
-                  <Shield size={18} className="me-2" />
+                  <Shield size={16} className="me-2" />
                   Admin Panel
                 </NavDropdown.Item>
               )}
               <NavDropdown.Divider />
-              <NavDropdown.Item onClick={() => logout()} className="text-danger">
-                <LogOut size={18} className="me-2" />
+              <NavDropdown.Item onClick={logout} className="text-danger">
+                <LogOut size={16} className="me-2" />
                 Logout
               </NavDropdown.Item>
             </NavDropdown>
+
+            {/* Mobile avatar */}
+            <span className="bv-nav__username px-1 d-lg-none">{user?.displayName}</span>
             <img
               src={user?.profilePictureURL}
               alt={user?.username}
-              className="rounded-circle d-lg-none"
+              className="bv-nav__avatar d-lg-none"
               width={40}
               height={40}
               style={{ cursor: "pointer" }}
@@ -88,7 +98,7 @@ const AppNavbar = () => {
       </Navbar>
 
       {/* Offcanvas mobile */}
-      <Offcanvas show={showOffcanvas} onHide={() => setShowOffcanvas(false)} placement="end" className="bg-dark text-white p-2">
+      <Offcanvas show={showOffcanvas} onHide={() => setShowOffcanvas(false)} placement="end" className="bv-offcanvas">
         <Offcanvas.Header closeButton closeVariant="white">
           <div className="d-flex align-items-center gap-3">
             <img src={user?.profilePictureURL} alt={user?.username} className="rounded-circle" width={50} height={50} />
@@ -98,8 +108,8 @@ const AppNavbar = () => {
             </div>
           </div>
         </Offcanvas.Header>
-        <Offcanvas.Body className="d-flex flex-column gap-2 pt-2">
-          <div className="d-flex flex-column gap-3 border-bottom border-secondary pb-3 my-2">
+        <Offcanvas.Body className="d-flex flex-column gap-2 pt-2 px-0">
+          <div className="d-flex flex-column gap-3 pb-3 px-3 my-2 border-bottom">
             <Link to="/me" className="nav-link d-flex align-items-center gap-2 fs-5" onClick={() => setShowOffcanvas(false)}>
               <User size={25} />
               Profile
@@ -115,16 +125,18 @@ const AppNavbar = () => {
               </Link>
             )}
           </div>
-          <button
-            className="btn btn-link nav-link d-flex align-items-center gap-2 text-danger p-0 fs-5"
-            onClick={() => {
-              logout();
-              setShowOffcanvas(false);
-            }}
-          >
-            <LogOut size={25} />
-            Logout
-          </button>
+          <div className="px-3">
+            <button
+              className="btn btn-link nav-link d-flex align-items-center gap-2 text-danger px-3 fs-5 w-100 "
+              onClick={() => {
+                logout();
+                setShowOffcanvas(false);
+              }}
+            >
+              <LogOut size={25} />
+              Logout
+            </button>
+          </div>
         </Offcanvas.Body>
       </Offcanvas>
     </>
