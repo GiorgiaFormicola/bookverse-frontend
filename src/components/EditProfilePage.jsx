@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { ChevronLeft, PlusCircleFill, InfoCircleFill, ArrowClockwise } from "react-bootstrap-icons";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { updateProfilePicture, updateProfileInfo } from "../../redux/actions";
+import { updateProfilePicture, updateProfileInfo } from "../redux/actions";
 
 const EditProfilePage = () => {
   const navigate = useNavigate();

@@ -2,9 +2,9 @@ import { useState, useEffect } from "react";
 import { Container, Row, Col, Form, Button, InputGroup, Card } from "react-bootstrap";
 import { Eye, EyeSlash, Book } from "react-bootstrap-icons";
 import { Link, useNavigate, useLocation } from "react-router-dom";
-import { instance } from "../../config/api";
+import { instance } from "../config/api";
 import { useDispatch } from "react-redux";
-import { getProfileInfo } from "../../redux/actions";
+import { getProfileInfo } from "../redux/actions";
 
 const LoginPage = () => {
   const navigate = useNavigate();

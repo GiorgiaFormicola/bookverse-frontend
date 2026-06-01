@@ -87,8 +87,7 @@ const AppNavbar = () => {
         </Container>
       </Navbar>
 
-      {/* OFFCANVAS MOBILE */}
-
+      {/* Offcanvas mobile */}
       <Offcanvas show={showOffcanvas} onHide={() => setShowOffcanvas(false)} placement="end" className="bg-dark text-white p-2">
         <Offcanvas.Header closeButton closeVariant="white">
           <div className="d-flex align-items-center gap-3">
@@ -99,7 +98,6 @@ const AppNavbar = () => {
             </div>
           </div>
         </Offcanvas.Header>
-
         <Offcanvas.Body className="d-flex flex-column gap-2 pt-2">
           <div className="d-flex flex-column gap-3 border-bottom border-secondary pb-3 my-2">
             <Link to="/me" className="nav-link d-flex align-items-center gap-2 fs-5" onClick={() => setShowOffcanvas(false)}>
@@ -129,7 +127,6 @@ const AppNavbar = () => {
           </button>
         </Offcanvas.Body>
       </Offcanvas>
-      {/* OFFCANVAS MOVILE */}
     </>
   );
 };

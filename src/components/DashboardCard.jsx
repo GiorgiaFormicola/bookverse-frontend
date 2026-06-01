@@ -27,7 +27,7 @@ const DashboardCard = ({ statName, statValue, children }) => {
 
       {location.pathname === "/me" && (
         <Col xs={6} md={6} lg={3}>
-          <Card className=" d-md-block py-sm-2 py-md-0 px-lg-0 rounded-3" /* ADD STAT-CARD CLASS */>
+          <Card className=" d-md-block py-sm-2 py-md-0 px-lg-0 rounded-3">
             <Card.Body className="py-sm-0 py-md-2 py-xl-2 p-xxl-3">
               <div className="d-flex align-items-center justify-content-between">
                 {children}

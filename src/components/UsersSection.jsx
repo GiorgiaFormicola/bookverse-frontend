@@ -1,9 +1,9 @@
 import { useState, useEffect } from "react";
 import { Card, Table, Badge, Button, Pagination } from "react-bootstrap";
-import UsersFilters from "../UsersFilters/UsersFilters";
-import EditUserModal from "../EditUserModal/EditUserModal";
-import DeleteConfirmModal from "../DeleteConfirmModal/DeleteConfirmModal";
-import { instance } from "../../config/api";
+import UsersFilters from "./UsersFilters";
+import EditUserModal from "./EditUserModal";
+import DeleteConfirmModal from "./DeleteConfirmModal";
+import { instance } from "../config/api";
 import { useSelector } from "react-redux";
 
 const UsersSection = () => {
@@ -12,7 +12,6 @@ const UsersSection = () => {
   const [selectedUser, setSelectedUser] = useState(null);
   const [showModal, setShowModal] = useState(false);
   const [userToDelete, setUserToDelete] = useState(null);
-  /* const [loading, setLoading] = useState(false); */
   const [totalPages, setTotalPages] = useState(1);
 
   const [filters, setFilters] = useState({

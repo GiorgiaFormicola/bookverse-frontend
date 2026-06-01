@@ -74,35 +74,33 @@ export const updateProfilePicture = (formData) => {
 
 export const updateProfileEmail = (body) => {
   return (dispatch) => {
-    instance
-      .patch("/users/me/email", body)
-      .then((response) => {
-        console.log(response.data);
-        dispatch({
-          type: UPDATE_PROFILE,
-          payload: response.data,
-        });
-      })
-      .catch((error) => {
-        console.log(error);
+    instance.patch("/users/me/email", body).then((response) => {
+      console.log(response.data);
+      dispatch({
+        type: UPDATE_PROFILE,
+        payload: response.data,
       });
+      return response.data;
+    });
+    /*  .catch((error) => {
+        console.log(error);
+      }); */
   };
 };
 
 export const updateProfilePassword = (body) => {
   return (dispatch) => {
-    instance
-      .patch("/users/me/password", body)
-      .then((response) => {
-        console.log(response.data);
-        dispatch({
-          type: UPDATE_PROFILE,
-          payload: response.data,
-        });
-      })
-      .catch((error) => {
-        console.log(error);
+    instance.patch("/users/me/password", body).then((response) => {
+      console.log(response.data);
+      dispatch({
+        type: UPDATE_PROFILE,
+        payload: response.data,
       });
+      return response.data;
+    });
+    /*   .catch((error) => {
+        console.log(error);
+      }); */
   };
 };
 

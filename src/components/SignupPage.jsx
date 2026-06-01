@@ -2,14 +2,13 @@ import { useState, useEffect } from "react";
 import { Container, Row, Col, Form, Button, InputGroup, Card, OverlayTrigger, Tooltip } from "react-bootstrap";
 import { Eye, EyeSlash, Book, People, Star, BarChartLine, InfoCircleFill, Search } from "react-bootstrap-icons";
 import { Link, useNavigate } from "react-router-dom";
-import { instance } from "../../config/api";
+import { instance } from "../config/api";
 
 const SignupPage = () => {
   const navigate = useNavigate();
   const [showPassword, setShowPassword] = useState(false);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
-  /*  const [autoDisplayName, setAutoDisplayName] = useState(true); */
   const [signUpCredentials, setSignUpCredentials] = useState({
     username: "",
     email: "",

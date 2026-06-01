@@ -1,10 +1,10 @@
 import { useEffect, useState } from "react";
-import { instance } from "../../config/api";
+import { instance } from "../config/api";
 import { Row, Col, Alert, Card } from "react-bootstrap";
 import { Link } from "react-router-dom";
 import { ArrowClockwise } from "react-bootstrap-icons";
 import { ChevronRight } from "lucide-react";
-import BookCard from "../BookCard/BookCard";
+import BookCard from "./BookCard";
 
 const HomePageSection = ({ filter, reviewed, title, loading, setLoading, onEmpty }) => {
   const [books, setBooks] = useState([]);

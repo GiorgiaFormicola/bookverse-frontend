@@ -1,9 +1,9 @@
 import { useState, useEffect } from "react";
 import { Card, Badge, Table, Button, Pagination } from "react-bootstrap";
-import BooksFilters from "../BooksFilters/BooksFilters";
-import EditBookModal from "../EditBookModal/EditBookModal";
-import DeleteConfirmModal from "../DeleteConfirmModal/DeleteConfirmModal";
-import { instance } from "../../config/api";
+import BooksFilters from "./BooksFilters";
+import EditBookModal from "./EditBookModal";
+import DeleteConfirmModal from "./DeleteConfirmModal";
+import { instance } from "../config/api";
 
 const BooksSection = () => {
   const [books, setBooks] = useState([]);

@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { Modal, Form, Button } from "react-bootstrap";
-import { instance } from "../../config/api";
+import { instance } from "../config/api";
 const EditUserModal = ({ show, onHide, user, handleSaveUser }) => {
   const [userRole, setUserRole] = useState(user?.role);
   const [userIsActive, setUserIsActive] = useState(user?.active ? "true" : "false");

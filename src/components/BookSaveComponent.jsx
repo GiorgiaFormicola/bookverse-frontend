@@ -1,7 +1,7 @@
 import { useDispatch, useSelector } from "react-redux";
 import { Button } from "react-bootstrap";
 import { SuitHeart, SuitHeartFill } from "react-bootstrap-icons";
-import { addBookToLibrary, removeBookFromLibrary } from "../../redux/actions";
+import { addBookToLibrary, removeBookFromLibrary } from "../redux/actions";
 import { useLocation } from "react-router-dom";
 
 const BookSaveComponent = ({ book }) => {
@@ -68,27 +68,6 @@ const BookSaveComponent = ({ book }) => {
           )}
         </>
       )}
-
-      {/* {location.pathname === "/library" && (
-        <>
-          {isSaved && (
-            <>
-              <SuitHeartFill
-                size={25}
-                onClick={(e) => {
-                  e.stopPropagation();
-                  removeBook();
-                }}
-              />
-            </>
-          )}
-          {!isSaved && (
-            <>
-              <SuitHeart size={25} onClick={() => addBook()} />
-            </>
-          )}
-        </>
-      )} */}
     </>
   );
 };

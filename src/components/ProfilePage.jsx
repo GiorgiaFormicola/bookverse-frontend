@@ -1,11 +1,11 @@
 import { useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
 import { useState, useEffect } from "react";
-import { instance } from "../../config/api";
+import { instance } from "../config/api";
 import { Container, Row, Col, Button, Card, Alert } from "react-bootstrap";
-import BookCard from "../BookCard/BookCard";
-import DashboardCard from "../DashboardCard";
-import EditProfileModal from "../EditProfileModal";
+import BookCard from "./BookCard";
+import DashboardCard from "./DashboardCard";
+import EditProfileModal from "./EditProfileModal";
 import { HeartFill, Book, BookHalf, BookFill, ThreeDots, ArrowClockwise, Star } from "react-bootstrap-icons";
 
 const ProfilePage = () => {

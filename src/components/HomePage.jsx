@@ -1,6 +1,6 @@
 import { Container, Row, Col } from "react-bootstrap";
-import HomePageSection from "../HomePageSection/HomePageSection";
-import Dashboard from "../Dashboard";
+import HomePageSection from "./HomePageSection";
+import Dashboard from "./Dashboard";
 import { useState } from "react";
 import { BookHalf } from "react-bootstrap-icons";
 import { Link } from "react-router-dom";
@@ -25,7 +25,7 @@ const HomePage = () => {
               <h1 className="mb-0">Your Dashboard</h1>
             </Col>
           </Row>
-          {/* DASHBOARDS */}
+          {/* Dashboard */}
           <Row className="g-2 d-sm-none">
             <Dashboard size="xs" />
           </Row>
@@ -35,7 +35,7 @@ const HomePage = () => {
           <Row className="g-3 mb-3 d-none d-lg-flex">
             <Dashboard size="lg" />
           </Row>
-          {/* DASHBOARDS */}
+          {/* Dashboard */}
         </div>
         <HomePageSection
           filter="TO_READ"

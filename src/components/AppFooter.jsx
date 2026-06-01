@@ -10,7 +10,7 @@ const AppFooter = () => {
 
   return (
     <>
-      {/* BOTTOM NAV MOBILE */}
+      {/* Bottom nav mobile */}
       <Navbar bg="dark" variant="dark" sticky="bottom" className="shadow-sm d-lg-none">
         <Container fluid className="px-3 pb-4 justify-content-center">
           <Nav className="w-100 justify-content-evenly">
@@ -31,8 +31,8 @@ const AppFooter = () => {
           </Nav>
         </Container>
       </Navbar>
-      {/* BOTTOM NAV MOBILE */}
-      {/* DESKTOP FOOTER */}
+
+      {/* Desktop footer */}
       <footer className="bg-dark text-white mt-auto d-none d-lg-block border-top border-secondary">
         <Container className="py-4">
           <Row className="row align-items-center gy-3">
@@ -45,7 +45,6 @@ const AppFooter = () => {
                 <p className="text-muted small mb-0">Where every story finds its shelf.</p>
               </div>
             </Col>
-
             <Col lg={6} className="d-flex flex-column align-items-lg-end gap-2">
               <div className="d-flex gap-3">
                 <a href="#" className="text-muted">
@@ -65,7 +64,6 @@ const AppFooter = () => {
           </Row>
         </Container>
       </footer>
-      {/* DESKTOP FOOTER */}
     </>
   );
 };

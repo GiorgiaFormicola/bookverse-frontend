@@ -1,5 +1,5 @@
 import { useDispatch, useSelector } from "react-redux";
-import { setBookPrivacy } from "../../redux/actions";
+import { setBookPrivacy } from "../redux/actions";
 import { Form } from "react-bootstrap";
 import { LockFill } from "react-bootstrap-icons";
 import { Globe } from "lucide-react";

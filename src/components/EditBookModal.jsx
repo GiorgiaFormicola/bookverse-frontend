@@ -1,13 +1,13 @@
 import { useState, useRef } from "react";
 import { Modal, Row, Col, Form, InputGroup, Button } from "react-bootstrap";
-import { instance } from "../../config/api";
+import { instance } from "../config/api";
 
 const EditBookModal = ({ show, onHide, book, handleSaveBook }) => {
   const [form, setForm] = useState(book);
   const [coverFile, setCoverFile] = useState(null);
   const [coverPreview, setCoverPreview] = useState(null);
   const fileInputRef = useRef(null);
-  const isLocked = (field) => !isEmpty(book[field]);
+  /* const isLocked = (field) => !isEmpty(book[field]); */
 
   if (!book || !form) return null;
   const isEmpty = (val) => {
@@ -54,8 +54,6 @@ const EditBookModal = ({ show, onHide, book, handleSaveBook }) => {
       shouldSend(book.categories, form.categories) ||
       coverFile);
 
-  //TEST
-
   const updateField = (field, value) => {
     setForm((prev) => ({ ...prev, [field]: value }));
   };
@@ -75,8 +73,6 @@ const EditBookModal = ({ show, onHide, book, handleSaveBook }) => {
 
   const handleSave = async () => {
     try {
-      /* const requests = []; */
-
       if (
         shouldSend(book.title, form.title) ||
         shouldSend(book.description, form.description) ||
@@ -129,12 +125,7 @@ const EditBookModal = ({ show, onHide, book, handleSaveBook }) => {
             <Form.Group>
               <Form.Label>Cover</Form.Label>
               <div className="mb-2">
-                <img
-                  src={coverPreview ?? form.coverURL}
-                  alt="cover preview"
-                  /* height={120} */
-                  className="rounded border book-cover"
-                />
+                <img src={coverPreview ?? form.coverURL} alt="cover preview" className="rounded border book-cover" />
               </div>
               <InputGroup>
                 <Form.Control type="file" accept="image/*" ref={fileInputRef} onChange={handleCoverChange} />

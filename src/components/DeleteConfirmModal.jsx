@@ -7,7 +7,7 @@ const DeleteConfirmModal = ({ show, onHide, onConfirm, username, bookId }) => {
         <Modal.Title>Confirm deleting</Modal.Title>
       </Modal.Header>
 
-      <Modal.Body>
+      <Modal.Body className="text-center">
         {username && (
           <>
             Are you sure you want to delete user <strong>{username}</strong>? <br /> This operation is irreversible.

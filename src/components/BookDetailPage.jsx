@@ -1,14 +1,14 @@
 import { useLocation, useNavigate, useParams } from "react-router-dom";
 import { useSelector } from "react-redux";
 import { useState, useEffect, useRef } from "react";
-import { instance } from "../../config/api";
+import { instance } from "../config/api";
 import { Container, Row, Col, Badge, Alert, ListGroup, Spinner, Form, Button } from "react-bootstrap";
-import BookSaveComponent from "../BookSaveComponent/BookSaveComponent";
-import BookStatusComponent from "../BookStatusComponent/BookStatusComponent";
-import BookReviewComponent from "../BookReviewComponent/BookReviewComponent";
-import BookPrivacyComponent from "../BookPrivacyComponent/BookPrivacyComponent";
-import BookStat from "../BookStat";
-import Review from "../Review/Review";
+import BookSaveComponent from "./BookSaveComponent";
+import BookStatusComponent from "./BookStatusComponent";
+import BookReviewComponent from "./BookReviewComponent";
+import BookPrivacyComponent from "./BookPrivacyComponent";
+import BookStat from "./BookStat";
+import Review from "./Review";
 import { BookFill, BookHalf, People, Star, ThreeDots, StarFill, Book } from "react-bootstrap-icons";
 import { ChevronLeft } from "lucide-react";
 

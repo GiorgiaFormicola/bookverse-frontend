@@ -1,7 +1,7 @@
 import { useSelector, useDispatch } from "react-redux";
 import { Book, BookHalf, BookFill } from "react-bootstrap-icons";
 import { Form } from "react-bootstrap";
-import { updateBookStatus } from "../../redux/actions";
+import { updateBookStatus } from "../redux/actions";
 
 const BookStatusComponent = ({ bookId }) => {
   const dispatch = useDispatch();
