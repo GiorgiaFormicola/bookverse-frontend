@@ -96,7 +96,7 @@ const ProfilePage = () => {
                   <DashboardCard statName="Saved" statValue={stats.saved}>
                     <HeartFill size={30} className="text-danger" />
                   </DashboardCard>
-                  <DashboardCard statName="Read" statValue={stats.read}>
+                  <DashboardCard statName="read" statValue={stats.read}>
                     <BookFill size={30} className="text-success" />
                   </DashboardCard>
                   <DashboardCard statName="Now reading" statValue={stats.reading}>

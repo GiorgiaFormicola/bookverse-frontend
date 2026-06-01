@@ -1,6 +1,6 @@
 import { useDispatch, useSelector } from "react-redux";
 import { useState } from "react";
-import { Home, Library, Search, User, Shield, LogOut } from "lucide-react";
+import { Home, Library, Search, User, Shield, LogOut, Settings } from "lucide-react";
 import { Navbar, Container, Nav, NavDropdown, Offcanvas } from "react-bootstrap";
 import { Book } from "react-bootstrap-icons";
 import { Link, useLocation, useNavigate } from "react-router-dom";
@@ -58,6 +58,10 @@ const AppNavbar = () => {
                 <User size={18} className="me-2" />
                 Profile
               </NavDropdown.Item>
+              <NavDropdown.Item as={Link} to="/me/account">
+                <Settings size={18} className="me-2" />
+                Account
+              </NavDropdown.Item>
               {user?.role === "ADMIN" && (
                 <NavDropdown.Item as={Link} to="/admin">
                   <Shield size={18} className="me-2" />
@@ -101,6 +105,10 @@ const AppNavbar = () => {
             <Link to="/me" className="nav-link d-flex align-items-center gap-2 fs-5" onClick={() => setShowOffcanvas(false)}>
               <User size={25} />
               Profile
+            </Link>
+            <Link to="/me/account" className="nav-link d-flex align-items-center gap-2 fs-5" onClick={() => setShowOffcanvas(false)}>
+              <Settings size={25} />
+              Account
             </Link>
             {user?.role === "ADMIN" && (
               <Link to="/admin" className="nav-link d-flex align-items-center gap-2 fs-5" onClick={() => setShowOffcanvas(false)}>

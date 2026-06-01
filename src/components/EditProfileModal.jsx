@@ -1,12 +1,10 @@
 import { Modal, Form, Button, Spinner, OverlayTrigger, Tooltip } from "react-bootstrap";
 import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { PlusCircleFill, InfoCircleFill, ArrowClockwise, Trash3Fill } from "react-bootstrap-icons";
-import { updateProfileInfo, updateProfilePicture, deleteProfile } from "../redux/actions";
-import { useNavigate } from "react-router-dom";
+import { PlusCircleFill, InfoCircleFill, ArrowClockwise } from "react-bootstrap-icons";
+import { updateProfileInfo, updateProfilePicture } from "../redux/actions";
 
 const EditProfileModal = ({ show, handleClose }) => {
-  const navigate = useNavigate();
   const dispatch = useDispatch();
   const user = useSelector((state) => state.profile.user);
 
@@ -15,18 +13,10 @@ const EditProfileModal = ({ show, handleClose }) => {
   const [error, setError] = useState(false);
   const [uploadLoading, setUploadLoading] = useState(false);
   const [uploadError, setUploadError] = useState(false);
-  const [showDeleteConfirm, setShowDeleteConfirm] = useState(false);
-  const [deleteLoading, setDeleteLoading] = useState(false);
-  const [deleteError, setDeleteError] = useState(false);
 
   const originalUser = { username: user?.username, displayName: user?.displayName, bio: user?.bio };
 
   const validateForm = (form) => {
-    const usernameRegex = /^(?!.*\.\.)(?!.*\.$)[a-z0-9_][a-z0-9_.]{1,29}$/;
-    if (!form.username || form.username.trim() === "" || !usernameRegex.test(form.username)) {
-      setError("Provide a valid username");
-      return false;
-    }
     if (!form.displayName || form.displayName.trim() === "" || form.displayName.length < 2 || form.displayName.length > 50) {
       setError("Provide a valid display name");
       return false;
@@ -34,7 +24,7 @@ const EditProfileModal = ({ show, handleClose }) => {
     return true;
   };
 
-  const hasChanged = () => originalUser.username !== form.username || originalUser.displayName !== form.displayName || originalUser.bio !== form.bio;
+  const hasChanged = () => originalUser.displayName !== form.displayName || originalUser.bio !== form.bio;
 
   const editProfileInfo = async () => {
     setLoading(true);
@@ -43,18 +33,13 @@ const EditProfileModal = ({ show, handleClose }) => {
       return;
     }
     try {
-      await dispatch(updateProfileInfo({ username: form.username, displayName: form.displayName, bio: form.bio || "" }));
+      await dispatch(updateProfileInfo({ username: user.username, displayName: form.displayName, bio: form.bio || "" }));
       handleClose();
     } catch (err) {
       setError(err.response?.data?.message || "Something went wrong with your request");
     } finally {
       setLoading(false);
     }
-  };
-
-  const handleDeleteAccount = async () => {
-    setDeleteLoading(true);
-    dispatch(deleteProfile());
   };
 
   return (
@@ -143,31 +128,6 @@ const EditProfileModal = ({ show, handleClose }) => {
               />
             </Form.Group>
 
-            <Form.Group className="mb-3" controlId="modalUsername">
-              <Form.Label className="fw-semibold d-flex align-items-center gap-2 fs-5">
-                Username
-                <OverlayTrigger
-                  placement="right"
-                  overlay={
-                    <Tooltip>
-                      <strong>Username</strong> must be 2–30 characters long.
-                    </Tooltip>
-                  }
-                >
-                  <span style={{ display: "inline-flex", flexShrink: 0, cursor: "pointer" }}>
-                    <InfoCircleFill />
-                  </span>
-                </OverlayTrigger>
-              </Form.Label>
-              <Form.Control
-                type="text"
-                placeholder="Choose a username"
-                value={form.username}
-                onFocus={() => setError(false)}
-                onChange={(e) => setForm((prev) => ({ ...prev, username: e.target.value }))}
-              />
-            </Form.Group>
-
             <Form.Group className="mb-3" controlId="modalBio">
               <Form.Label className="fw-semibold fs-5">Biography</Form.Label>
               <Form.Control
@@ -187,40 +147,7 @@ const EditProfileModal = ({ show, handleClose }) => {
               {loading ? "Updating profile..." : "Save"}
             </Button>
           </Form>
-          <Button
-            variant="outline-danger"
-            disabled={deleteLoading}
-            className="w-100 fw-semibold mt-2 mb-3 fs-4"
-            type="botton"
-            onClick={() => {
-              handleClose();
-              setShowDeleteConfirm(true);
-            }}
-          >
-            {deleteLoading ? "Deleting account..." : "Delete account"}
-          </Button>
         </Modal.Body>
-      </Modal>
-      <Modal show={showDeleteConfirm} onHide={() => setShowDeleteConfirm(false)} centered>
-        <Modal.Header closeButton className="px-4">
-          <Modal.Title className="text-danger">Delete account</Modal.Title>
-        </Modal.Header>
-        <Modal.Body className="px-4 text-center py-4">
-          <Trash3Fill size={48} className="text-danger mb-3" />
-          <h5>Are you sure?</h5>
-          <p className="text-muted mb-0">
-            This action is <strong>irreversible</strong>. <br /> Your account, library and reviews will be permanently deleted.
-          </p>
-          {deleteError && <p className="text-danger mt-3 mb-0 small">Something went wrong. Try again.</p>}
-        </Modal.Body>
-        <Modal.Footer className="px-4 d-flex gap-2">
-          <Button variant="secondary" className="flex-grow-1" onClick={() => setShowDeleteConfirm(false)} disabled={deleteLoading}>
-            Cancel
-          </Button>
-          <Button variant="danger" className="flex-grow-1" onClick={handleDeleteAccount} disabled={deleteLoading}>
-            {deleteLoading ? <Spinner animation="border" size="sm" /> : "Yes, delete my account"}
-          </Button>
-        </Modal.Footer>
       </Modal>
     </>
   );

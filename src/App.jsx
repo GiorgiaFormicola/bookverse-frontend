@@ -19,6 +19,7 @@ import AppLayout from "./components/AppLayout";
 import DisabledPage from "./components/DisabledPage";
 import ForgotPasswordPage from "./components/ForgotPasswordPage";
 import ResetPasswordPage from "./components/ResetPasswordPage";
+import AccountPage from "./components/AccountPage";
 
 function App() {
   useEffect(() => {
@@ -99,6 +100,17 @@ function App() {
               <ProtectedRoute adminOnly>
                 <AppLayout>
                   <AdminPage />
+                </AppLayout>
+              </ProtectedRoute>
+            }
+          />
+
+          <Route
+            path="/me/account"
+            element={
+              <ProtectedRoute>
+                <AppLayout>
+                  <AccountPage />
                 </AppLayout>
               </ProtectedRoute>
             }
