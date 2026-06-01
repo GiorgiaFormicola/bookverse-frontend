@@ -53,6 +53,7 @@ const HomePage = () => {
         ></HomePageSection>
         <HomePageSection
           filter="READ"
+          reviewed={false}
           title="Leave a review"
           loading={isLoading}
           setLoading={setLoadingSection3}

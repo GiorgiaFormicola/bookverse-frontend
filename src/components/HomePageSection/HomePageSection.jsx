@@ -6,13 +6,13 @@ import { ArrowClockwise } from "react-bootstrap-icons";
 import { ChevronRight } from "lucide-react";
 import BookCard from "../BookCard/BookCard";
 
-const HomePageSection = ({ filter, title, loading, setLoading, onEmpty }) => {
+const HomePageSection = ({ filter, reviewed, title, loading, setLoading, onEmpty }) => {
   const [books, setBooks] = useState([]);
   const [error, setError] = useState(false);
 
   const getSectionBooks = () => {
     instance
-      .get("/me/books?size=6&order=title&status=" + filter)
+      .get("/me/books?size=6&order=title&status=" + filter + (reviewed === false ? "&reviewed=false" : ""))
       .then((response) => {
         setBooks(response.data.content);
         if (response.data.content.length === 0) onEmpty?.();
