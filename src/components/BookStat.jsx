@@ -1,10 +1,10 @@
-const BookStat = ({ children, statValue, statName }) => {
+const BookStat = ({ children, statValue, statName, color = "saved" }) => {
   return (
-    <div className="bg-dark rounded-3 d-flex h-100 w-50 align-items-center px-2 px-sm-4 p-lg-2 px-xl-3 justify-content-between" /* ADD STAT-CARD CLASS */>
-      {children}
-      <div className="text-end small">
-        <p className="mb-0">{statValue}</p>
-        <p className="mb-0">{statName}</p>
+    <div className="bv-book-stat">
+      <div className={`bv-book-stat__icon bv-book-stat__icon--${color}`}>{children}</div>
+      <div className="text-end">
+        <p className="bv-book-stat__value mb-0">{statValue}</p>
+        <p className="bv-book-stat__label mb-0">{statName}</p>
       </div>
     </div>
   );

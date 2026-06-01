@@ -9,8 +9,8 @@ import BookReviewComponent from "./BookReviewComponent";
 import BookPrivacyComponent from "./BookPrivacyComponent";
 import BookStat from "./BookStat";
 import Review from "./Review";
-import { BookFill, BookHalf, People, Star, ThreeDots, StarFill, Book } from "react-bootstrap-icons";
-import { ChevronLeft } from "lucide-react";
+import { Star, ThreeDots, StarFill, BookmarkFill } from "react-bootstrap-icons";
+import { BookCheck, BookOpen, Book, ChevronLeft } from "lucide-react";
 
 const BookDetailPage = () => {
   const params = useParams();
@@ -237,7 +237,7 @@ const BookDetailPage = () => {
                   <div className="d-flex flex-column justify-content-between h-100 gap-3">
                     <BookSaveComponent book={book} />
                     {isInLibrary && (
-                      <div className="d-flex flex-column gap-1 flex-grow-1 bg-dark rounded-3 py-2">
+                      <div className="d-flex flex-column gap-2 flex-grow-1 bg-dark rounded-3 py-3">
                         <BookStatusComponent bookId={book.googleId} />
                         <BookPrivacyComponent bookId={book.googleId} />
                       </div>
@@ -245,19 +245,18 @@ const BookDetailPage = () => {
                     {!isInLibrary && bookStats && (
                       <>
                         <div className="d-flex align-items-center rounded-3 gap-2 flex-grow-1">
-                          <BookStat statValue={bookStats.saved} statName="saved">
-                            <People size={25} className="text-primary" />
+                            <BookmarkFill size={22} className="text-saved" />
                           </BookStat>
-                          <BookStat statValue={bookStats.read} statName="read">
-                            <BookFill size={25} className="text-success" />
+                          <BookStat statValue={bookStats.read} statName="read" color="read">
+                            <BookCheck size={25} className="text-read" />
                           </BookStat>
                         </div>
                         <div className="d-flex align-items-center rounded-3 gap-2  flex-grow-1">
-                          <BookStat statValue={bookStats.reading} statName="reading">
-                            <BookHalf size={25} className="text-info" />
+                          <BookStat statValue={bookStats.reading} statName="reading" color="reading">
+                            <BookOpen size={25} className="text-reading" />
                           </BookStat>
-                          <BookStat statValue={bookStats.reviews} statName="reviews">
-                            <Star size={25} className="text-warning" />
+                          <BookStat statValue={bookStats.reviews} statName="reviews" color="review">
+                            <Star size={25} className="text-review" />
                           </BookStat>
                         </div>
                       </>

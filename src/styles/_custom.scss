@@ -500,3 +500,182 @@ html {
     color: var(--accent) !important;
   }
 }
+
+// ============================================================
+//  BOOK DETAIL PAGE
+// ============================================================
+
+.bv-book-action {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  width: 100%;
+  /* padding: 0.6rem 1rem; */
+  padding: 0;
+  border-radius: var(--bs-border-radius-lg);
+  font-weight: 500;
+  font-size: 0.9rem;
+  transition: all 0.15s ease;
+  border: 1px solid var(--border);
+  cursor: pointer;
+  text-align: left;
+
+  p {
+    margin: 0;
+    flex: 1;
+  }
+
+  // Salva libro — primario
+  &--save {
+    background: var(--primary-grad);
+    border-color: transparent;
+    color: #fff;
+
+    &:hover {
+      background: var(--primary-grad-hover);
+      border-color: transparent;
+      color: #fff;
+    }
+
+    &.saved {
+      background: var(--primary-tint);
+      border-color: var(--primary);
+      color: var(--primary-light);
+
+      &:hover {
+        background: rgba(139, 92, 246, 0.25);
+      }
+    }
+  }
+
+  // Recensisci — accent
+  &--review {
+    background: transparent;
+    border-color: var(--border);
+    color: var(--text-muted);
+
+    &:hover {
+      border-color: var(--st-review);
+      color: var(--st-review);
+      background: var(--st-review-bg);
+    }
+
+    &.reviewed {
+      border-color: var(--st-review);
+      color: var(--st-review);
+      background: var(--st-review-bg);
+    }
+  }
+}
+
+.bv-book-stat {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--bs-border-radius-lg);
+  padding: 0.75rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex: 1;
+
+  &__icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 40px;
+    height: 40px;
+    border-radius: 10px;
+    &--saved {
+      background: var(--st-saved-bg);
+    }
+    &--read {
+      background: var(--st-read-bg);
+    }
+    &--reading {
+      background: var(--st-reading-bg);
+    }
+    &--review {
+      background: var(--st-review-bg);
+    }
+  }
+
+  &__value {
+    font-family: "Space Grotesk", sans-serif;
+    font-size: 1.25rem;
+    font-weight: 700;
+    color: var(--text-primary);
+    line-height: 1;
+  }
+
+  &__label {
+    font-size: 0.7rem;
+    font-weight: 500;
+    color: var(--text-muted);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+  }
+}
+
+.bv-review {
+  background: transparent !important;
+  border-color: var(--border) !important;
+  padding: 1rem 0.5rem;
+  position: relative;
+
+  &--own {
+    border-top: 2px solid var(--st-review) !important;
+    background: var(--st-review-bg) !important;
+    border-radius: var(--bs-border-radius-lg);
+    margin-top: 0.5rem;
+  }
+
+  &__name {
+    font-size: 0.9rem;
+    color: var(--text-primary);
+  }
+
+  &__date {
+    font-size: 0.75rem;
+    color: var(--text-faint);
+  }
+
+  &__comment {
+    font-size: 0.9rem;
+    color: var(--text-muted);
+    font-style: italic;
+    line-height: 1.6;
+  }
+
+  // Stelle
+  .bi-star-fill {
+    color: var(--st-toread) !important;
+  }
+  .bi-star {
+    color: var(--text-faint) !important;
+    opacity: 0.4;
+  }
+}
+
+.text-saved {
+  color: var(--st-saved) !important;
+  fill: var(--st-saved) !important;
+}
+.text-read {
+  color: var(--st-read) !important;
+}
+.text-reading {
+  color: var(--st-reading) !important;
+}
+.text-review {
+  color: var(--st-review) !important;
+}
+.text-toread {
+  color: var(--st-toread) !important;
+}
+.text-public {
+  color: var(--st-public) !important;
+}
+.text-private {
+  color: var(--st-private) !important;
+  fill: var(--st-private) !important;
+}
