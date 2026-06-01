@@ -12,20 +12,19 @@ const BookCard = ({ book, status, isPublic, navigationState }) => {
       {/*Homepage book card*/}
       {location.pathname === "/" && (
         <Col xs={5} sm={4} md={3} lg={2}>
-          <Card className="bg-transparent border-0 book-card ">
-            <Card.Img
-              className="book-cover rounded-3"
-              src={book.coverURL ? book.coverURL : defaultCover}
-              alt={book.title}
-              onClick={() => navigate("/books/" + book.googleId)}
-            />
-            <Card.ImgOverlay className="d-none d-lg-flex align-items-end py-0 px-2 overlay rounded-3">
-              <Card.Title className="fs-6">{book.title}</Card.Title>
-            </Card.ImgOverlay>
-            <Card.Body className="d-lg-none p-1">
-              <Card.Text className="book-title">{book.title}</Card.Text>
-            </Card.Body>
-          </Card>
+          <div className="bv-book-card" onClick={() => navigate("/books/" + book.googleId)}>
+            <div className="bv-book-card__cover-wrap">
+              <img className="bv-book-card__cover" src={book.coverURL ? book.coverURL : defaultCover} alt={book.title} />
+              <div className="bv-book-card__overlay">
+                <span className="bv-book-card__title-overlay">{book.title}</span>
+                <span className="bv-book-card__author-overlay">{book.authors?.[0] || "Unknown author"}</span>
+              </div>
+            </div>
+            <div className="bv-book-card__body d-lg-none">
+              <p className="bv-book-card__title mb-0">{book.title}</p>
+              <p className="bv-book-card__author mb-0">{book.authors?.[0] || "Unknown author"}</p>
+            </div>
+          </div>
         </Col>
       )}
 

@@ -1,16 +1,10 @@
 // ============================================================
+//  LAYOUT
+// ============================================================
+// ============================================================
 //  BACKGROUND AMBIENT
 // ============================================================
 
-/* body {
-  background-color: var(--bg-deep);
-  background:
-    radial-gradient(60vw 50vh at 12% -5%, rgba(124, 58, 237, 0.22), transparent 60%),
-    radial-gradient(55vw 45vh at 95% 8%, rgba(168, 85, 247, 0.16), transparent 55%),
-    radial-gradient(40vw 40vh at 60% 110%, rgba(124, 58, 237, 0.18), transparent 60%);
-  background-attachment: fixed;
-  min-height: 100vh;
-} */
 body {
   min-height: 100vh;
   background:
@@ -262,5 +256,247 @@ html {
     &:hover {
       color: var(--accent);
     }
+  }
+}
+
+// ============================================================
+//  HOMEPAGE
+// ============================================================
+
+// ============================================================
+//  STAT CARDS — DASHBOARD
+// ============================================================
+
+.bv-stat-card {
+  border: 1px solid var(--border);
+  border-radius: var(--bs-border-radius-lg);
+  padding: 1.5rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 1rem;
+  position: relative;
+  overflow: hidden;
+
+  &::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 2px;
+    z-index: 1;
+  }
+
+  &__icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 48px;
+    height: 48px;
+    border-radius: 12px;
+    flex-shrink: 0;
+    position: relative;
+    z-index: 1;
+  }
+
+  &__body {
+    display: flex;
+    flex-direction: column;
+    gap: 0.1rem;
+    position: relative;
+    z-index: 1;
+  }
+
+  &__value {
+    font-family: "Space Grotesk", sans-serif;
+    font-size: 1.75rem;
+    font-weight: 700;
+    line-height: 1;
+    color: var(--text-primary);
+    text-align: end;
+  }
+
+  &__label {
+    font-size: 0.75rem;
+    font-weight: 500;
+    color: var(--text-muted);
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    text-align: end;
+  }
+
+  &--saved {
+    background: radial-gradient(ellipse 80% 40% at 50% 0%, var(--st-saved-bg) 0%, transparent 70%), var(--surface);
+    box-shadow: 0 0 20px rgba(167, 139, 250, 0.08);
+    &::before {
+      background: var(--st-saved);
+    }
+    .bv-stat-card__icon {
+      background: var(--st-saved-bg);
+      color: var(--st-saved);
+    }
+  }
+
+  &--read {
+    background: radial-gradient(ellipse 80% 40% at 50% 0%, var(--st-read-bg) 0%, transparent 70%), var(--surface);
+    box-shadow: 0 0 20px rgba(52, 211, 153, 0.08);
+    &::before {
+      background: var(--st-read);
+    }
+    .bv-stat-card__icon {
+      background: var(--st-read-bg);
+      color: var(--st-read);
+    }
+  }
+
+  &--reading {
+    background: radial-gradient(ellipse 80% 40% at 50% 0%, var(--st-reading-bg) 0%, transparent 70%), var(--surface);
+    box-shadow: 0 0 20px rgba(56, 189, 248, 0.08);
+    &::before {
+      background: var(--st-reading);
+    }
+    .bv-stat-card__icon {
+      background: var(--st-reading-bg);
+      color: var(--st-reading);
+    }
+  }
+
+  &--toread {
+    background: radial-gradient(ellipse 80% 40% at 50% 0%, var(--st-toread-bg) 0%, transparent 70%), var(--surface);
+    box-shadow: 0 0 20px rgba(251, 191, 36, 0.08);
+    &::before {
+      background: var(--st-toread);
+    }
+    .bv-stat-card__icon {
+      background: var(--st-toread-bg);
+      color: var(--st-toread);
+    }
+  }
+
+  &--review {
+    background: radial-gradient(ellipse 80% 40% at 50% 0%, var(--st-review-bg) 0%, transparent 70%), var(--surface);
+    box-shadow: 0 0 20px rgba(244, 114, 182, 0.08);
+    &::before {
+      background: var(--st-review);
+    }
+    .bv-stat-card__icon {
+      background: var(--st-review-bg);
+      color: var(--st-review);
+    }
+  }
+}
+
+// ============================================================
+//  BOOK CARD — HOMEPAGE GRID
+// ============================================================
+
+.bv-book-card {
+  cursor: pointer;
+  transition: transform 0.2s ease;
+
+  &:hover {
+    transform: translateY(-4px);
+
+    .bv-book-card__overlay {
+      opacity: 1;
+    }
+
+    .bv-book-card__cover {
+      box-shadow: 0 8px 24px rgba(139, 92, 246, 0.25);
+    }
+  }
+
+  &__cover-wrap {
+    position: relative;
+    border-radius: calc(var(--bs-border-radius-lg) + 2px);
+    overflow: hidden;
+    transform: translateZ(0);
+    -webkit-transform: translateZ(0);
+    isolation: isolate;
+    will-change: transform;
+    -webkit-mask-image: -webkit-radial-gradient(white, black);
+  }
+
+  &__cover {
+    width: 100%;
+    aspect-ratio: 3 / 4;
+    object-fit: cover;
+    display: block;
+    border-radius: 0;
+    transition: box-shadow 0.2s ease;
+  }
+
+  &__overlay {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(to top, rgba(9, 9, 15, 0.98) 0%, rgba(9, 9, 15, 0.7) 40%, transparent 70%);
+    border-radius: var(--bs-border-radius-lg);
+    opacity: 0;
+    transition: opacity 0.25s ease;
+    display: none;
+    align-items: flex-start;
+    padding: 0.75rem;
+    flex-direction: column;
+    justify-content: flex-end;
+
+    @media (min-width: 992px) {
+      display: flex;
+    }
+  }
+
+  &__title-overlay {
+    font-size: 0.8rem;
+    font-weight: 600;
+    color: var(--text-primary);
+    line-height: 1.3;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+
+  &__author-overlay {
+    font-size: 0.7rem;
+    font-weight: 400;
+    color: var(--text-muted);
+    display: block;
+    margin-top: 2px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  &__body {
+    padding: 0.4rem 0.1rem 0;
+  }
+
+  &__title {
+    font-size: 0.75rem;
+    font-weight: 600;
+    color: var(--text-primary);
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    line-height: 1.3;
+  }
+
+  &__author {
+    font-size: 0.7rem;
+    color: var(--text-faint);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    margin-top: 2px;
+  }
+}
+
+.view-more-link {
+  color: var(--primary-light) !important;
+  transition: color 0.15s ease;
+
+  &:hover {
+    color: var(--accent) !important;
   }
 }

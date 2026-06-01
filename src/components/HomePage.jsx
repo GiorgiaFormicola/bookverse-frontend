@@ -18,24 +18,16 @@ const HomePage = () => {
 
   return (
     <>
-      <Container fluid className="d-flex flex-column container-lg py-4 px-3 px-lg-4 gap-4 gap-lg-3">
-        <div className="mb-2 mt-lg-2">
-          <Row className="mb-3 mb-lg-4">
+      <Container fluid className="d-flex flex-column container-lg py-4 px-3 px-lg-4 gap-5 gap-lg-3">
+        <div className="my-2 mt-lg-2">
+          <Row className="mb-4">
             <Col>
               <h1 className="mb-0">Your Dashboard</h1>
             </Col>
           </Row>
-          {/* Dashboard */}
-          <Row className="g-2 d-sm-none">
-            <Dashboard size="xs" />
+          <Row className="g-3 g-sm-4 g-lg-3 g-xl-4 mb-lg-3">
+            <Dashboard />
           </Row>
-          <Row className="g-3 d-none d-sm-flex d-lg-none">
-            <Dashboard size="sm" />
-          </Row>
-          <Row className="g-3 mb-3 d-none d-lg-flex">
-            <Dashboard size="lg" />
-          </Row>
-          {/* Dashboard */}
         </div>
         <HomePageSection
           filter="TO_READ"

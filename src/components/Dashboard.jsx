@@ -1,7 +1,8 @@
 import { useSelector } from "react-redux";
 import DashboardCard from "./DashboardCard";
-import { HeartFill, BookFill, Book, BookHalf } from "react-bootstrap-icons";
-const Dashboard = ({ size }) => {
+import { BookmarkFill } from "react-bootstrap-icons";
+import { Book, BookCheck, BookOpen } from "lucide-react";
+const Dashboard = () => {
   const library = useSelector((currentState) => currentState.profile.savedBooks);
 
   const stats = Object.values(library).reduce(
@@ -17,56 +18,57 @@ const Dashboard = ({ size }) => {
 
   return (
     <>
-      {size === "xs" && (
+      {/* {size === "xs" && (
         <>
-          <DashboardCard statName="Saved" statValue={stats.saved}>
-            <HeartFill size={40} className="text-danger" />
+          <DashboardCard statName="Saved" statValue={stats.saved} color="saved">
+            <BookmarkFill size={24} className="text-saved" />
           </DashboardCard>
-          <DashboardCard statName="Read" statValue={stats.read}>
-            <BookFill size={40} className="text-success" />
+          <DashboardCard statName="Read" statValue={stats.read} color="read">
+            <BookCheck size={30} className="text-read" />
           </DashboardCard>
-          <DashboardCard statName="To read" statValue={stats.toRead}>
-            <Book size={40} className="text-warning" />
+          <DashboardCard statName="To read" statValue={stats.toRead} color="toread">
+            <Book size={30} className="text-toread" />
           </DashboardCard>
-          <DashboardCard statName="Reading" statValue={stats.reading}>
-            <BookHalf size={40} className="text-info" />
+          <DashboardCard statName="Reading" statValue={stats.reading} color="reading">
+            <BookOpen size={30} className="text-reading" />
           </DashboardCard>
         </>
-      )}
+      )} */}
 
-      {size === "sm" && (
+      {/* {size === "sm" && (
         <>
-          <DashboardCard statName="Books saved" statValue={stats.saved}>
-            <HeartFill size={50} className="text-danger" />
+          <DashboardCard statName="Books saved" statValue={stats.saved} color="saved">
+            <BookmarkFill size={24} className="text-savedr" />
           </DashboardCard>
-          <DashboardCard statName="Books read" statValue={stats.read}>
-            <BookFill size={50} className="text-success" />
+          <DashboardCard statName="Books read" statValue={stats.read} color="read">
+            <BookCheck size={30} className="text-read" />
           </DashboardCard>
-          <DashboardCard statName="Currently reading" statValue={stats.reading}>
-            <BookHalf size={50} className="text-info" />
+          <DashboardCard statName="Currently reading" statValue={stats.reading} color="reading">
+            <BookOpen size={30} className="text-reading" />
           </DashboardCard>
-          <DashboardCard statName="Books to read" statValue={stats.toRead}>
-            <Book size={50} className="text-warning" />
+          <DashboardCard statName="Books to read" statValue={stats.toRead} color="toread">
+            <Book size={30} className="text-toread" />
           </DashboardCard>
         </>
-      )}
+      )} */}
 
-      {size === "lg" && (
-        <>
-          <DashboardCard statName="Books saved" statValue={stats.saved}>
-            <HeartFill size={45} className="text-danger" />
-          </DashboardCard>
-          <DashboardCard statName="Books read" statValue={stats.read}>
-            <BookFill size={45} className="text-success" />
-          </DashboardCard>
-          <DashboardCard statName="Currently reading" statValue={stats.reading}>
-            <BookHalf size={45} className="text-info" />
-          </DashboardCard>
-          <DashboardCard statName="Books to read" statValue={stats.toRead}>
-            <Book size={45} className="text-warning" />
-          </DashboardCard>
-        </>
-      )}
+      {/* {size === "lg" && (
+        <> */}
+      <DashboardCard statName="Books saved" statValue={stats.saved} color="saved">
+        <BookmarkFill size={24} className="text-saved" />
+      </DashboardCard>
+      <DashboardCard statName="Books read" statValue={stats.read} color="read">
+        <BookCheck size={30} className="text-read" />
+      </DashboardCard>
+      <DashboardCard statName="Now reading" statValue={stats.reading} color="reading">
+        <BookOpen size={30} className="text-reading" />
+      </DashboardCard>
+      <DashboardCard statName="To read" statValue={stats.toRead} color="toread">
+        <Book size={30} className="text-toread" />
+      </DashboardCard>
+
+      {/*  </>
+      )} */}
     </>
   );
 };

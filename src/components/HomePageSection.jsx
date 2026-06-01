@@ -72,15 +72,14 @@ const HomePageSection = ({ filter, reviewed, title, loading, setLoading, onEmpty
             </Col>
           ) : loading ? (
             Array.from({ length: 6 }).map((_, i) => (
-              <Col key={i} xs={6} sm={5} md={3} lg={2}>
-                <Card className="bg-transparent border-0">
-                  <div className="placeholder-glow rounded-3 book-cover">
-                    <div className="placeholder rounded-3 w-100 h-100" />
-                  </div>
-                  <Card.Body className="d-lg-none p-0 py-1 placeholder-glow">
-                    <div className="placeholder rounded w-75" style={{ height: 14 }} />
-                  </Card.Body>
-                </Card>
+              <Col key={i} xs={5} sm={4} md={3} lg={2}>
+                <div className="bv-book-card__cover-wrap placeholder-glow">
+                  <div className="placeholder w-100" style={{ aspectRatio: "3/4", borderRadius: "var(--bs-border-radius-lg)" }} />
+                </div>
+                <div className="d-lg-none mt-2 placeholder-glow">
+                  <div className="placeholder rounded w-75" style={{ height: 12 }} />
+                  <div className="placeholder rounded w-50 mt-1" style={{ height: 10 }} />
+                </div>
               </Col>
             ))
           ) : (
