@@ -6,7 +6,7 @@ import { Container, Row, Col, Button, Card, Alert } from "react-bootstrap";
 import BookCard from "../BookCard/BookCard";
 import DashboardCard from "../DashboardCard";
 import EditProfileModal from "../EditProfileModal";
-import { HeartFill, Book, BookHalf, BookFill, ThreeDots, ArrowClockwise } from "react-bootstrap-icons";
+import { HeartFill, Book, BookHalf, BookFill, ThreeDots, ArrowClockwise, Star } from "react-bootstrap-icons";
 
 const ProfilePage = () => {
   const navigate = useNavigate();
@@ -18,6 +18,7 @@ const ProfilePage = () => {
   const [currentPage, setCurrentPage] = useState(0);
   const [hasNext, setHasNext] = useState(false);
   const [showEditModal, setShowEditModal] = useState(false);
+  const [totalReviews, setTotalReviews] = useState(0);
 
   const stats = Object.values(library).reduce(
     (acc, book) => {
@@ -51,12 +52,22 @@ const ProfilePage = () => {
       .finally(() => setLoading(false));
   };
 
+  const getTotalReviews = () => {
+    instance
+      .get("/users/me")
+      .then((response) => setTotalReviews(response.data.totalReviews))
+      .catch((err) => {
+        if (err.response?.data?.error === "ACCOUNT_DISABLED") return;
+      });
+  };
+
   const loadNextPage = () => {
     getUserBookshelf(currentPage + 1, true);
   };
 
   useEffect(() => {
     getUserBookshelf(currentPage, false);
+    getTotalReviews();
   }, []);
 
   return (
@@ -82,17 +93,17 @@ const ProfilePage = () => {
               </div>
               <div>
                 <Row className="g-2 g-md-2 g-lg-1 align-items-stretch align-items-md-center">
-                  <DashboardCard statName="Books saved" statValue={stats.saved}>
+                  <DashboardCard statName="Saved" statValue={stats.saved}>
                     <HeartFill size={30} className="text-danger" />
                   </DashboardCard>
-                  <DashboardCard statName="Books read" statValue={stats.read}>
+                  <DashboardCard statName="Read" statValue={stats.read}>
                     <BookFill size={30} className="text-success" />
                   </DashboardCard>
                   <DashboardCard statName="Now reading" statValue={stats.reading}>
                     <BookHalf size={30} className="text-info" />
                   </DashboardCard>
-                  <DashboardCard statName="Books to read" statValue={stats.toRead} className="d-md-block">
-                    <Book size={30} className="text-warning" />
+                  <DashboardCard statName="Reviewed" statValue={totalReviews} className="d-md-block">
+                    <Star size={30} className="text-warning" />
                   </DashboardCard>
                 </Row>
               </div>
