@@ -9,7 +9,7 @@ import BookReviewComponent from "./BookReviewComponent";
 import BookPrivacyComponent from "./BookPrivacyComponent";
 import BookStat from "./BookStat";
 import Review from "./Review";
-import { Star, ThreeDots, StarFill, BookmarkFill } from "react-bootstrap-icons";
+import { Star, ThreeDots, StarFill, BookmarkFill, Book as BSBook } from "react-bootstrap-icons";
 import { BookCheck, BookOpen, Book, ChevronLeft } from "lucide-react";
 
 const BookDetailPage = () => {
@@ -228,43 +228,53 @@ const BookDetailPage = () => {
         </div>
         {mappedBook && (
           <Row className="justify-content-center gap-4 gap-lg-0 pt-4 pt-lg-4 mt-lg-1 mt-xxl-2">
-            <Col xs={12} sm={12} md={12} lg={3}>
-              <Row className="g-2 g-sm-4 g-lg-3 ">
-                <Col xs={6} sm={5} md={4} lg={12} xl={11}>
-                  <img src={mappedBook.coverURL} className="book-cover rounded-3"></img>
-                </Col>
-                <Col xs={6} sm={6} md={8} lg={12} xl={11} className="flex-grow-1 px-4 px-lg-2 me-xl-4">
-                  <div className="d-flex flex-column justify-content-between h-100 gap-3">
-                    <BookSaveComponent book={book} />
-                    {isInLibrary && (
-                      <div className="d-flex flex-column gap-2 flex-grow-1 bg-dark rounded-3 py-3">
-                        <BookStatusComponent bookId={book.googleId} />
-                        <BookPrivacyComponent bookId={book.googleId} />
+            <Col xs={12} sm={12} md={12} lg={3} className="align-self-stretch">
+              <div className="bv-book-sidebar px-3 py-4 px-sm-4 px-lg-3 px-xl-2 h-100">
+                <Row className="g-3 g-sm-4 g-lg-3 justify-content-center">
+                  <Col xs={6} sm={5} md={4} lg={12} xl={11}>
+                    <img src={mappedBook.coverURL} className="book-cover rounded-3"></img>
+                  </Col>
+                  <Col xs={6} sm={6} md={8} lg={12} xl={11} className="flex-grow-1 px-lg-2 ms-xl-2 me-xl-2">
+                    <div className="d-flex flex-column justify-content-between h-100 gap-3">
+                      <div className="flex-grow-1">
+                        <BookSaveComponent book={book} />
                       </div>
-                    )}
-                    {!isInLibrary && bookStats && (
-                      <>
-                        <div className="d-flex align-items-center rounded-3 gap-2 flex-grow-1">
-                            <BookmarkFill size={22} className="text-saved" />
-                          </BookStat>
-                          <BookStat statValue={bookStats.read} statName="read" color="read">
-                            <BookCheck size={25} className="text-read" />
-                          </BookStat>
+
+                      {isInLibrary && (
+                        <div className="d-flex flex-column gap-2 flex-grow-1 bv-book-controls py-3">
+                          <BookStatusComponent bookId={book.googleId} />
+                          <BookPrivacyComponent bookId={book.googleId} />
                         </div>
-                        <div className="d-flex align-items-center rounded-3 gap-2  flex-grow-1">
-                          <BookStat statValue={bookStats.reading} statName="reading" color="reading">
-                            <BookOpen size={25} className="text-reading" />
-                          </BookStat>
-                          <BookStat statValue={bookStats.reviews} statName="reviews" color="review">
-                            <Star size={25} className="text-review" />
-                          </BookStat>
+                      )}
+
+                      {!isInLibrary && bookStats && (
+                        <div className="d-flex flex-column gap-2 flex-grow-1">
+                          <div className="d-flex gap-2 flex-grow-1">
+                            <BookStat statValue={bookStats.saved} statName="saved" color="saved">
+                              <BookmarkFill size={20} className="text-saved" />
+                            </BookStat>
+                            <BookStat statValue={bookStats.read} statName="read" color="read">
+                              <BookCheck size={20} className="text-read" />
+                            </BookStat>
+                          </div>
+                          <div className="d-flex gap-2 flex-grow-1">
+                            <BookStat statValue={bookStats.reading} statName="reading" color="reading">
+                              <BookOpen size={20} className="text-reading" />
+                            </BookStat>
+                            <BookStat statValue={bookStats.reviews} statName="reviews" color="review">
+                              <Star size={20} className="text-review" />
+                            </BookStat>
+                          </div>
                         </div>
-                      </>
-                    )}
-                    <BookReviewComponent isReviewed={!!currentUserReview} handleReviewClick={handleReviewClick} />
-                  </div>
-                </Col>
-              </Row>
+                      )}
+
+                      <div className="flex-grow-1">
+                        <BookReviewComponent isReviewed={!!currentUserReview} handleReviewClick={handleReviewClick} />
+                      </div>
+                    </div>
+                  </Col>
+                </Row>
+              </div>
             </Col>
             <Col xs={12} sm={12} md={12} lg={9}>
               <Row className="g-3">
@@ -277,13 +287,13 @@ const BookDetailPage = () => {
                 <Col xs={12}>
                   <div className="d-flex flex-wrap gap-2">
                     {mappedBook.categories.map((category, i) => (
-                      <Badge key={i} bg="primary rounded-pill">
+                      <Badge key={i} bg="accent" className="rounded-pill">
                         {category}
                       </Badge>
                     ))}
                   </div>
                 </Col>
-                <Col xs={12} className="order-lg-2 pt-xxl-4 pb-xxl-3">
+                <Col xs={12} className="order-lg-2 pb-xxl-4">
                   {mappedBook.description && (
                     <div className="mb-2">
                       {/* <Card className="border-0 shadow-sm mb-2 mb-lg-4">
@@ -330,7 +340,7 @@ const BookDetailPage = () => {
                   <h5 className="mb-3">Rewiews ({totalReviews})</h5>
                   {!reviewsLoading && !reviewsError && totalReviews === 0 && (
                     <div className="text-center text-muted py-4">
-                      <Book size={40} className="mb-2 opacity-50" />
+                      <BSBook size={40} className="mb-2 opacity-50" />
                       <p className="mb-1">No reviews yet</p>
                       <span className="small">Be the first to review this book!</span>
                     </div>
@@ -353,17 +363,18 @@ const BookDetailPage = () => {
                   ) : (
                     <Col xs={12}>
                       <ListGroup variant="flush">
-                        {reviews
-                          .filter((review) => review.user?.id !== user?.id)
-                          .map((review) => (
-                            <Review key={review.id} review={review} isUserReview={false} />
-                          ))}
+                        {reviews.map((review) => (
+                          <Review key={review.id} review={review} isUserReview={false} />
+                        ))}
                         {hasNext && (
                           <Col xs={12} className="text-center">
                             <ThreeDots size={50} style={{ cursor: "pointer" }} onClick={loadNextPage} />
                           </Col>
                         )}
-                        {currentUserReview && !editingReview && (
+                      </ListGroup>
+
+                      {currentUserReview && !editingReview && (
+                        <div className="bv-review-own-divider">
                           <Review
                             key={currentUserReview.id}
                             review={currentUserReview}
@@ -371,22 +382,23 @@ const BookDetailPage = () => {
                             handleReviewClick={handleReviewClick}
                             setUserReview={setUserReview}
                           />
-                        )}
-                      </ListGroup>
+                        </div>
+                      )}
                     </Col>
                   )}
 
                   {showForm && (
                     <Col xs={12} ref={reviewFormRef}>
-                      <div className=" pt-3 border-top border-light border-opacity-50 ">
+                      <div className="bv-review-form mt-3">
                         <h5 className="fw-semibold mb-3">{currentUserReview ? "Edit" : "Leave"} your review</h5>
+
                         <div className="d-flex gap-2 mb-3">
                           {[1, 2, 3, 4, 5].map((star) => (
                             <StarFill
                               key={star}
-                              size={28}
+                              size={26}
                               role="button"
-                              className={star <= (hoveredRating || userReview.rating) ? "text-primary" : "text-light opacity-25"}
+                              className={star <= (hoveredRating || userReview.rating) ? "text-accent" : "text-faint opacity-25"}
                               style={{ cursor: "pointer" }}
                               onMouseEnter={() => setHoveredRating(star)}
                               onMouseLeave={() => setHoveredRating(0)}
@@ -394,6 +406,7 @@ const BookDetailPage = () => {
                             />
                           ))}
                         </div>
+
                         <Form
                           onSubmit={(e) => {
                             e.preventDefault();
@@ -413,18 +426,20 @@ const BookDetailPage = () => {
                               as="textarea"
                               rows={5}
                               placeholder="Share with other readers your opinion..."
-                              className="rounded-3 border-secondary-subtle shadow-none"
+                              className="shadow-none"
                               value={userReview.comment}
                               onChange={(e) => setUserReview({ ...userReview, comment: e.target.value })}
                             />
                           </Form.Group>
+
                           <div className="d-flex justify-content-between align-items-center">
-                            <small className="text-muted">{userReview.rating > 0 ? `${userReview.rating}/5 selected` : "Select a rating"}</small>
+                            <small style={{ color: "var(--text-faint)" }}>
+                              {userReview.rating > 0 ? `${userReview.rating}/5 selected` : "Select a rating"}
+                            </small>
                             <div className="d-flex gap-2">
                               <Button
                                 type="button"
-                                variant="secondary"
-                                className="px-4 fw-semibold rounded-3"
+                                className="px-4 fw-semibold bv-btn-close"
                                 onClick={() => {
                                   setShowForm(false);
                                   setEditingReview(false);
@@ -436,16 +451,12 @@ const BookDetailPage = () => {
                               <Button
                                 type="submit"
                                 disabled={userReview.rating === 0 || userReview.comment.trim() === "" || (currentUserReview && !isFormDirty)}
-                                className="px-4 fw-semibold rounded-3"
+                                className="px-4 fw-semibold bv-btn-confirm"
                               >
                                 {currentUserReview ? "Edit" : "Publish"}
                               </Button>
                               {currentUserReview && (
-                                <Button
-                                  type="button"
-                                  className="px-4 fw-semibold bg-danger border-danger rounded-3"
-                                  onClick={() => deleteReview(currentUserReview.id)}
-                                >
+                                <Button type="button" className="px-4 fw-semibold bv-btn-delete" onClick={() => deleteReview(currentUserReview.id)}>
                                   Delete
                                 </Button>
                               )}

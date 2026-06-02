@@ -1,3 +1,53 @@
+:root {
+  // Brand
+  --primary: #{$primary};
+  --primary-strong: #7c3aed;
+  --primary-light: #a78bfa;
+  --primary-grad: linear-gradient(135deg, #7c3aed 0%, #a855f7 100%);
+  --primary-grad-hover: linear-gradient(135deg, #6d28d9 0%, #9333ea 100%);
+  --primary-tint: rgba(139, 92, 246, 0.16);
+  --primary-glow: rgba(139, 92, 246, 0.45);
+
+  // Accento lime
+  --accent: #c4f042;
+  --accent-strong: #aee02f;
+  --accent-glow: rgba(196, 240, 66, 0.3);
+
+  // Superfici
+  --bg-deep: #09090f;
+  --surface: #14141f;
+  --surface-raised: #1e1e2e;
+  --surface-hover: #262636;
+
+  // Testo
+  --text-primary: #ecebf5;
+  --text-muted: #9696b4;
+  --text-faint: #6b6b88;
+
+  // Bordi
+  --border: #2a2a3e;
+  --border-strong: #3a3a52;
+
+  // Link
+  --link: #b794ff;
+
+  // Stati libro
+  --st-saved: #a78bfa;
+  --st-toread: #fbbf24;
+  --st-reading: #38bdf8;
+  --st-read: #34d399;
+  --st-review: #f472b6;
+  --st-saved-bg: rgba(167, 139, 250, 0.14);
+  --st-toread-bg: rgba(251, 191, 36, 0.14);
+  --st-reading-bg: rgba(56, 189, 248, 0.14);
+  --st-read-bg: rgba(52, 211, 153, 0.14);
+  --st-review-bg: rgba(244, 114, 182, 0.14);
+  --st-public: #ecebf5;
+  --st-private: #6b6b88;
+  --st-public-bg: rgba(34, 211, 238, 0.12);
+  --st-private-bg: rgba(107, 107, 136, 0.12);
+}
+
 // ============================================================
 //  LAYOUT
 // ============================================================
@@ -13,6 +63,158 @@ body {
     radial-gradient(55vw 45vh at 95% 8%, rgba(168, 85, 247, 0.16), transparent 55%),
     radial-gradient(40vw 40vh at 60% 110%, rgba(124, 58, 237, 0.18), transparent 60%), linear-gradient(to top, #09090f 0%, #0d0d1a 40%, #110d1f 100%);
   background-attachment: fixed;
+}
+
+// ============================================================
+//  GENERICS
+// ============================================================
+.form-control,
+.form-select {
+  background-color: var(--surface);
+  border-color: var(--border);
+  color: var(--text-primary);
+
+  /*  &:hover:not(:focus) {
+    border-color: var(--border-strong);
+  } */
+  &:focus {
+    background-color: var(--surface);
+    border-color: var(--border);
+    color: var(--text-primary);
+    box-shadow: 0 0 0 0.2rem var(--primary-glow);
+  }
+  &::placeholder {
+    color: var(--text-faint);
+  }
+}
+.input-group-text {
+  background-color: var(--surface-raised);
+  border-color: var(--border);
+  color: var(--text-faint);
+}
+
+//BADGE
+
+@mixin soft-badge($color, $bg) {
+  background-color: $bg !important;
+  color: $color !important;
+  box-shadow: inset 0 0 0 1px rgba($color, 0.35);
+}
+.badge {
+  &.bg-saved {
+    @include soft-badge(#a78bfa, rgba(167, 139, 250, 0.14));
+  }
+  &.bg-warning {
+    @include soft-badge(#fbbf24, rgba(251, 191, 36, 0.14));
+  }
+  &.bg-reading,
+  &.bg-info {
+    @include soft-badge(#38bdf8, rgba(56, 189, 248, 0.14));
+  }
+  &.bg-read,
+  &.bg-success {
+    @include soft-badge(#34d399, rgba(52, 211, 153, 0.14));
+  }
+  &.bg-review {
+    @include soft-badge(#f472b6, rgba(244, 114, 182, 0.14));
+  }
+  &.bg-danger {
+    @include soft-badge(#fb7185, rgba(251, 113, 133, 0.14));
+  }
+  &.bg-secondary {
+    @include soft-badge(#9696b4, rgba(150, 150, 180, 0.14));
+  }
+  &.bg-primary {
+    @include soft-badge(#a78bfa, rgba(139, 92, 246, 0.16));
+  }
+  &.bg-accent {
+    @include soft-badge(#c4f042, rgba(196, 240, 66, 0.14));
+  }
+}
+
+::selection {
+  background: var(--text-faint);
+  /*   color: #0d0d1a; */
+}
+
+//BOTTONI
+// Close — grigio neutro
+.bv-btn-close {
+  background: var(--surface-hover) !important;
+  border-color: var(--border-strong) !important;
+  color: var(--text-muted) !important;
+  font-weight: 600;
+
+  &:hover {
+    background: var(--border) !important;
+    color: var(--text-primary) !important;
+  }
+}
+
+// Confirm — primario
+.bv-btn-confirm {
+  background: var(--accent) !important;
+  border-color: transparent !important;
+  color: var(--bg-deep) !important;
+  font-weight: 600;
+
+  &:hover {
+    background: var(--accent-strong) !important;
+  }
+
+  &:disabled {
+    background: var(--accent) !important;
+    opacity: 0.4;
+  }
+}
+
+// Delete — danger soft
+.bv-btn-delete {
+  background: rgba(251, 113, 133, 0.12) !important;
+  border-color: rgba(251, 113, 133, 0.35) !important;
+  color: #fb7185 !important;
+  font-weight: 600;
+
+  &:hover {
+    background: rgba(251, 113, 133, 0.22) !important;
+    border-color: #fb7185 !important;
+  }
+}
+
+.text-saved {
+  color: var(--st-saved) !important;
+  fill: var(--st-saved) !important;
+}
+.text-read {
+  color: var(--st-read) !important;
+}
+.text-reading {
+  color: var(--st-reading) !important;
+}
+.text-review {
+  color: var(--st-review) !important;
+}
+.text-toread {
+  color: var(--st-toread) !important;
+}
+.text-public {
+  color: var(--st-public) !important;
+}
+.text-private {
+  color: var(--st-private) !important;
+  fill: var(--st-private) !important;
+}
+.text-accent {
+  color: var(--accent) !important;
+  fill: var(--accent) !important;
+}
+.text-faint {
+  color: var(--text-faint) !important;
+  fill: var(--text-faint) !important;
+}
+.text-muted {
+  color: var(--text-muted) !important;
+  fill: var(--text-muted) !important;
 }
 
 // ============================================================
@@ -504,12 +706,19 @@ html {
 // ============================================================
 //  BOOK DETAIL PAGE
 // ============================================================
+.bv-book-sidebar {
+  background: var(--surface-raised);
+  border: 1px solid var(--border);
+  border-radius: var(--bs-border-radius-lg);
+  /* padding: 1.25rem; */
+}
 
 .bv-book-action {
   display: flex;
   align-items: center;
   gap: 0.5rem;
   width: 100%;
+  height: 100%;
   /* padding: 0.6rem 1rem; */
   padding: 0;
   border-radius: var(--bs-border-radius-lg);
@@ -555,15 +764,15 @@ html {
     color: var(--text-muted);
 
     &:hover {
-      border-color: var(--st-review);
-      color: var(--st-review);
-      background: var(--st-review-bg);
+      border-color: var(--accent);
+      color: var(--accent);
+      background: var(--accent-glow);
     }
 
     &.reviewed {
-      border-color: var(--st-review);
-      color: var(--st-review);
-      background: var(--st-review-bg);
+      border-color: var(--accent);
+      color: var(--accent);
+      background: var(--accent-glow);
     }
   }
 }
@@ -577,6 +786,7 @@ html {
   align-items: center;
   justify-content: space-between;
   flex: 1;
+  height: 100%;
 
   &__icon {
     display: flex;
@@ -623,10 +833,12 @@ html {
   position: relative;
 
   &--own {
-    border-top: 2px solid var(--st-review) !important;
-    background: var(--st-review-bg) !important;
-    border-radius: var(--bs-border-radius-lg);
-    margin-top: 0.5rem;
+    border-top: 2px solid var(--st-accent) !important;
+    border-left: 1px solid var(--border) !important;
+    border-right: 1px solid var(--border) !important;
+    border-bottom: 1px solid var(--border) !important;
+    border-radius: 0 0 var(--bs-border-radius-lg) var(--bs-border-radius-lg) !important;
+    background: var(--surface-raised) !important;
   }
 
   &__name {
@@ -656,26 +868,25 @@ html {
   }
 }
 
-.text-saved {
-  color: var(--st-saved) !important;
-  fill: var(--st-saved) !important;
+.bv-review-own-divider {
+  border-top: 2px solid var(--accent);
 }
-.text-read {
-  color: var(--st-read) !important;
+
+.bv-book-controls {
+  background: var(--surface-raised);
+  border: 1px solid var(--border);
+  border-radius: var(--bs-border-radius-lg);
+  > div {
+    flex: 1;
+  }
 }
-.text-reading {
-  color: var(--st-reading) !important;
+
+.bv-review-form {
+  background: var(--surface-raised);
+  border: 1px solid var(--border);
+  border-top: 2px solid var(--border-strong) !important;
+  border-radius: 0 0 var(--bs-border-radius-lg) var(--bs-border-radius-lg);
+  padding: 1.25rem;
 }
-.text-review {
-  color: var(--st-review) !important;
-}
-.text-toread {
-  color: var(--st-toread) !important;
-}
-.text-public {
-  color: var(--st-public) !important;
-}
-.text-private {
-  color: var(--st-private) !important;
-  fill: var(--st-private) !important;
-}
+
+//
