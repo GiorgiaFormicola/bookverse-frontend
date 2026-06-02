@@ -8,13 +8,14 @@ export const ADD_BOOK = "ADD_BOOK";
 export const REMOVE_BOOK = "REMOVE_BOOK";
 export const UPDATE_BOOK = "UPDATE_BOOK";
 export const SET_AUTH_CHECKED = "SET_AUTH_CHECKED";
+export const RESET_AUTH = "RESET_AUTH";
 
 export const getProfileInfo = () => {
   return (dispatch) => {
     instance
       .get("/users/me")
       .then((response) => {
-        const savedBooksMap = response.data.savedBooks.reduce((acc, book) => {
+        const savedBooksMap = (response.data.savedBooks ?? []).reduce((acc, book) => {
           acc[book.googleId] = {
             public: book.public,
             status: book.status,

@@ -16,39 +16,6 @@ instance.interceptors.request.use((config) => {
   return config;
 });
 
-/* instance.interceptors.response.use(
-  (response) => response,
-
-  (error) => {
-    const errorPayload = {
-      status: error.response?.status ?? 500,
-      message: error.response?.data?.message ?? "Something went wrong with the server, try again later!",
-      errorsList: error.response?.data?.errors ?? [],
-    };
-  
-    if (error.response?.status === 401) {
-      if (window.location.pathname === "/login") {
-        store.dispatch({
-          type: SET_ERROR,
-          payload: errorPayload,
-        });
-        return Promise.reject(error);
-      } else {
-        localStorage.removeItem("token");
-
-        store.dispatch({ type: CLEAR_PROFILE });
-
-        window.location.replace("/login");
-        return Promise.reject(error);
-      }
-    }
-    store.dispatch({
-      type: SET_ERROR,
-      payload: errorPayload,
-    });
-    return Promise.reject(error);
-  },
-); */
 instance.interceptors.response.use(
   (response) => response,
 
@@ -86,6 +53,16 @@ instance.interceptors.response.use(
         window.location.replace("/login");
         return Promise.reject(error);
       }
+    }
+
+    if (!error.response) {
+      window.location.replace("/error?type=network");
+      return Promise.reject(error);
+    }
+
+    if (error.response?.status >= 500) {
+      window.location.replace("/error?type=server");
+      return Promise.reject(error);
     }
 
     store.dispatch({

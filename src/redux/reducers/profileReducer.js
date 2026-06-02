@@ -1,4 +1,4 @@
-import { ADD_BOOK, CLEAR_PROFILE, GET_PROFILE, REMOVE_BOOK, UPDATE_PROFILE, UPDATE_BOOK, SET_AUTH_CHECKED } from "../actions";
+import { ADD_BOOK, CLEAR_PROFILE, GET_PROFILE, REMOVE_BOOK, UPDATE_PROFILE, UPDATE_BOOK, SET_AUTH_CHECKED, RESET_AUTH } from "../actions";
 
 const initialState = {
   user: null,
@@ -61,6 +61,12 @@ const profileReducer = (currentState = initialState, action) => {
       return {
         ...currentState,
         authChecked: true,
+      };
+
+    case RESET_AUTH:
+      return {
+        ...currentState,
+        authChecked: false,
       };
 
     default:

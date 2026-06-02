@@ -5,7 +5,7 @@ import { Book, BookCheck, BookOpen } from "lucide-react";
 const Dashboard = () => {
   const library = useSelector((currentState) => currentState.profile.savedBooks);
 
-  const stats = Object.values(library).reduce(
+  const stats = Object.values(library ?? {}).reduce(
     (acc, book) => {
       acc.saved++;
       if (book.status === "READ") acc.read++;
