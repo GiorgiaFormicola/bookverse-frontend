@@ -18,42 +18,6 @@ const Dashboard = () => {
 
   return (
     <>
-      {/* {size === "xs" && (
-        <>
-          <DashboardCard statName="Saved" statValue={stats.saved} color="saved">
-            <BookmarkFill size={24} className="text-saved" />
-          </DashboardCard>
-          <DashboardCard statName="Read" statValue={stats.read} color="read">
-            <BookCheck size={30} className="text-read" />
-          </DashboardCard>
-          <DashboardCard statName="To read" statValue={stats.toRead} color="toread">
-            <Book size={30} className="text-toread" />
-          </DashboardCard>
-          <DashboardCard statName="Reading" statValue={stats.reading} color="reading">
-            <BookOpen size={30} className="text-reading" />
-          </DashboardCard>
-        </>
-      )} */}
-
-      {/* {size === "sm" && (
-        <>
-          <DashboardCard statName="Books saved" statValue={stats.saved} color="saved">
-            <BookmarkFill size={24} className="text-savedr" />
-          </DashboardCard>
-          <DashboardCard statName="Books read" statValue={stats.read} color="read">
-            <BookCheck size={30} className="text-read" />
-          </DashboardCard>
-          <DashboardCard statName="Currently reading" statValue={stats.reading} color="reading">
-            <BookOpen size={30} className="text-reading" />
-          </DashboardCard>
-          <DashboardCard statName="Books to read" statValue={stats.toRead} color="toread">
-            <Book size={30} className="text-toread" />
-          </DashboardCard>
-        </>
-      )} */}
-
-      {/* {size === "lg" && (
-        <> */}
       <DashboardCard statName="Books saved" statValue={stats.saved} color="saved">
         <BookmarkFill size={24} className="text-saved" />
       </DashboardCard>
@@ -66,9 +30,6 @@ const Dashboard = () => {
       <DashboardCard statName="To read" statValue={stats.toRead} color="toread">
         <Book size={30} className="text-toread" />
       </DashboardCard>
-
-      {/*  </>
-      )} */}
     </>
   );
 };

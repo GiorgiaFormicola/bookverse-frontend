@@ -1,30 +1,32 @@
 import { Modal, Button } from "react-bootstrap";
+import { Trash3Fill } from "react-bootstrap-icons";
 
 const DeleteConfirmModal = ({ show, onHide, onConfirm, username, bookId }) => {
   return (
     <Modal show={show} onHide={onHide} centered>
       <Modal.Header closeButton>
-        <Modal.Title>Confirm deleting</Modal.Title>
+        <Modal.Title style={{ color: "#fb7185" }}>Confirm deletion</Modal.Title>
       </Modal.Header>
 
-      <Modal.Body className="text-center">
+      <Modal.Body className="text-center py-4">
+        <Trash3Fill size={40} className="mb-3" style={{ color: "#fb7185" }} />
         {username && (
-          <>
-            Are you sure you want to delete user <strong>{username}</strong>? <br /> This operation is irreversible.
-          </>
+          <p className="mb-0" style={{ color: "var(--text-muted)" }}>
+            Are you sure you want to delete user <strong style={{ color: "var(--text-primary)" }}>{username}</strong>? <br /> This operation is irreversible.
+          </p>
         )}
         {bookId && (
-          <>
-            Are you sure you want to delete book <strong>{bookId}</strong>? <br /> This operation is irreversible.
-          </>
+          <p className="mb-0" style={{ color: "var(--text-muted)" }}>
+            Are you sure you want to delete book <strong style={{ color: "var(--text-primary)" }}>{bookId}</strong>? <br /> This operation is irreversible.
+          </p>
         )}
       </Modal.Body>
 
-      <Modal.Footer>
-        <Button variant="secondary" onClick={onHide}>
-          Undo
+      <Modal.Footer className="d-flex gap-2">
+        <Button className="flex-grow-1 bv-btn-close" onClick={onHide}>
+          Cancel
         </Button>
-        <Button variant="danger" onClick={onConfirm}>
+        <Button className="flex-grow-1 bv-btn-delete" onClick={onConfirm}>
           Delete
         </Button>
       </Modal.Footer>

@@ -186,9 +186,11 @@ const BookDetailPage = () => {
 
   if (bookLoading || reviewsLoading) {
     return (
-      <Container className="min-vh-100 d-flex justify-content-center align-items-center">
-        <Spinner animation="border" />
-      </Container>
+      <div className="d-flex align-items-center justify-content-center gap-2" style={{ minHeight: "60vh" }}>
+        <span className="bv-loader-dot" style={{ animationDelay: "0ms" }} />
+        <span className="bv-loader-dot" style={{ animationDelay: "150ms" }} />
+        <span className="bv-loader-dot" style={{ animationDelay: "300ms" }} />
+      </div>
     );
   }
 
