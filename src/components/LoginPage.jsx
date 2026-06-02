@@ -77,7 +77,7 @@ const LoginPage = () => {
   }, []);
 
   return (
-    <Container fluid className="min-vh-100 d-flex align-items-center justify-content-center">
+    <Container fluid className="min-vh-100 d-flex align-items-center justify-content-center auth-gradient">
       <Row className="justify-content-center w-100">
         <Col sm={12} md={11} lg={9} xl={7}>
           <Card className="bv-auth-card border-0 overflow-hidden">
@@ -195,7 +195,7 @@ const LoginPage = () => {
                     }
                     role="alert"
                   >
-                    {error ? error : location.state?.passwordReset ? "Password reset successfully!" : "placeholder"}
+                    {error ? error : location.state?.passwordReset ? "Password reset successfully" : "placeholder"}
                   </div>
 
                   <Button type="submit" disabled={loading} size="lg" className="w-100 bv-btn-confirm mb-3">

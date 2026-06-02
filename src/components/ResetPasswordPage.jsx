@@ -53,7 +53,7 @@ const ResetPasswordPage = () => {
   return (
     <>
       {!token ? (
-        <Container fluid className="min-vh-100 d-flex align-items-center justify-content-center">
+        <Container fluid className="min-vh-100 d-flex align-items-center justify-content-center auth-gradient">
           <div className="bv-empty-state">
             <h5 className="bv-empty-state__title">Invalid reset link</h5>
             <p className="bv-empty-state__text">This link is invalid or has expired.</p>
@@ -63,7 +63,7 @@ const ResetPasswordPage = () => {
           </div>
         </Container>
       ) : (
-        <Container fluid className="min-vh-100 d-flex align-items-center justify-content-center">
+        <Container fluid className="min-vh-100 d-flex align-items-center justify-content-center auth-gradient">
           <Row className="justify-content-center w-100">
             <Col xs={11} sm={8} md={6} lg={4}>
               <Card className="bv-auth-card border-0 p-4">

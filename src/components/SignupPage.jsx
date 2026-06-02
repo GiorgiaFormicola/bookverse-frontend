@@ -112,55 +112,72 @@ const SignupPage = () => {
   }, []);
 
   return (
-    <Container fluid className="min-vh-100 d-flex align-items-center justify-content-center auth-gradient" /* ADD AUTH-GRADIENT CLASS */>
-      <Row className="justify-content-center">
-        <Col sm={12} md={11} lg={9}>
-          <Card className="border-0 shadow-lg overflow-hidden">
+    <Container fluid className="min-vh-100 d-flex align-items-center justify-content-center auth-gradient">
+      <Row className="justify-content-center w-100">
+        <Col sm={12} md={11} lg={9} xl={8}>
+          <Card className="bv-auth-card border-0 overflow-hidden">
             <Row className="g-0">
-              <Col md={6} className="d-none d-md-block bg-secondary text-white p-5 auth-gradient" /* ADD AUTH-GRADIENT CLASS */>
-                <div className="h-100 d-flex flex-column justify-content-between">
+              {/* Colonna sinistra — solo desktop */}
+              <Col md={6} className="d-none d-md-flex auth-gradient p-5">
+                <div className="d-flex flex-column justify-content-between h-100">
                   <div>
-                    <Book size={64} className="mb-4" />
-
-                    <h2 className="mb-3" /* ADD DISPLAY-FONT CLASS */>Join Our Community</h2>
-                    <p className="mb-4 opacity-75">
-                      Start your reading journey today. <br></br> Track your progress, share reviews, and discover your next favorite book.
+                    <div className="bv-brand d-flex align-items-center gap-3 mb-5">
+                      <span className="bv-brand__icon">
+                        <Book size={50} />
+                      </span>
+                      <span className="bv-brand__text fs-2">
+                        Book <span className="bv-brand__accent">Verse</span>
+                      </span>
+                    </div>
+                    <h2 className="mb-3" style={{ fontFamily: "Space Grotesk", fontWeight: 700 }}>
+                      Join Our Community
+                    </h2>
+                    <p style={{ color: "rgba(236,235,245,0.7)" }}>
+                      Start your reading journey today. Track your progress, share reviews, and discover your next favorite book.
                     </p>
                   </div>
-                  <Row className="row-cols-1 h-50 my-auto gap-4">
+                  <Row className="row-cols-1 gap-4 mt-4 flex-grow-1 py-5">
                     <Col>
                       <div className="d-flex align-items-center gap-3">
-                        <Search size={32} />
+                        <Search size={24} style={{ color: "var(--accent)" }} />
                         <div>
-                          <strong className="h5">Search & Discover</strong>
-                          <p className="mb-0  opacity-75"> Find your next favourite read</p>
+                          <strong style={{ fontFamily: "Space Grotesk" }}>Search & Discover</strong>
+                          <p className="mb-0 small" style={{ color: "rgba(236,235,245,0.6)" }}>
+                            Find your next favourite read
+                          </p>
                         </div>
                       </div>
                     </Col>
                     <Col>
                       <div className="d-flex align-items-center gap-3">
-                        <Star size={32} />
+                        <Star size={24} style={{ color: "var(--accent)" }} />
                         <div>
-                          <strong className="h5">Rate & Review</strong>
-                          <p className="mb-0  opacity-75">Share your thoughts on books</p>
+                          <strong style={{ fontFamily: "Space Grotesk" }}>Rate & Review</strong>
+                          <p className="mb-0 small" style={{ color: "rgba(236,235,245,0.6)" }}>
+                            Share your thoughts on books
+                          </p>
                         </div>
                       </div>
                     </Col>
                     <Col>
                       <div className="d-flex align-items-center gap-3">
-                        <People size={32} />
+                        <People size={24} style={{ color: "var(--accent)" }} />
                         <div>
-                          <strong className="h5">Connect</strong>
-                          <p className="mb-0 opacity-75">See what others are reading</p>
+                          <strong style={{ fontFamily: "Space Grotesk" }}>Connect</strong>
+                          <p className="mb-0 small" style={{ color: "rgba(236,235,245,0.6)" }}>
+                            See what others are reading
+                          </p>
                         </div>
                       </div>
                     </Col>
                     <Col>
                       <div className="d-flex align-items-center gap-3">
-                        <BarChartLine size={32} />
+                        <BarChartLine size={24} style={{ color: "var(--accent)" }} />
                         <div>
-                          <strong className="h5">Track Progress</strong>
-                          <p className="mb-0 opacity-75">Monitor your reading goals</p>
+                          <strong style={{ fontFamily: "Space Grotesk" }}>Track Progress</strong>
+                          <p className="mb-0 small" style={{ color: "rgba(236,235,245,0.6)" }}>
+                            Monitor your reading goals
+                          </p>
                         </div>
                       </div>
                     </Col>
@@ -168,14 +185,24 @@ const SignupPage = () => {
                 </div>
               </Col>
 
-              <Col sm={12} md={6} className="p-5">
+              {/* Colonna destra — form */}
+              <Col sm={12} md={6} className="p-5" style={{ background: "var(--surface-raised)" }}>
+                {/* Mobile header */}
                 <div className="mb-4 text-center d-md-none">
-                  <Book color="#667DE9" size={55} className="text-primary mb-2" />
-
-                  <h2 /* ADD DISPLAY-FONT CLASS */>Sign up</h2>
+                  <div className="bv-brand d-flex align-items-center justify-content-center gap-2 mb-3">
+                    <span className="bv-brand__icon">
+                      <Book size={16} />
+                    </span>
+                    <span className="bv-brand__text">
+                      Book <span className="bv-brand__accent">Verse</span>
+                    </span>
+                  </div>
+                  <h2 style={{ fontFamily: "Space Grotesk", fontWeight: 700 }}>Sign up</h2>
                 </div>
 
-                <h3 className="mb-4 d-none d-md-block" /* ADD DISPLAY-FONT CLASS */>Create Account</h3>
+                <h3 className="mb-4 d-none d-md-block" style={{ fontFamily: "Space Grotesk", fontWeight: 700 }}>
+                  Create Account
+                </h3>
 
                 <Form
                   noValidate
@@ -188,28 +215,16 @@ const SignupPage = () => {
                     <Form.Label className="d-flex align-items-center gap-2">
                       Username
                       <OverlayTrigger
-                        key="username"
                         placement="right"
                         overlay={
-                          <Tooltip id="username-tooltip" className="custom-tooltip">
-                            <strong>Username</strong> must be 2–30 characters long and can contain lowercase letters, numbers, underscores and dots. It cannot
-                            end with a dot or contain consecutive dots.
+                          <Tooltip className="custom-tooltip">
+                            <strong>Username</strong> must be 2–30 characters long and can contain lowercase letters, numbers, underscores and dots.
                           </Tooltip>
                         }
                         popperConfig={{
                           modifiers: [
-                            {
-                              name: "computeStyles",
-                              options: {
-                                gpuAcceleration: false,
-                              },
-                            },
-                            {
-                              name: "preventOverflow",
-                              options: {
-                                boundary: "clippingParents",
-                              },
-                            },
+                            { name: "computeStyles", options: { gpuAcceleration: false } },
+                            { name: "preventOverflow", options: { boundary: "clippingParents" } },
                           ],
                         }}
                       >
@@ -223,50 +238,12 @@ const SignupPage = () => {
                       placeholder="Choose a username"
                       value={signUpCredentials.username}
                       onClick={() => setError("")}
-                      onChange={(e) => {
-                        setSignUpCredentials((prev) => ({
-                          ...prev,
-                          username: e.target.value,
-                          displayName: e.target.value,
-                          /* displayName: autoDisplayName ? e.target.value : prev.displayName, */
-                        }));
-                      }}
+                      onChange={(e) => setSignUpCredentials((prev) => ({ ...prev, username: e.target.value, displayName: e.target.value }))}
                       required
                       size="lg"
                     />
                   </Form.Group>
-                  {/* <Form.Group className="mb-3" controlId="displayName">
-                    <Form.Check
-                      className="mb-2"
-                      type="checkbox"
-                      label="Custom name to display"
-                      checked={!autoDisplayName}
-                      onClick={() => setError("")}
-                      onChange={(e) => {
-                        setAutoDisplayName(!e.target.checked);
-                        if (!e.target.checked) {
-                          setSignUpCredentials((prev) => ({
-                            ...prev,
-                            displayName: prev.username,
-                          }));
-                        }
-                      }}
-                    />
-                    <Form.Control
-                      className="py-2"
-                      disabled={autoDisplayName}
-                      type="text"
-                      placeholder="Choose a name to display"
-                      value={signUpCredentials.displayName}
-                      onClick={() => setError("")}
-                      onChange={(e) => {
-                        setSignUpCredentials({
-                          ...signUpCredentials,
-                          displayName: e.target.value,
-                        });
-                      }}
-                    />
-                  </Form.Group> */}
+
                   <Form.Group className="mb-3" controlId="email">
                     <Form.Label>Email address</Form.Label>
                     <Form.Control
@@ -286,7 +263,6 @@ const SignupPage = () => {
                       type="date"
                       min={minDateInput}
                       max={maxDateInput}
-                      placeholder="Enter your email"
                       value={signUpCredentials.birthdate}
                       onClick={() => setError("")}
                       onChange={(e) => setSignUpCredentials({ ...signUpCredentials, birthdate: e.target.value })}
@@ -299,28 +275,16 @@ const SignupPage = () => {
                     <Form.Label className="d-flex align-items-center gap-2">
                       Password
                       <OverlayTrigger
-                        key="password"
                         placement="right"
                         overlay={
-                          <Tooltip id="password-tooltip" className="custom-tooltip">
-                            <strong>Password</strong> must be at least 8 characters long and include at least one uppercase letter, one lowercase letter, one
-                            number and one special character.
+                          <Tooltip className="custom-tooltip">
+                            <strong>Password</strong> must be at least 8 characters and include uppercase, lowercase and a number.
                           </Tooltip>
                         }
                         popperConfig={{
                           modifiers: [
-                            {
-                              name: "computeStyles",
-                              options: {
-                                gpuAcceleration: false,
-                              },
-                            },
-                            {
-                              name: "preventOverflow",
-                              options: {
-                                boundary: "clippingParents",
-                              },
-                            },
+                            { name: "computeStyles", options: { gpuAcceleration: false } },
+                            { name: "preventOverflow", options: { boundary: "clippingParents" } },
                           ],
                         }}
                       >
@@ -363,19 +327,19 @@ const SignupPage = () => {
                     </InputGroup>
                   </Form.Group>
 
-                  <div className={"alert alert-danger text-center bg-transparent border-0 p-0" + (error ? "" : " invisible")} role="alert">
-                    {error ? error : "Error placeholder"}
+                  <div className={"alert bg-transparent text-center border-0 p-0 mb-3" + (error ? " alert-danger" : " invisible")} role="alert">
+                    {error || "Error placeholder"}
                   </div>
 
-                  <div className="gap-2 mb-3">
-                    <Button variant="primary" type="submit" disabled={loading} size="lg" className="border-0 w-100 auth-gradient">
-                      {loading ? "Creating account..." : "Sign Up"}
-                    </Button>
-                  </div>
+                  <Button type="submit" disabled={loading} size="lg" className="w-100 bv-btn-confirm mb-3">
+                    {loading ? "Creating account..." : "Sign Up"}
+                  </Button>
 
                   <div className="text-center">
-                    <p className="text-muted mb-0">Already have an account?</p>
-                    <Link to="/login" className="text-decoration-none text-light fw-semibold">
+                    <p className="mb-0" style={{ color: "var(--text-muted)" }}>
+                      Already have an account?
+                    </p>
+                    <Link to="/login" className="view-more-link fw-semibold">
                       Log In
                     </Link>
                   </div>

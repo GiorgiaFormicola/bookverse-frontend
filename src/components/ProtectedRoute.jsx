@@ -6,7 +6,22 @@ const ProtectedRoute = ({ children, adminOnly = false }) => {
 
   const token = localStorage.getItem("token");
   if (token && !authChecked) {
-    return <div>Loading...</div>;
+    return (
+      <div
+        style={{
+          position: "fixed",
+          inset: 0,
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "center",
+          gap: "0.5rem",
+        }}
+      >
+        <span className="bv-loader-dot" style={{ animationDelay: "0ms" }} />
+        <span className="bv-loader-dot" style={{ animationDelay: "150ms" }} />
+        <span className="bv-loader-dot" style={{ animationDelay: "300ms" }} />
+      </div>
+    );
   }
 
   if (!token) {
