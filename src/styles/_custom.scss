@@ -203,6 +203,19 @@ img.rounded-circle {
   }
 }
 
+.bv-btn-accent {
+  background: var(--accent-glow) !important;
+  border-color: var(--accent) !important;
+  color: var(--accent) !important;
+  font-weight: 600;
+
+  &:hover {
+    background: rgba(196, 240, 66, 0.2) !important;
+    border-color: var(--accent-strong) !important;
+    color: var(--accent-strong) !important;
+  }
+}
+
 .text-saved {
   color: var(--st-saved) !important;
   fill: var(--st-saved) !important;
@@ -770,13 +783,12 @@ html {
   border-radius: var(--bs-border-radius-lg);
 }
 
-.bv-book-action {
+/* .bv-book-action {
   display: flex;
   align-items: center;
   gap: 0.5rem;
   width: 100%;
   height: 100%;
-  /* padding: 0.6rem 1rem; */
   padding: 0;
   border-radius: var(--bs-border-radius-lg);
   font-weight: 500;
@@ -790,8 +802,13 @@ html {
     margin: 0;
     flex: 1;
   }
+  &:focus,
+  &:active,
+  &:focus-visible {
+    outline: none !important;
+    box-shadow: none !important;
+  }
 
-  // Salva libro — primario
   &--save {
     background: var(--primary-grad);
     border-color: transparent;
@@ -831,6 +848,206 @@ html {
       color: var(--accent);
       background: var(--accent-glow);
     }
+  }
+} */
+
+// Salva — viola pieno
+/* .bv-book-save {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  width: 100%;
+  height: 100%;
+  padding: 0;
+  font-weight: 600;
+  font-size: 0.9rem;
+  cursor: pointer;
+  border-radius: var(--bs-border-radius-lg);
+  background: var(--primary-grad);
+  border: none;
+  color: #fff;
+  transition: all 0.15s ease;
+
+  p {
+    margin: 0;
+    flex: 1;
+  }
+
+  &:hover,
+  &:focus,
+  &:active,
+  &:focus-visible {
+    background: var(--primary-grad-hover);
+    border: none;
+    color: #fff;
+    outline: none;
+    box-shadow: none;
+  }
+
+  &--saved {
+    background: var(--primary-tint);
+    border: 1px solid var(--primary);
+    color: var(--primary-light);
+
+    &:hover,
+    &:focus,
+    &:active,
+    &:focus-visible {
+      background: rgba(139, 92, 246, 0.25);
+      border-color: var(--primary);
+      color: var(--primary-light);
+      outline: none;
+      box-shadow: none;
+    }
+  }
+}
+
+// Recensisci — magenta
+.bv-book-review {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  width: 100%;
+  height: 100%;
+  padding: 0;
+  font-weight: 600;
+  font-size: 0.9rem;
+  cursor: pointer;
+  border-radius: var(--bs-border-radius-lg);
+  background: transparent;
+  border: 1px solid var(--border);
+  color: var(--text-muted);
+  transition: all 0.15s ease;
+
+  p {
+    margin: 0;
+    flex: 1;
+  }
+
+  &:hover,
+  &:focus,
+  &:active,
+  &:focus-visible {
+    background: var(--st-review-bg);
+    border-color: var(--st-review);
+    color: var(--st-review);
+    outline: none;
+    box-shadow: none;
+  }
+
+  &--reviewed {
+    background: var(--st-review-bg);
+    border-color: var(--st-review);
+    color: var(--st-review);
+
+    &:hover,
+    &:focus,
+    &:active,
+    &:focus-visible {
+      background: rgba(244, 114, 182, 0.22);
+      border-color: var(--st-review);
+      color: var(--st-review);
+      outline: none;
+      box-shadow: none;
+    }
+  }
+} */
+
+.bv-book-save {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  width: 100%;
+  height: 100%;
+  padding: 0;
+  font-weight: 600;
+  font-size: 0.9rem;
+  cursor: pointer;
+  border-radius: var(--bs-border-radius-lg);
+  transition: all 0.15s ease;
+  p {
+    margin: 0;
+    flex: 1;
+  }
+
+  &:focus,
+  &:active,
+  &:focus-visible {
+    outline: none !important;
+    box-shadow: none !important;
+  }
+}
+
+.bv-book-save--add {
+  background: var(--primary-grad);
+  border: none;
+  color: #fff;
+
+  &:hover {
+    background: var(--primary-grad-hover);
+    color: #fff;
+    border: none;
+  }
+}
+
+.bv-book-save--remove {
+  background: var(--primary-tint);
+  border: 1px solid var(--primary);
+  color: var(--primary-light);
+
+  &:hover {
+    background: rgba(139, 92, 246, 0.25);
+    color: var(--primary-light);
+    border-color: var(--primary);
+  }
+}
+
+.bv-book-review {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  width: 100%;
+  height: 100%;
+  padding: 0;
+  font-weight: 600;
+  font-size: 0.9rem;
+  cursor: pointer;
+  border-radius: var(--bs-border-radius-lg);
+  transition: all 0.15s ease;
+  p {
+    margin: 0;
+    flex: 1;
+  }
+
+  &:focus,
+  &:active,
+  &:focus-visible {
+    outline: none !important;
+    box-shadow: none !important;
+  }
+}
+
+.bv-book-review--add {
+  background: transparent;
+  border: 1px solid var(--border);
+  color: var(--text-muted);
+
+  &:hover {
+    background: var(--st-review-bg);
+    border-color: var(--st-review);
+    color: var(--st-review);
+  }
+}
+
+.bv-book-review--done {
+  background: var(--st-review-bg);
+  border: 1px solid var(--st-review);
+  color: var(--st-review);
+
+  &:hover {
+    background: rgba(244, 114, 182, 0.22);
+    border-color: var(--st-review);
+    color: var(--st-review);
   }
 }
 
@@ -930,7 +1147,7 @@ html {
 }
 
 .bv-book-controls {
-  background: var(--surface-raised);
+  background: var(--surface);
   border: 1px solid var(--border);
   border-radius: var(--bs-border-radius-lg);
   > div {

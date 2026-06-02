@@ -18,7 +18,7 @@ const BookPrivacyComponent = ({ bookId }) => {
 
   return (
     <div className="d-flex align-items-center px-3 px-sm-4 py-1 px-lg-3 py-lg-2 rounded-3 gap-2 bg-transparent w-100 flex-grow-1">
-      {isPublic ? <Globe size={25} className="text-public" /> : <LockFill size={25} className="text-private" />}
+      {isPublic ? <Globe size={25} className="text-reading" /> : <LockFill size={25} className=" text-light" />}
       <Form.Select value={String(isPublic)} onChange={(e) => updatePrivacy(e.target.value)}>
         <option value="true">Public</option>
         <option value="false">Private</option>

@@ -298,7 +298,7 @@ const BookDetailPage = () => {
                 <Col xs={12}>
                   <div className="d-flex flex-wrap gap-2">
                     {mappedBook.categories.map((category, i) => (
-                      <Badge key={i} bg="accent" className="rounded-pill">
+                      <Badge key={i} bg="primary" className="rounded-pill">
                         {category}
                       </Badge>
                     ))}

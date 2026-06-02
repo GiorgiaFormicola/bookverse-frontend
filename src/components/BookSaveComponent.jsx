@@ -30,8 +30,8 @@ const BookSaveComponent = ({ book }) => {
     <>
       {location.pathname === "/books/" + book.googleId && (
         <Button
-          type="button"
-          className={`bv-book-action bv-book-action--save ${isSaved ? "saved" : ""} d-flex align-items-center px-3 px-sm-4 p-lg-3 gap-0 w-100 flex-grow-1`}
+          variant="link"
+          className={`bv-book-save ${isSaved ? "bv-book-save--remove" : "bv-book-save--add"} d-flex align-items-center px-3 px-sm-4 p-lg-3 gap-0 w-100 flex-grow-1`}
           onClick={handleClick}
         >
           {isSaved ? <SuitHeartFill size={20} /> : <SuitHeart size={20} />}

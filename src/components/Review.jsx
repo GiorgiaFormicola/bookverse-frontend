@@ -33,7 +33,7 @@ const Review = ({ review, isUserReview, handleReviewClick }) => {
       </div>
       <p className="bv-review__comment mb-0">"{review.comment}"</p>
       {isUserReview && (
-        <Button className="bv-btn-edit position-absolute bottom-0 end-0 me-2 mb-3 px-3" size="sm" onClick={handleReviewClick}>
+        <Button className="bv-btn-accent position-absolute bottom-0 end-0 me-2 mb-3 px-3" size="sm" onClick={handleReviewClick}>
           Edit
         </Button>
       )}
