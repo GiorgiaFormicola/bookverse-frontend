@@ -63,64 +63,62 @@ const EditProfilePage = () => {
 
   return (
     <>
-      <Container fluid className="d-flex flex-column p-4 px-5 gap-3">
+      <Container fluid className="d-flex flex-column container-lg p-4 gap-3">
+        {/* Header con back */}
         <Row className="justify-content-center">
-          <Col xs={12} className="position-relative">
-            <ChevronLeft className="position-absolute" size={30} onClick={() => navigate(-1)} />
-            <h1 className="text-center">Edit profile</h1>
+          <Col xs={12} className="position-relative d-flex align-items-center justify-content-center">
+            <span
+              className="position-absolute start-0 d-flex align-items-center gap-1 view-more-link fw-semibold"
+              style={{ cursor: "pointer" }}
+              onClick={() => navigate(-1)}
+            >
+              <ChevronLeft size={15} />
+              <span>Back</span>
+            </span>
+            <h1 className="mb-0">Edit profile</h1>
           </Col>
         </Row>
-        <Row className=" justify-content-center g-3 py-3">
-          <Col xs={7} className="d-flex justify-content-center">
-            <div className="position-relative rounded-circle">
+
+        {/* Avatar */}
+        <Row className="justify-content-center g-3 py-3">
+          <Col xs={7} sm={5} md={4} lg={3} className="d-flex justify-content-center">
+            <div className="position-relative d-inline-block">
               <img src={user.profilePictureURL} alt={user.username} className="avatar" />
               <div
-                className="position-absolute bottom-0 end-0 translate-middle-x translate-middle-y bg-dark rounded-circle d-flex align-items-center justify-content-center me-sm-3"
-                onClick={() => handleShow()}
+                className="position-absolute bottom-0 end-0 translate-middle-x translate-middle-y"
+                style={{ cursor: "pointer", border: "2px solid var(--bg-deep)", borderRadius: "50%", lineHeight: 0 }}
+                onClick={handleShow}
               >
-                <PlusCircleFill className="me-3 d-sm-none" size={30} />
-                <PlusCircleFill className="me-3 d-none d-sm-block d-md-none" size={40} />
-                <PlusCircleFill className="me-4 d-none d-md-block" size={50} />
+                <PlusCircleFill size={32} className="text-accent" />
               </div>
             </div>
           </Col>
         </Row>
-        <Row>
-          <Col xs={12}>
+
+        {/* Form */}
+        <Row className="justify-content-center">
+          <Col xs={12} md={8} lg={6}>
             <Form
               noValidate
-              className=" fw-semibold small"
               onSubmit={(e) => {
                 e.preventDefault();
                 editProfileInfo();
               }}
             >
               <Form.Group className="mb-4" controlId="profileName">
-                <Form.Label className="d-flex align-items-center gap-2 fs-4">
+                <Form.Label className="d-flex align-items-center gap-2 fw-semibold">
                   Profile Name
                   <OverlayTrigger
-                    key="profileName"
                     placement="right"
                     overlay={
-                      <Tooltip id="username-tooltip">
-                        <strong>Profile name</strong> must be 2–50 characters long and it will be the name that we'll be shown on your profile and on your
-                        reviews.
+                      <Tooltip className="custom-tooltip">
+                        <strong>Profile name</strong> must be 2–50 characters long and will be shown on your profile and reviews.
                       </Tooltip>
                     }
                     popperConfig={{
                       modifiers: [
-                        {
-                          name: "computeStyles",
-                          options: {
-                            gpuAcceleration: false,
-                          },
-                        },
-                        {
-                          name: "preventOverflow",
-                          options: {
-                            boundary: "clippingParents",
-                          },
-                        },
+                        { name: "computeStyles", options: { gpuAcceleration: false } },
+                        { name: "preventOverflow", options: { boundary: "clippingParents" } },
                       ],
                     }}
                   >
@@ -134,98 +132,84 @@ const EditProfilePage = () => {
                   placeholder="Choose your profile name"
                   value={form.displayName}
                   onClick={() => setError("")}
-                  onChange={(e) => {
-                    setForm((prev) => ({
-                      ...prev,
-                      displayName: e.target.value,
-                    }));
-                  }}
+                  onChange={(e) => setForm((prev) => ({ ...prev, displayName: e.target.value }))}
                   required
-                  size="lg"
                 />
               </Form.Group>
 
-              <Form.Group className="mb-4" controlId="biography">
-                <Form.Label className="fs-4">Biography</Form.Label>
+              <Form.Group className="mb-3" controlId="biography">
+                <Form.Label className="fw-semibold">Biography</Form.Label>
                 <Form.Control
                   as="textarea"
-                  rows={10}
+                  rows={8}
                   placeholder="Let other readers know something about you!"
                   value={form.bio}
                   onClick={() => setError("")}
-                  onChange={(e) => {
-                    setForm((prev) => ({
-                      ...prev,
-                      bio: e.target.value,
-                    }));
-                  }}
-                  size="lg"
+                  onChange={(e) => setForm((prev) => ({ ...prev, bio: e.target.value }))}
                 />
               </Form.Group>
-              <div className={"alert alert-danger text-center bg-transparent border-0 p-0" + (error ? "" : " invisible")} role="alert">
-                {error ? error : "Error placeholder"}
+
+              <div className={"alert alert-danger bg-transparent text-center border-0 p-0 mb-3" + (error ? "" : " invisible")} role="alert">
+                {error || "Error placeholder"}
               </div>
-              <Button disabled={!hasChanged() || loading} className=" fw-semibold bg-primary border-0 w-100 py-2 fs-4 mt-1" type="submit">
-                {loading ? "Updating profile..." : "Save"}
+
+              <Button disabled={!hasChanged() || loading} className="w-100 fw-semibold bv-btn-confirm py-2 fs-5" type="submit">
+                {loading ? <Spinner animation="border" size="sm" /> : "Save"}
               </Button>
             </Form>
           </Col>
         </Row>
       </Container>
+
+      {/* Modal upload foto */}
       <Modal show={show} onHide={handleClose} centered>
-        <Modal.Header closeButton className="d-flex align-items-center px-4">
+        <Modal.Header closeButton className="px-4">
           <Modal.Title className="fs-5">Upload profile picture</Modal.Title>
         </Modal.Header>
-        <Modal.Body className="px-5 mx-3 my-3 text-center d-flex flex-column justify-content-center" style={{ minHeight: 420 }}>
+        <Modal.Body className="px-4 text-center d-flex flex-column justify-content-center align-items-center" style={{ minHeight: 300 }}>
           {uploadLoading ? (
-            <div className="d-flex justify-content-center align-items-center" style={{ height: 200 }}>
-              <Spinner animation="border" />
-            </div>
+            <Spinner animation="border" style={{ color: "var(--primary-light)" }} />
           ) : uploadError ? (
-            <div className="d-flex flex-column align-items-center gap-3 py-3">
-              <p className="text-danger mb-0">Something went wrong uploading the picture.</p>
-              <ArrowClockwise size={30} style={{ cursor: "pointer" }} onClick={() => setUploadError(false)} />
+            <div className="bv-empty-state py-3">
+              <ArrowClockwise size={30} className="bv-empty-state__icon" style={{ cursor: "pointer" }} onClick={() => setUploadError(false)} />
+              <p className="bv-empty-state__text mb-0">Something went wrong uploading the picture.</p>
+              <span className="bv-empty-state__link" style={{ cursor: "pointer" }} onClick={() => setUploadError(false)}>
+                Try again
+              </span>
             </div>
           ) : (
-            <img src={user.profilePictureURL} alt={user.username} className="avatar" />
+            <img src={user.profilePictureURL} alt={user.username} className="avatar" style={{ width: 160 }} />
           )}
         </Modal.Body>
-        <Modal.Footer className="justify-content-end px-4">
-          <div className="d-flex">
-            <Form>
-              <Form.Group>
-                <Form.Label
-                  htmlFor="file-upload"
-                  style={{ marginBottom: "0", cursor: "pointer" }}
-                  className="btn bg-primary text-light px-3 fw-semibold py-1 text-nowrap"
-                >
-                  Upload picture
-                </Form.Label>
-                <Form.Control
-                  className="d-none"
-                  type="file"
-                  accept="image/*,.pdf"
-                  id="file-upload"
-                  onChange={async (e) => {
-                    const data = new FormData();
-                    data.append("profile_picture", e.target.files[0]);
-                    setUploadLoading(true);
-                    setUploadError(false);
-                    try {
-                      await dispatch(updateProfilePicture(data));
-                      handleClose();
-                    } catch (err) {
-                      console.log(err);
-                      if (err.response?.data?.error === "ACCOUNT_DISABLED") return;
-                      setUploadError(true);
-                    } finally {
-                      setUploadLoading(false);
-                    }
-                  }}
-                />
-              </Form.Group>
-            </Form>
-          </div>
+        <Modal.Footer className="px-4">
+          <Form>
+            <Form.Group>
+              <Form.Label htmlFor="file-upload" className="bv-btn-confirm btn mb-0 fw-semibold" style={{ cursor: "pointer" }}>
+                Upload picture
+              </Form.Label>
+              <Form.Control
+                className="d-none"
+                type="file"
+                accept="image/*"
+                id="file-upload"
+                onChange={async (e) => {
+                  const data = new FormData();
+                  data.append("profile_picture", e.target.files[0]);
+                  setUploadLoading(true);
+                  setUploadError(false);
+                  try {
+                    await dispatch(updateProfilePicture(data));
+                    handleClose();
+                  } catch (err) {
+                    if (err.response?.data?.error === "ACCOUNT_DISABLED") return;
+                    setUploadError(true);
+                  } finally {
+                    setUploadLoading(false);
+                  }
+                }}
+              />
+            </Form.Group>
+          </Form>
         </Modal.Footer>
       </Modal>
     </>

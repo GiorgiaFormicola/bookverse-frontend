@@ -37,7 +37,7 @@ const HomePageSection = ({ filter, reviewed, title, loading, setLoading, onEmpty
         <div className="d-flex align-items-center justify-content-between">
           <h2>{title}</h2>
           {!loading && !error && (
-            <Link to={`/library?status=${filter}`} className="view-more-link text-muted text-decoration-none d-flex align-items-center gap-1">
+            <Link to={`/library?status=${filter}`} className="view-more-link text-decoration-none d-flex align-items-center gap-1 fw-semibold">
               View more
               <span>
                 <ChevronRight size={20} strokeWidth={2} />
@@ -50,25 +50,32 @@ const HomePageSection = ({ filter, reviewed, title, loading, setLoading, onEmpty
       <Col className="overflow-auto hide-scrollbar">
         <Row className="flex-nowrap pe-sm-5 pe-lg-0 g-3 pt-1">
           {error ? (
-            <Col xs={8} lg={12} className="mx-auto">
-              <Alert
-                variant="secondary"
-                className="d-flex flex-column align-items-center justify-content-between mb-0 rounded-3 gap-3 py-4 bg-transparent border-0"
-              >
-                <span>Something went wrong loading this section.</span>
-                <div className="d-flex flex-column align-items-center gap-2">
-                  <span className="fw-bold">Try again</span>
-                  <ArrowClockwise
-                    size={30}
-                    onClick={() => {
-                      setError(false);
-                      setLoading(true);
-                      getSectionBooks();
-                    }}
-                    style={{ cursor: "pointer" }}
-                  />
-                </div>
-              </Alert>
+            <Col xs={12}>
+              <div className="bv-empty-state">
+                <ArrowClockwise
+                  size={40}
+                  className="bv-empty-state__icon"
+                  style={{ cursor: "pointer" }}
+                  onClick={() => {
+                    setError(false);
+                    setLoading(true);
+                    getSectionBooks();
+                  }}
+                />
+                <h5 className="bv-empty-state__title">Something went wrong</h5>
+                <p className="bv-empty-state__text">Something went wrong loading this section.</p>
+                <span
+                  className="bv-empty-state__link"
+                  style={{ cursor: "pointer" }}
+                  onClick={() => {
+                    setError(false);
+                    setLoading(true);
+                    getSectionBooks();
+                  }}
+                >
+                  Try again
+                </span>
+              </div>
             </Col>
           ) : loading ? (
             Array.from({ length: 6 }).map((_, i) => (

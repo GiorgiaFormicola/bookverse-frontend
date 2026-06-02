@@ -68,6 +68,12 @@ body {
 // ============================================================
 //  GENERICS
 // ============================================================
+.avatar,
+.review-avatar,
+img.rounded-circle {
+  border: 2px solid var(--border);
+}
+
 .form-control,
 .form-select {
   background-color: var(--surface);
@@ -220,6 +226,54 @@ body {
   fill: var(--text-muted) !important;
 }
 
+//alert
+.alert-success {
+  background-color: rgba(52, 211, 153, 0.1);
+  border-color: rgba(52, 211, 153, 0.3);
+  color: #6ee7b7;
+}
+.alert-danger {
+  background-color: rgba(251, 113, 133, 0.1);
+  border-color: rgba(251, 113, 133, 0.3);
+  color: #fda4af;
+}
+
+// ------------------------------------------------------------
+//  Tooltip
+// ------------------------------------------------------------
+/* .custom-tooltip .tooltip-inner {
+  background-color: var(--primary-strong);
+  color: var(--text-primary);
+  font-size: 0.875em;
+  max-width: 30em;
+  padding: 0.875em;
+  border-radius: 1em;
+  strong {
+    color: var(--accent);
+  }
+}
+.custom-tooltip .tooltip-arrow::before {
+  border-right-color: var(--primary-strong);
+} */
+.custom-tooltip .tooltip-inner {
+  background-color: #3d2080;
+  color: #e8d5ff;
+  font-size: 0.8em;
+  max-width: 28em;
+  padding: 0.7em 1em;
+  border-radius: 0.75em;
+  border: none;
+  box-shadow: 0 4px 20px rgba(124, 58, 237, 0.35);
+
+  strong {
+    color: var(--accent);
+    font-weight: 600;
+  }
+}
+
+.custom-tooltip .tooltip-arrow::before {
+  border-right-color: #3d2080;
+}
 // ============================================================
 //  NAVBAR
 // ============================================================
@@ -698,8 +752,9 @@ html {
 }
 
 .view-more-link {
-  color: var(--primary-light) !important;
+  color: var(--st-review) !important;
   transition: color 0.15s ease;
+  text-decoration: none;
 
   &:hover {
     color: var(--accent) !important;

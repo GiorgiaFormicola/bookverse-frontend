@@ -54,12 +54,14 @@ const EditProfileModal = ({ show, handleClose }) => {
             <div className="position-relative d-inline-block">
               {uploadLoading ? (
                 <div className="d-flex justify-content-center align-items-center" style={{ height: 200, width: 200 }}>
-                  <Spinner animation="border" />
+                  <Spinner animation="border" style={{ color: "var(--text-muted)" }} />
                 </div>
               ) : uploadError ? (
-                <div className="d-flex flex-column align-items-center gap-3 py-3" style={{ width: 200 }}>
-                  <p className="text-danger mb-0 text-center">Something went wrong uploading the picture.</p>
-                  <ArrowClockwise size={30} style={{ cursor: "pointer" }} onClick={() => setUploadError(false)} />
+                <div className="d-flex flex-column align-items-center gap-2 py-3" style={{ width: 200 }}>
+                  <p className="mb-0 small" style={{ color: "var(--danger)" }}>
+                    Something went wrong uploading the picture.
+                  </p>
+                  <ArrowClockwise size={24} style={{ cursor: "pointer", color: "var(--text-muted)" }} onClick={() => setUploadError(false)} />
                 </div>
               ) : (
                 <>
@@ -69,7 +71,7 @@ const EditProfileModal = ({ show, handleClose }) => {
                     className="position-absolute bottom-0 end-0 bg-dark rounded-circle d-flex align-items-center justify-content-center mb-0"
                     style={{ cursor: "pointer", width: 30, height: 30 }}
                   >
-                    <PlusCircleFill size={30} />
+                    <PlusCircleFill size={30} className="text-accent" />
                     <Form.Control
                       className="d-none"
                       type="file"
@@ -109,7 +111,7 @@ const EditProfileModal = ({ show, handleClose }) => {
                 <OverlayTrigger
                   placement="right"
                   overlay={
-                    <Tooltip>
+                    <Tooltip className="custom-tooltip">
                       <strong>Profile name</strong> must be 2–50 characters long.
                     </Tooltip>
                   }
@@ -143,7 +145,7 @@ const EditProfileModal = ({ show, handleClose }) => {
               {error || "Error placeholder"}
             </div>
 
-            <Button disabled={!hasChanged() || loading} className="w-100 fw-semibold my-2 fs-4" type="submit">
+            <Button disabled={!hasChanged() || loading} className="w-100 fw-semibold my-2 fs-4 bv-btn-confirm" type="submit">
               {loading ? "Updating profile..." : "Save"}
             </Button>
           </Form>

@@ -63,14 +63,14 @@ const SearchPage = () => {
           >
             <InputGroup className="mb-2">
               <Form.Control
-                className="rounded-start-pill fs-5 px-4"
+                className="rounded-start-pill px-4"
                 type="search"
                 placeholder="Search..."
                 value={query}
                 onChange={(e) => setQuery(e.target.value)}
               />
               <Button type="submit" className="rounded-end-pill bg-dark border-secondary border-opacity-25">
-                <Search size={25} className="" />
+                <Search size={20} className="text-accent" />
               </Button>
             </InputGroup>
           </Form>

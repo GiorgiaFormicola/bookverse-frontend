@@ -52,19 +52,14 @@ const HomePage = () => {
           onEmpty={() => setEmptySection3(true)}
         ></HomePageSection>
         {allEmpty && (
-          <>
-            <div className="d-flex flex-column align-items-center justify-content-center text-center text-muted py-5 gap-3">
-              <BookHalf size={60} className="opacity-50" />
-              <h4 className="mb-0">Start your adventure</h4>
-
-              <p className="mb-0">Search and discover books to add to your library</p>
-              <div className="d-flex flex-column align-items-center gap-2">
-                <Link to="/search" className="fw-bold text-light opacity-75 text-decoration-none">
-                  Go to Search page
-                </Link>
-              </div>
-            </div>
-          </>
+          <div className="bv-empty-state">
+            <BookHalf size={40} className="bv-empty-state__icon" />
+            <h5 className="bv-empty-state__title">Start your adventure</h5>
+            <p className="bv-empty-state__text">Search and discover books to add to your library</p>
+            <Link to="/search" className="bv-empty-state__link">
+              Go to Search page
+            </Link>
+          </div>
         )}
       </Container>
     </>

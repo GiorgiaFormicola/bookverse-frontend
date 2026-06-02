@@ -1,5 +1,5 @@
 import { useLocation, useNavigate } from "react-router-dom";
-import { Row, Col, Card, ListGroup, Badge } from "react-bootstrap";
+import { Row, Col, ListGroup, Badge } from "react-bootstrap";
 import { Globe, LockFill } from "react-bootstrap-icons";
 import { BookCheck, BookOpen, Book } from "lucide-react";
 import BookSaveComponent from "./BookSaveComponent";
@@ -32,17 +32,15 @@ const BookCard = ({ book, status, isPublic, navigationState }) => {
       {/* Profile page book card */}
       {location.pathname === "/me" && (
         <Col className="mb-3">
-          <Card className="bg-transparent border-0 book-card">
-            <Card.Img
-              className="book-cover rounded-3"
-              src={book.coverURL ? book.coverURL : defaultCover}
-              alt={book.title}
-              onClick={() => navigate("/books/" + book.googleId)}
-            />
-            <Card.ImgOverlay className="d-none d-lg-flex align-items-end py-0 px-2 overlay rounded-3">
-              <Card.Title className="fs-6">{book.title}</Card.Title>
-            </Card.ImgOverlay>
-          </Card>
+          <div className="bv-book-card" onClick={() => navigate("/books/" + book.googleId)}>
+            <div className="bv-book-card__cover-wrap">
+              <img className="bv-book-card__cover" src={book.coverURL ? book.coverURL : defaultCover} alt={book.title} />
+              <div className="bv-book-card__overlay">
+                <span className="bv-book-card__title-overlay">{book.title}</span>
+                <span className="bv-book-card__author-overlay">{book.authors?.[0] || "Unknown author"}</span>
+              </div>
+            </div>
+          </div>
         </Col>
       )}
 

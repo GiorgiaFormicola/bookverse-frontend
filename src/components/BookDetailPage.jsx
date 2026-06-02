@@ -9,7 +9,7 @@ import BookReviewComponent from "./BookReviewComponent";
 import BookPrivacyComponent from "./BookPrivacyComponent";
 import BookStat from "./BookStat";
 import Review from "./Review";
-import { Star, ThreeDots, StarFill, BookmarkFill, Book as BSBook } from "react-bootstrap-icons";
+import { Star, ThreeDots, StarFill, BookmarkFill, Book as BSBook, ArrowClockwise } from "react-bootstrap-icons";
 import { BookCheck, BookOpen, ChevronLeft } from "lucide-react";
 
 const BookDetailPage = () => {
@@ -194,10 +194,23 @@ const BookDetailPage = () => {
 
   if (bookError) {
     return (
-      <Container className="py-4">
-        <Alert variant="danger">
-          Something went wrong loading the book.
-          <Alert.Link
+      <Container className="min-vh-100 d-flex justify-content-center align-items-center">
+        <div className="bv-empty-state">
+          <ArrowClockwise
+            size={40}
+            className="bv-empty-state__icon"
+            style={{ cursor: "pointer" }}
+            onClick={() => {
+              setBookError(false);
+              setBookLoading(true);
+              getBookDetails();
+            }}
+          />
+          <h5 className="bv-empty-state__title">Something went wrong</h5>
+          <p className="bv-empty-state__text">Something went wrong loading the book.</p>
+          <span
+            className="bv-empty-state__link"
+            style={{ cursor: "pointer" }}
             onClick={() => {
               setBookError(false);
               setBookLoading(true);
@@ -205,8 +218,8 @@ const BookDetailPage = () => {
             }}
           >
             Try again
-          </Alert.Link>
-        </Alert>
+          </span>
+        </div>
       </Container>
     );
   }
@@ -216,7 +229,7 @@ const BookDetailPage = () => {
       <Container fluid className="d-flex flex-column container-lg py-4 px-3 px-lg-4 gap-4 gap-lg-3 position-relative">
         <div className="position-absolute top-0 mt-2 pt-1 mt-lg-3">
           <span
-            className="d-flex align-items-center gap-1 text-muted view-more-link text-muted"
+            className="d-flex align-items-center gap-1 view-more-link fw-semibold"
             style={{ cursor: "pointer", width: "fit-content" }}
             onClick={() => navigate(location.state?.from || "/", { state: location.state })}
           >
@@ -277,7 +290,7 @@ const BookDetailPage = () => {
             <Col xs={12} sm={12} md={12} lg={9}>
               <Row className="g-3">
                 <Col xs={12} className="order-lg-0">
-                  <div>
+                  <div className="mt-lg-3">
                     <h1 className="display-font mb-2">{mappedBook.title}</h1>
                     <h4 className="text-muted mb-1">by {mappedBook.authors}</h4>
                   </div>
@@ -330,27 +343,38 @@ const BookDetailPage = () => {
                 <Col xs={12} className=" order-last pt-2 pt-lg-0">
                   <h5 className="mb-3">Rewiews ({totalReviews})</h5>
                   {!reviewsLoading && !reviewsError && totalReviews === 0 && (
-                    <div className="text-center text-faint py-4">
-                      <BSBook size={40} className="mb-2 opacity-50" />
-                      <p className="mb-1">No reviews yet</p>
-                      <span className="small">Be the first to review this book!</span>
+                    <div className="bv-empty-state py-3">
+                      <BSBook size={40} className="bv-empty-state__icon" />
+                      <h5 className="bv-empty-state__title">No reviews yet</h5>
+                      <p className="bv-empty-state__text">Be the first to review this book!</p>
                     </div>
                   )}
                   {reviewsError ? (
-                    <Col xs={12}>
-                      <Alert variant="danger">
-                        Something went wrong loading reviews.{" "}
-                        <Alert.Link
-                          onClick={() => {
-                            setReviewsError(false);
-                            setReviewsLoading(true);
-                            getBookReviews(0, false);
-                          }}
-                        >
-                          Try again
-                        </Alert.Link>
-                      </Alert>
-                    </Col>
+                    <div className="bv-empty-state">
+                      <ArrowClockwise
+                        size={40}
+                        className="bv-empty-state__icon"
+                        style={{ cursor: "pointer" }}
+                        onClick={() => {
+                          setReviewsError(false);
+                          setReviewsLoading(true);
+                          getBookReviews(0, false);
+                        }}
+                      />
+                      <h5 className="bv-empty-state__title">Something went wrong</h5>
+                      <p className="bv-empty-state__text">Something went wrong loading reviews.</p>
+                      <span
+                        className="bv-empty-state__link"
+                        style={{ cursor: "pointer" }}
+                        onClick={() => {
+                          setReviewsError(false);
+                          setReviewsLoading(true);
+                          getBookReviews(0, false);
+                        }}
+                      >
+                        Try again
+                      </span>
+                    </div>
                   ) : (
                     <Col xs={12}>
                       <ListGroup variant="flush">

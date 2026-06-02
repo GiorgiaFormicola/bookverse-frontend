@@ -105,10 +105,16 @@ const LibraryPage = () => {
               handleSearch(query, filter, 0, false);
             }}
           >
-            <InputGroup>
-              <Form.Control className="rounded-start-pill" type="search" placeholder="Search..." value={query} onChange={(e) => setQuery(e.target.value)} />
+            <InputGroup className="mb-2">
+              <Form.Control
+                className="rounded-start-pill px-4"
+                type="search"
+                placeholder="Search..."
+                value={query}
+                onChange={(e) => setQuery(e.target.value)}
+              />
               <Button type="submit" className="rounded-end-pill bg-dark border-secondary border-opacity-25">
-                <Search className="mb-1" />
+                <Search size={20} className="text-accent" />
               </Button>
             </InputGroup>
           </Form>
