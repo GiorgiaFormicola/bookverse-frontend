@@ -3,15 +3,11 @@ import { instance } from "../config/api";
 import { Container, Row, Col, ListGroup, Form, InputGroup, Button, ToggleButtonGroup, ToggleButton, Spinner, Alert } from "react-bootstrap";
 import BookCard from "./BookCard";
 import { Search, ThreeDots, ArrowClockwise } from "react-bootstrap-icons";
-import { useLocation, useNavigate, useSearchParams, Link } from "react-router-dom";
+import { useLocation, useSearchParams, Link } from "react-router-dom";
 
 const LibraryPage = () => {
-  const navigate = useNavigate();
   const location = useLocation();
   const savedState = location.state;
-
-  console.log("location.state", location.state);
-  console.log("savedState", savedState);
   const [searchParams] = useSearchParams();
   const [error, setError] = useState(false);
   const [query, setQuery] = useState(savedState?.query || "");
@@ -21,6 +17,7 @@ const LibraryPage = () => {
   const [currentPage, setCurrentPage] = useState(savedState?.currentPage || 0);
   const [hasNext, setHasNext] = useState(savedState?.hasNext || false);
   const [readingStatus, setReadingStatus] = useState(savedState?.readingStatus ?? searchParams.get("status") ?? null);
+  const [hasBooks, setHasBooks] = useState(savedState?.hasBooks ?? null);
 
   const getAllBooks = (pageNumber, append, status = readingStatus) => {
     const readingStatusParam = status ? `&status=${status}` : "";
@@ -32,12 +29,14 @@ const LibraryPage = () => {
         } else {
           setBooks(response.data.content);
         }
+        if (!status && pageNumber === 0) {
+          setHasBooks(response.data.content.length > 0 || response.data.totalElements > 0);
+        }
         setCurrentPage(response.data.number);
         setHasNext(!response.data.last);
       })
       .catch((err) => {
-        console.log(err);
-        if (err.response?.data?.error === "ACCOUNT_DISABLED") return;
+        if (err.handled) return;
         setError(true);
       })
       .finally(() => setLoading(false));
@@ -107,14 +106,8 @@ const LibraryPage = () => {
             }}
           >
             <InputGroup>
-              <Form.Control
-                className="rounded-start-pill border-secondary bg-dark text-light"
-                type="search"
-                placeholder="Search..."
-                value={query}
-                onChange={(e) => setQuery(e.target.value)}
-              />
-              <Button type="submit" className="rounded-end-pill bg-dark border-secondary">
+              <Form.Control className="rounded-start-pill" type="search" placeholder="Search..." value={query} onChange={(e) => setQuery(e.target.value)} />
+              <Button type="submit" className="rounded-end-pill bg-dark border-secondary border-opacity-25">
                 <Search className="mb-1" />
               </Button>
             </InputGroup>
@@ -134,16 +127,16 @@ const LibraryPage = () => {
             }}
             className="flex-wrap gap-2 justify-content-center w-100"
           >
-            <ToggleButton id="tbg-btn-1" value="title" variant={filter === "title" ? "light" : "secondary"} className="rounded-pill">
+            <ToggleButton id="tbg-btn-1" value="title" variant="outline-secondary" className="rounded-pill bv-filter-btn">
               Title
             </ToggleButton>
-            <ToggleButton id="tbg-btn-2" value="author" variant={filter === "author" ? "light" : "secondary"} className="rounded-pill">
+            <ToggleButton id="tbg-btn-2" value="author" variant="outline-secondary" className="rounded-pill bv-filter-btn">
               Author
             </ToggleButton>
-            <ToggleButton id="tbg-btn-3" value="category" variant={filter === "category" ? "light" : "secondary"} className="rounded-pill">
+            <ToggleButton id="tbg-btn-3" value="category" variant="outline-secondary" className="rounded-pill bv-filter-btn">
               Category
             </ToggleButton>
-            <ToggleButton id="tbg-btn-4" value="publisher" variant={filter === "publisher" ? "light" : "secondary"} className="rounded-pill">
+            <ToggleButton id="tbg-btn-4" value="publisher" variant="outline-secondary" className="rounded-pill bv-filter-btn">
               Publisher
             </ToggleButton>
           </ToggleButtonGroup>
@@ -156,27 +149,27 @@ const LibraryPage = () => {
             <ToggleButton
               id="tbg-btn-6"
               value="TO_READ"
-              variant={readingStatus === "TO_READ" ? "warning" : "secondary"}
+              variant="outline-secondary"
               onClick={() => handleStatusToggle("TO_READ")}
-              className="rounded-pill text-white px-1 px-sm-2"
+              className="rounded-pill bv-status-btn bv-status-btn--toread"
             >
               To read
             </ToggleButton>
             <ToggleButton
               id="tbg-btn-7"
               value="READING"
-              variant={readingStatus === "READING" ? "info" : "secondary"}
+              variant="outline-secondary"
               onClick={() => handleStatusToggle("READING")}
-              className="rounded-pill text-white px-1 px-sm-2"
+              className="rounded-pill bv-status-btn bv-status-btn--reading"
             >
               Reading
             </ToggleButton>
             <ToggleButton
               id="tbg-btn-8"
               value="READ"
-              variant={readingStatus === "READ" ? "success" : "secondary"}
+              variant="outline-secondary"
               onClick={() => handleStatusToggle("READ")}
-              className="rounded-pill text-white px-1 px-sm-2"
+              className="rounded-pill bv-status-btn bv-status-btn--read"
             >
               Read
             </ToggleButton>
@@ -188,82 +181,72 @@ const LibraryPage = () => {
         <Col xs={12}>
           {loading ? (
             <div className="d-flex gap-3 justify-content-center align-items-center py-5">
-              <Spinner animation="grow" />
-              <Spinner animation="grow" />
-              <Spinner animation="grow" />
+              <Spinner animation="grow" style={{ color: "var(--text-muted)" }} />
+              <Spinner animation="grow" style={{ color: "var(--text-muted)" }} />
+              <Spinner animation="grow" style={{ color: "var(--text-muted)" }} />
             </div>
           ) : error ? (
-            <div className="d-flex align-items-center justify-content-center gap-3 py-5 my-5">
-              <Alert
-                variant="secondary"
-                className="d-flex flex-column align-items-center justify-content-between mb-0 rounded-3 gap-3 py-4 bg-transparent border-0"
+            <div className="bv-empty-state">
+              <ArrowClockwise
+                size={40}
+                className="bv-empty-state__icon"
+                style={{ cursor: "pointer" }}
+                onClick={() => {
+                  setError(false);
+                  handleSearch(query, filter, 0, false);
+                }}
+              />
+              <h5 className="bv-empty-state__title">Something went wrong</h5>
+              <p className="bv-empty-state__text">Something went wrong loading the results.</p>
+              <span
+                className="bv-empty-state__link"
+                style={{ cursor: "pointer" }}
+                onClick={() => {
+                  setError(false);
+                  handleSearch(query, filter, 0, false);
+                }}
               >
-                <span>Something went wrong loading the results.</span>
-                <div className="d-flex flex-column align-items-center gap-2">
-                  <span className="fw-bold">Try again</span>
-                  <ArrowClockwise
-                    size={30}
-                    onClick={() => {
-                      setError(false);
-                      handleSearch(query, filter, 0, false);
-                    }}
-                    style={{ cursor: "pointer" }}
-                  />
-                </div>
-              </Alert>
+                Try again
+              </span>
             </div>
           ) : books.length === 0 ? (
             <>
-              {query || readingStatus ? (
-                <div className="d-flex flex-column align-items-center justify-content-center gap-3 py-5 text-muted">
-                  <h5 className="mb-0">No books matching your research</h5>
-                  <p className="mb-0 small">Try changing your search filters or explore the Search Page to discover something new</p>
-                  <Link to="/search" className="fw-bold text-light opacity-75 text-decoration-none">
+              {query || readingStatus || hasBooks ? (
+                <div className="bv-empty-state">
+                  <Search size={40} className="bv-empty-state__icon" />
+                  <h5 className="bv-empty-state__title">No books matching your research</h5>
+                  <p className="bv-empty-state__text">Try changing your search filters or explore the Search Page to discover something new</p>
+                  <Link to="/search" className="bv-empty-state__link">
                     Go to Search page
                   </Link>
-                  <Search
-                    className="text-light opacity-75"
-                    size={40}
-                    onClick={() => {
-                      navigate("/search");
-                    }}
-                    style={{ cursor: "pointer" }}
-                  />
                 </div>
               ) : (
-                <div className="d-flex flex-column align-items-center justify-content-center gap-3 py-5 text-muted">
-                  <h5 className="mb-0">Looks like your library is empty!</h5>
-                  <p className="mb-0 small">Discover new books and start building your collection</p>
-                  <Link to="/search" className="fw-bold text-light opacity-75 text-decoration-none">
+                <div className="bv-empty-state">
+                  <Search size={40} className="bv-empty-state__icon" />
+                  <h5 className="bv-empty-state__title">Looks like your library is empty!</h5>
+                  <p className="bv-empty-state__text">Discover new books and start building your collection</p>
+                  <Link to="/search" className="bv-empty-state__link">
                     Go to Search page
                   </Link>
-                  <Search
-                    className="text-light opacity-75"
-                    size={40}
-                    onClick={() => {
-                      navigate("/search");
-                    }}
-                    style={{ cursor: "pointer" }}
-                  />
                 </div>
               )}
             </>
           ) : (
             <>
-              <ListGroup variant="flush" className="rounded-3">
+              <ListGroup variant="flush" className="rounded-3 mt-2">
                 {books.map((book) => (
                   <BookCard
                     key={book.id}
                     book={book.info}
                     status={book.status}
                     isPublic={book.public}
-                    navigationState={{ query, filter, books, currentPage, hasNext, readingStatus, from: "/library" }}
+                    navigationState={{ query, filter, books, currentPage, hasNext, readingStatus, hasBooks, from: "/library" }}
                   />
                 ))}
               </ListGroup>
               {hasNext && (
                 <div className="text-center pt-2 pt-sm-3">
-                  <ThreeDots size={50} style={{ cursor: "pointer" }} onClick={() => loadNextPage()} />
+                  <ThreeDots size={50} style={{ cursor: "pointer", color: "var(--text-faint)" }} onClick={() => loadNextPage()} />
                 </div>
               )}
             </>

@@ -1,6 +1,7 @@
 import { useLocation, useNavigate } from "react-router-dom";
 import { Row, Col, Card, ListGroup, Badge } from "react-bootstrap";
-import { Book, BookFill, BookHalf, Globe, LockFill } from "react-bootstrap-icons";
+import { Globe, LockFill } from "react-bootstrap-icons";
+import { BookCheck, BookOpen, Book } from "lucide-react";
 import BookSaveComponent from "./BookSaveComponent";
 
 const BookCard = ({ book, status, isPublic, navigationState }) => {
@@ -49,50 +50,43 @@ const BookCard = ({ book, status, isPublic, navigationState }) => {
       {(location.pathname === "/library" || location.pathname === "/search") && (
         <ListGroup.Item
           action
-          className=" bg-transparent px-1 py-2 py-sm-2 border-0 position-relative"
-          onClick={() => {
-            console.log("navigationState", navigationState);
-            navigate(`/books/${book.googleId}`, { state: navigationState });
-          }}
-          style={{ cursor: "pointer" }}
+          className="bv-library-item border-0 position-relative"
+          onClick={() => navigate(`/books/${book.googleId}`, { state: navigationState })}
         >
           {location.pathname === "/library" && (
-            <div className="d-flex gap-2 position-absolute top-0 end-0 mt-3">
+            <div className="d-flex gap-2 position-absolute top-0 end-0 mt-3 me-2">
               <Badge
-                className="rounded-pill d-inline-flex align-items-center justify-content-center px-3"
-                bg={status === "READ" ? "success" : status === "READING" ? "info" : status === "TO_READ" ? "warning" : "secondary"}
+                className="rounded-pill d-inline-flex align-items-center justify-content-center px-2 gap-1"
+                bg={status === "READ" ? "read" : status === "READING" ? "reading" : status === "TO_READ" ? "toread" : "secondary"}
               >
-                {status === "READ" && <BookFill size={20} />}
-                {status === "READING" && <BookHalf size={20} />}
-                {status === "TO_READ" && <Book size={20} />}
+                {status === "READ" && <BookCheck size={14} />}
+                {status === "READING" && <BookOpen size={14} />}
+                {status === "TO_READ" && <Book size={14} />}
               </Badge>
-
-              <Badge className="rounded-pill d-inline-flex align-items-center justify-content-center px-0" bg="transparent">
-                {isPublic ? <Globe size={20} /> : <LockFill size={20} />}
+              <Badge className="rounded-pill d-inline-flex align-items-center justify-content-center px-2" bg={isPublic ? "reading" : "secondary"}>
+                {isPublic ? <Globe size={14} /> : <LockFill size={14} />}
               </Badge>
             </div>
           )}
-          <Row className="g-3">
+
+          <Row className="g-3 align-items-stretch">
             <Col xs={4} sm={3} md={2} xxl={1}>
-              <img className="book-cover rounded-3 img-fluid" src={book.coverURL ? book.coverURL : defaultCover} alt={book.title} />
+              <div className="bv-library-item__cover-wrap">
+                <img className="bv-library-item__cover img-fluid" src={book.coverURL ? book.coverURL : defaultCover} alt={book.title} />
+              </div>
             </Col>
             <Col xs={5} sm={7} md={8} xxl={9}>
-              <div className="d-flex flex-column h-100 pt-xxl-2">
-                <p className="mb-0 h5 pt-1 pt-sm-2 text-light d-lg-none">{book.title}</p>
-                <p className="mb-0 h4 pt-1 pt-sm-2 text-light d-none d-lg-block pt-xxl-0 ">{book.title}</p>
-                <div className="flex-grow-1 d-flex flex-column justify-content-center gap-sm-1 gap-xl-2">
-                  <p className="mb-0 small d-sm-none">{book.authors.length > 0 ? book.authors.join(", ") : "Unknown author"}</p>
-                  <p className="mb-0 fst-italic small  d-sm-none">{book.publisher ? book.publisher : "Unknown publisher"}</p>
-                  <p className="mb-0 d-none d-sm-block d-lg-none">{book.authors.length > 0 ? book.authors.join(", ") : "Unknown author"}</p>
-                  <p className="mb-0 fst-italic d-none d-sm-block d-lg-none">{book.publisher ? book.publisher : "Unknown publisher"}</p>
-                  <p className="mb-0 d-none d-lg-block fs-5">{book.authors.length > 0 ? book.authors.join(", ") : "Unknown author"}</p>
-                  <p className="mb-0 fst-italic d-none d-lg-block fs-5">{book.publisher ? book.publisher : "Unknown publisher"}</p>
+              <div className="d-flex flex-column h-100 mt-2">
+                <p className="bv-library-item__title mb-1">{book.title}</p>
+                <div className="flex-grow-1 d-flex flex-column justify-content-center">
+                  <p className="bv-library-item__author mb-0">{book.authors.length > 0 ? book.authors.join(", ") : "Unknown author"}</p>
+                  <p className="bv-library-item__publisher mb-0">{book.publisher ? book.publisher : "Unknown publisher"}</p>
                 </div>
               </div>
             </Col>
             {location.pathname === "/search" && (
-              <Col xs={1} className=" offset-2 offset-sm-1">
-                <div className="d-flex flex-column h-100 justify-content-center align-items-center">
+              <Col xs={1} className="offset-2 offset-sm-1">
+                <div className="d-flex flex-column h-100 justify-content-center align-items-end">
                   <BookSaveComponent book={book} />
                 </div>
               </Col>

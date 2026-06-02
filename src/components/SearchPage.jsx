@@ -1,9 +1,9 @@
 import { useLocation } from "react-router-dom";
 import { useState } from "react";
 import { instance } from "../config/api";
-import { Container, Row, Col, ListGroup, Form, InputGroup, Button, ToggleButtonGroup, ToggleButton, Spinner, Alert } from "react-bootstrap";
+import { Container, Row, Col, ListGroup, Form, InputGroup, Button, ToggleButtonGroup, ToggleButton, Spinner } from "react-bootstrap";
 import BookCard from "./BookCard";
-import { Search, ThreeDots, ArrowClockwise, BookHalf } from "react-bootstrap-icons";
+import { Search, ThreeDots, ArrowClockwise, Book } from "react-bootstrap-icons";
 
 const SearchPage = () => {
   const location = useLocation();
@@ -25,13 +25,11 @@ const SearchPage = () => {
     instance
       .get(`/books/search?&${filter}=${query}`)
       .then((response) => {
-        console.log(response);
         setVisibleBooksCount(10);
         setBooks(response.data);
       })
       .catch((err) => {
-        console.log(err);
-        if (err.response?.data?.error === "ACCOUNT_DISABLED") return;
+        if (err.handled) return;
         setError(true);
       })
       .finally(() => setLoading(false));
@@ -63,21 +61,22 @@ const SearchPage = () => {
               handleSearch(query, filter);
             }}
           >
-            <InputGroup>
+            <InputGroup className="mb-2">
               <Form.Control
-                className="rounded-start-pill border-secondary bg-dark text-light"
+                className="rounded-start-pill fs-5 px-4"
                 type="search"
                 placeholder="Search..."
                 value={query}
                 onChange={(e) => setQuery(e.target.value)}
               />
-              <Button type="submit" className="rounded-end-pill bg-dark border-secondary">
-                <Search className="mb-1"></Search>
+              <Button type="submit" className="rounded-end-pill bg-dark border-secondary border-opacity-25">
+                <Search size={25} className="" />
               </Button>
             </InputGroup>
           </Form>
         </Col>
       </Row>
+
       <Row className="justify-content-center">
         <Col xs={12} sm={9} lg={6} className="d-flex justify-content-center">
           <ToggleButtonGroup
@@ -92,16 +91,16 @@ const SearchPage = () => {
             }}
             className="flex-wrap gap-2 justify-content-center w-100"
           >
-            <ToggleButton id="tbg-btn-1" value={"title"} variant={filter === "title" ? "light" : "secondary"} className="rounded-pill">
+            <ToggleButton id="tbg-btn-1" value="title" variant="outline-secondary" className="rounded-pill bv-filter-btn">
               Title
             </ToggleButton>
-            <ToggleButton id="tbg-btn-2" value={"author"} variant={filter === "author" ? "light" : "secondary"} className="rounded-pill">
+            <ToggleButton id="tbg-btn-2" value="author" variant="outline-secondary" className="rounded-pill bv-filter-btn">
               Author
             </ToggleButton>
-            <ToggleButton id="tbg-btn-3" value={"category"} variant={filter === "category" ? "light" : "secondary"} className="rounded-pill">
+            <ToggleButton id="tbg-btn-3" value="category" variant="outline-secondary" className="rounded-pill bv-filter-btn">
               Category
             </ToggleButton>
-            <ToggleButton id="tbg-btn-4" value={"publisher"} variant={filter === "publisher" ? "light" : "secondary"} className="rounded-pill">
+            <ToggleButton id="tbg-btn-4" value="publisher" variant="outline-secondary" className="rounded-pill bv-filter-btn">
               Publisher
             </ToggleButton>
           </ToggleButtonGroup>
@@ -111,55 +110,57 @@ const SearchPage = () => {
       <Row className="g-3 pt-3 pt-sm-1 pt-md-2 pt-lg-0">
         <Col xs={12}>
           {loading ? (
-            <div className="d-flex align-items-center justify-content-center gap-3 py-5 my-5">
-              <Spinner animation="grow" />
-              <Spinner animation="grow" />
-              <Spinner animation="grow" />
+            <div className="d-flex gap-3 justify-content-center align-items-center py-5">
+              <Spinner animation="grow" style={{ color: "var(--text-muted)" }} />
+              <Spinner animation="grow" style={{ color: "var(--text-muted)" }} />
+              <Spinner animation="grow" style={{ color: "var(--text-muted)" }} />
             </div>
           ) : error ? (
-            <div className="d-flex align-items-center justify-content-center gap-3 py-5 my-5">
-              <Alert
-                variant="secondary"
-                className="d-flex flex-column align-items-center justify-content-between mb-0 rounded-3 gap-3 py-4 bg-transparent border-0"
+            <div className="bv-empty-state">
+              <ArrowClockwise
+                size={40}
+                className="bv-empty-state__icon"
+                style={{ cursor: "pointer" }}
+                onClick={() => {
+                  setError(false);
+                  searchBooks(query, filter);
+                }}
+              />
+              <h5 className="bv-empty-state__title">Something went wrong</h5>
+              <p className="bv-empty-state__text">Something went wrong loading the results.</p>
+              <span
+                className="bv-empty-state__link"
+                style={{ cursor: "pointer" }}
+                onClick={() => {
+                  setError(false);
+                  searchBooks(query, filter);
+                }}
               >
-                <span>Something went wrong loading the results.</span>
-                <div className="d-flex flex-column align-items-center gap-2">
-                  <span className="fw-bold">Try again</span>
-                  <ArrowClockwise
-                    size={30}
-                    onClick={() => {
-                      setError(false);
-                      searchBooks(query, filter);
-                    }}
-                    style={{ cursor: "pointer" }}
-                  />
-                </div>
-              </Alert>
+                Try again
+              </span>
             </div>
           ) : !hasSearched ? (
-            <div className="d-flex flex-column align-items-center justify-content-center gap-3 py-5 text-muted">
-              <BookHalf size={50} />
-              <h5 className="mb-0">Discover your next read</h5>
-              <p className="mb-0 small">Search for a book by title, author, category or publisher</p>
+            <div className="bv-empty-state">
+              <Book size={40} className="bv-empty-state__icon" />
+              <h5 className="bv-empty-state__title">Discover your next read</h5>
+              <p className="bv-empty-state__text">Search for a book by title, author, category or publisher</p>
             </div>
           ) : books.length === 0 && hasSearched ? (
-            <>
-              <div className="d-flex flex-column align-items-center justify-content-center gap-3 py-5 text-muted">
-                <Search size={50} />
-                <h5 className="mb-0">No books matching your research</h5>
-                <p className="mb-0 small">Try changing your search filters</p>
-              </div>
-            </>
+            <div className="bv-empty-state">
+              <Search size={40} className="bv-empty-state__icon" />
+              <h5 className="bv-empty-state__title">No results found</h5>
+              <p className="bv-empty-state__text">Try searching with different keywords or filters</p>
+            </div>
           ) : (
             <>
-              <ListGroup variant="flush" className="rounded-3">
+              <ListGroup variant="flush" className="rounded-3 mt-2">
                 {visibleBooks.map((book) => (
                   <BookCard key={book.googleId} book={book} navigationState={{ query, filter, books, visibleBooksCount, hasSearched, from: "/search" }} />
                 ))}
               </ListGroup>
               {hasNext && (
-                <div xs={12} className="text-center">
-                  <ThreeDots size={50} style={{ cursor: "pointer" }} onClick={() => loadNextPage()}></ThreeDots>
+                <div className="text-center pt-2 pt-sm-3">
+                  <ThreeDots size={50} style={{ cursor: "pointer", color: "var(--text-faint)" }} onClick={() => loadNextPage()} />
                 </div>
               )}
             </>

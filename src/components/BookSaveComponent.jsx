@@ -44,7 +44,7 @@ const BookSaveComponent = ({ book }) => {
           {isSaved && (
             <>
               <SuitHeartFill
-                className="text-danger"
+                className="text-saved"
                 size={30}
                 onClick={(e) => {
                   e.stopPropagation();
@@ -56,6 +56,7 @@ const BookSaveComponent = ({ book }) => {
           {!isSaved && (
             <>
               <SuitHeart
+                className="text-muted"
                 size={30}
                 onClick={(e) => {
                   e.stopPropagation();

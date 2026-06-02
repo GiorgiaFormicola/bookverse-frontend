@@ -10,7 +10,7 @@ import BookPrivacyComponent from "./BookPrivacyComponent";
 import BookStat from "./BookStat";
 import Review from "./Review";
 import { Star, ThreeDots, StarFill, BookmarkFill, Book as BSBook } from "react-bootstrap-icons";
-import { BookCheck, BookOpen, Book, ChevronLeft } from "lucide-react";
+import { BookCheck, BookOpen, ChevronLeft } from "lucide-react";
 
 const BookDetailPage = () => {
   const params = useParams();
@@ -18,7 +18,6 @@ const BookDetailPage = () => {
   const location = useLocation();
   const reviewFormRef = useRef(null);
   const library = useSelector((currentState) => currentState.profile.savedBooks);
-  const user = useSelector((currentState) => currentState.profile.user);
   const [book, setBook] = useState(null);
   const [bookLoading, setBookLoading] = useState(true);
   const [bookError, setBookError] = useState(false);
@@ -219,7 +218,6 @@ const BookDetailPage = () => {
           <span
             className="d-flex align-items-center gap-1 text-muted view-more-link text-muted"
             style={{ cursor: "pointer", width: "fit-content" }}
-            /* onClick={() => navigate(-1)} */
             onClick={() => navigate(location.state?.from || "/", { state: location.state })}
           >
             <ChevronLeft size={20} />
@@ -296,12 +294,7 @@ const BookDetailPage = () => {
                 <Col xs={12} className="order-lg-2 pb-xxl-4">
                   {mappedBook.description && (
                     <div className="mb-2">
-                      {/* <Card className="border-0 shadow-sm mb-2 mb-lg-4">
-                        <Card.Body> */}
-                      {/* <h5 className="mb-3">Description</h5> */}
                       <p className="text-muted mb-0">{mappedBook.description}</p>
-                      {/*  </Card.Body>
-                      </Card> */}
                     </div>
                   )}
                 </Col>
@@ -335,11 +328,9 @@ const BookDetailPage = () => {
                   </div>
                 </Col>
                 <Col xs={12} className=" order-last pt-2 pt-lg-0">
-                  {/* <Card className="border-0 shadow-sm mt-3 mt-lg-0">
-                    <Card.Body> */}
                   <h5 className="mb-3">Rewiews ({totalReviews})</h5>
                   {!reviewsLoading && !reviewsError && totalReviews === 0 && (
-                    <div className="text-center text-muted py-4">
+                    <div className="text-center text-faint py-4">
                       <BSBook size={40} className="mb-2 opacity-50" />
                       <p className="mb-1">No reviews yet</p>
                       <span className="small">Be the first to review this book!</span>
@@ -466,8 +457,6 @@ const BookDetailPage = () => {
                       </div>
                     </Col>
                   )}
-                  {/*    </Card.Body>
-                  </Card> */}
                 </Col>
               </Row>
             </Col>
