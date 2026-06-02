@@ -2,7 +2,7 @@ import { Container, Row, Col } from "react-bootstrap";
 import HomePageSection from "./HomePageSection";
 import Dashboard from "./Dashboard";
 import { useState } from "react";
-import { BookHalf } from "react-bootstrap-icons";
+import { Book } from "react-bootstrap-icons";
 import { Link } from "react-router-dom";
 
 const HomePage = () => {
@@ -53,7 +53,7 @@ const HomePage = () => {
         ></HomePageSection>
         {allEmpty && (
           <div className="bv-empty-state">
-            <BookHalf size={40} className="bv-empty-state__icon" />
+            <Book size={40} className="bv-empty-state__icon" />
             <h5 className="bv-empty-state__title">Start your adventure</h5>
             <p className="bv-empty-state__text">Search and discover books to add to your library</p>
             <Link to="/search" className="bv-empty-state__link">

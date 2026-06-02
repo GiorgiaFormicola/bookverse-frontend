@@ -38,25 +38,37 @@ const ForgotPasswordPage = () => {
   };
 
   return (
-    <Container fluid className="min-vh-100 d-flex align-items-center justify-content-center auth-gradient">
+    <Container fluid className="min-vh-100 d-flex align-items-center justify-content-center">
       <Row className="justify-content-center w-100">
         <Col xs={11} sm={8} md={6} lg={4}>
-          <Card className="border-0 shadow-lg p-4">
+          <Card className="bv-auth-card border-0 p-4">
             {sent ? (
               <div className="text-center d-flex flex-column align-items-center gap-3 py-3">
-                <EnvelopeFill size={48} className="text-success" />
-                <p className="mb-0">Check your inbox! We sent you a link to reset your password.</p>
-                <Link to="/login" className="text-decoration-none text-light fw-semibold view-more-link">
+                <EnvelopeFill size={48} style={{ color: "var(--accent)" }} />
+                <p className="mb-0" style={{ color: "var(--text-muted)" }}>
+                  Check your inbox! We sent you a link to reset your password.
+                </p>
+                <Link to="/login" className="view-more-link fw-semibold">
                   Back to login
                 </Link>
               </div>
             ) : (
               <>
                 <div className="text-center mb-4">
-                  <Book size={48} className="text-primary mb-2" />
-                  <h3>Forgot password</h3>
-                  <p className="text-muted small mb-0">Enter your email and we'll send you a reset link</p>
+                  <div className="bv-brand d-flex align-items-center justify-content-center gap-2 mb-3">
+                    <span className="bv-brand__icon">
+                      <Book size={30} />
+                    </span>
+                    <span className="bv-brand__text">
+                      Book<span className="bv-brand__accent">Verse</span>
+                    </span>
+                  </div>
+                  <h3 style={{ fontFamily: "Space Grotesk", fontWeight: 700 }}>Forgot password</h3>
+                  <p className="small mb-0" style={{ color: "var(--text-muted)" }}>
+                    Enter your email and we'll send you a reset link
+                  </p>
                 </div>
+
                 <Form noValidate onSubmit={handleSubmit}>
                   <Form.Group className="mb-3">
                     <Form.Label>Email address</Form.Label>
@@ -71,14 +83,17 @@ const ForgotPasswordPage = () => {
                       size="lg"
                     />
                   </Form.Group>
-                  <div className={"alert alert-danger text-center bg-transparent border-0 p-0 mb-3" + (error ? "" : " invisible")}>
+
+                  <div className={"alert bg-transparent text-center border-0 p-0 mb-3" + (error ? " alert-danger" : " invisible")}>
                     {error || "placeholder"}
                   </div>
-                  <Button type="submit" disabled={loading || !email} className="w-100 auth-gradient border-0" size="lg">
-                    {loading ? <Spinner animation="border" size="sm" /> : "Send reset link"}
+
+                  <Button type="submit" disabled={loading || !email} className="w-100 bv-btn-confirm mb-3" size="lg">
+                    {loading ? <Spinner animation="border" size="sm" style={{ color: "var(--bg-deep)" }} /> : "Send reset link"}
                   </Button>
-                  <div className="text-center mt-3">
-                    <Link to="/login" className="text-decoration-none text-muted small">
+
+                  <div className="text-center">
+                    <Link to="/login" className="view-more-link small fw-semibold">
                       Back to login
                     </Link>
                   </div>

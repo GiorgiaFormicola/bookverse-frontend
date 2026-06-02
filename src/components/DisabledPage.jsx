@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { useSelector } from "react-redux";
-import { Container, Button, Spinner } from "react-bootstrap";
-import { ShieldExclamation, EnvelopeFill } from "react-bootstrap-icons";
+import { Container, Row, Col, Card, Button, Spinner } from "react-bootstrap";
+import { ShieldExclamation, EnvelopeFill, Book } from "react-bootstrap-icons";
 import { instance } from "../config/api";
 
 const DisabledPage = () => {
@@ -23,26 +23,47 @@ const DisabledPage = () => {
   };
 
   return (
-    <Container className="min-vh-100 d-flex justify-content-center align-items-center">
-      <div className="text-center d-flex flex-column align-items-center gap-3" style={{ maxWidth: 420 }}>
-        <ShieldExclamation size={64} className="text-warning" />
-        <h3 className="mb-0">Your account has been disabled</h3>
-        <p className="text-muted mb-0">Your account has been temporarily disabled by an administrator. You can request more information by contacting us.</p>
+    <Container fluid className="min-vh-100 d-flex align-items-center justify-content-center">
+      <Row className="justify-content-center w-100">
+        <Col xs={11} sm={8} md={6} lg={4}>
+          <Card className="bv-auth-card border-0 p-4">
+            {sent ? (
+              <div className="text-center d-flex flex-column align-items-center gap-3 py-4">
+                <EnvelopeFill size={48} style={{ color: "var(--accent)" }} />
+                <h5 style={{ fontFamily: "Space Grotesk", fontWeight: 700 }}>Request sent!</h5>
+                <p className="mb-0" style={{ color: "var(--text-muted)" }}>
+                  We'll get back to you as soon as possible.
+                </p>
+              </div>
+            ) : (
+              <>
+                <div className="text-center mb-4">
+                  <div className="bv-brand d-flex align-items-center justify-content-center gap-2 mb-5">
+                    <span className="bv-brand__icon">
+                      <Book size={30} />
+                    </span>
+                    <span className="bv-brand__text">
+                      Book<span className="bv-brand__accent">Verse</span>
+                    </span>
+                  </div>
+                  <ShieldExclamation size={48} className="mb-3" style={{ color: "var(--st-toread)" }} />
+                  <h3 style={{ fontFamily: "Space Grotesk", fontWeight: 700 }}>Account disabled</h3>
+                  <p className="small mb-0" style={{ color: "var(--text-muted)" }}>
+                    Your account has been temporarily disabled by an administrator. You can request reactivation below.
+                  </p>
+                </div>
 
-        {sent ? (
-          <div className="d-flex flex-column align-items-center gap-2 text-success">
-            <EnvelopeFill size={32} />
-            <p className="mb-0">Request sent! We'll get back to you as soon as possible.</p>
-          </div>
-        ) : (
-          <>
-            {error && <p className="text-danger small mb-0">Something went wrong. Try again.</p>}
-            <Button variant="primary" className="rounded-pill px-4" onClick={handleSend} disabled={loading || !email}>
-              {loading ? <Spinner animation="border" size="sm" /> : "Request reactivation"}
-            </Button>
-          </>
-        )}
-      </div>
+                <Button className="w-100 bv-btn-confirm" size="lg" onClick={handleSend} disabled={loading || !email}>
+                  {loading ? <Spinner animation="border" size="sm" style={{ color: "var(--bg-deep)" }} /> : "Request reactivation"}
+                </Button>
+                <div className={"alert text-center border-0 p-0 mb-3" + (error ? " alert-danger" : " invisible")}>
+                  {error ? "Something went wrong. Try again." : "placeholder"}
+                </div>
+              </>
+            )}
+          </Card>
+        </Col>
+      </Row>
     </Container>
   );
 };

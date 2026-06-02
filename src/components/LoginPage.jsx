@@ -77,41 +77,71 @@ const LoginPage = () => {
   }, []);
 
   return (
-    <Container fluid className="min-vh-100 d-flex align-items-center justify-content-center auth-gradient" /* ADD AUTH-GRADIENT CLASS */>
-      <Row className="justify-content-center">
-        <Col sm={12} md={11} lg={9}>
-          <Card className="border-0 shadow-lg overflow-hidden">
+    <Container fluid className="min-vh-100 d-flex align-items-center justify-content-center">
+      <Row className="justify-content-center w-100">
+        <Col sm={12} md={11} lg={9} xl={7}>
+          <Card className="bv-auth-card border-0 overflow-hidden">
             <Row className="g-0">
-              <Col md={6} className="d-none d-md-block bg-secondary text-white p-5 auth-gradient" /* ADD AUTH-GRADIENT CLASS */>
-                <div>
-                  <Book size={64} className="mb-4" />
-                  <h2 className="mb-3" /* ADD DISPLAY-FONT CLASS */>Welcome Back</h2>
-                  <p className="mb-4 opacity-75">Your personal library awaits. Discover, read, and share your thoughts on thousands of books.</p>
-                  <Row className="justify-content-between row-cols-3">
-                    <Col /* ADD FETCH FOR INFO */>
-                      <h3 className="h1 mb-0 text-nowrap">10K+</h3>
-                      <small className="opacity-75">Books</small>
+              {/* Colonna sinistra — solo desktop */}
+              <Col md={6} className="d-none d-md-flex auth-gradient p-5">
+                <div className="d-flex flex-column justify-content-between h-100">
+                  <div>
+                    <div className="bv-brand d-flex align-items-center gap-3 mb-5">
+                      <span className="bv-brand__icon">
+                        <Book size={50} />
+                      </span>
+                      <span className="bv-brand__text fs-2">
+                        Book<span className="bv-brand__accent">Verse</span>
+                      </span>
+                    </div>
+                    <h2 className="mb-3" style={{ fontFamily: "Space Grotesk", fontWeight: 700 }}>
+                      Welcome Back
+                    </h2>
+                    <p style={{ color: "rgba(236,235,245,0.7)" }}>
+                      Your personal library awaits. Discover, read, and share your thoughts on thousands of books.
+                    </p>
+                  </div>
+                  <Row className="justify-content-between row-cols-3 mt-4">
+                    <Col>
+                      <h3 className="h1 mb-0 text-nowrap" style={{ fontFamily: "Space Grotesk", color: "var(--accent)" }}>
+                        10K+
+                      </h3>
+                      <small style={{ color: "rgba(236,235,245,0.6)" }}>Books</small>
                     </Col>
-                    <Col /* ADD FETCH FOR INFO */>
-                      <h3 className="h1 mb-0 text-nowrap">5K+</h3>
-                      <small className="opacity-75">Readers</small>
+                    <Col>
+                      <h3 className="h1 mb-0 text-nowrap" style={{ fontFamily: "Space Grotesk", color: "var(--accent)" }}>
+                        5K+
+                      </h3>
+                      <small style={{ color: "rgba(236,235,245,0.6)" }}>Readers</small>
                     </Col>
-                    <Col /* ADD FETCH FOR INFO */>
-                      <h3 className="h1 mb-0 text-nowrap">20K+</h3>
-                      <small className="opacity-75">Reviews</small>
+                    <Col>
+                      <h3 className="h1 mb-0 text-nowrap" style={{ fontFamily: "Space Grotesk", color: "var(--accent)" }}>
+                        20K+
+                      </h3>
+                      <small style={{ color: "rgba(236,235,245,0.6)" }}>Reviews</small>
                     </Col>
                   </Row>
                 </div>
               </Col>
 
-              <Col sm={12} md={6} className="p-5">
+              {/* Colonna destra — form */}
+              <Col sm={12} md={6} className="p-5" style={{ background: "var(--surface-raised)" }}>
+                {/* Mobile header */}
                 <div className="mb-4 text-center d-md-none">
-                  <Book color="#667DE9" size={55} className="text-primary mb-2" />
-
-                  <h2 /* ADD DISPLAY-FONT CLASS */>Log in</h2>
+                  <div className="bv-brand d-flex flex-column align-items-center justify-content-center gap-2 mb-3">
+                    <span className="bv-brand__icon">
+                      <Book size={50} />
+                    </span>
+                    <span className="bv-brand__text fs-2">
+                      Book<span className="bv-brand__accent">Verse</span>
+                    </span>
+                  </div>
+                  <h2 style={{ fontFamily: "Space Grotesk", fontWeight: 700 }}>Log in</h2>
                 </div>
 
-                <h3 className="mb-4 d-none d-md-block" /* ADD DISPLAY-FONT CLASS */>Log in</h3>
+                <h3 className="mb-4 d-none d-md-block" style={{ fontFamily: "Space Grotesk", fontWeight: 700 }}>
+                  Log in
+                </h3>
 
                 <Form
                   noValidate
@@ -141,12 +171,7 @@ const LoginPage = () => {
                         placeholder="Enter your password"
                         value={loginCredentials.password}
                         onClick={() => clearMessages()}
-                        onChange={(e) =>
-                          setLoginCredentials({
-                            ...loginCredentials,
-                            password: e.target.value,
-                          })
-                        }
+                        onChange={(e) => setLoginCredentials({ ...loginCredentials, password: e.target.value })}
                         required
                         size="lg"
                       />
@@ -157,14 +182,14 @@ const LoginPage = () => {
                   </Form.Group>
 
                   <div className="text-end mb-3">
-                    <Link to="/forgot-password" className="text-decoration-none text-muted small view-more-link">
+                    <Link to="/forgot-password" className="text-decoration-none small view-more-link fw-semibold">
                       Forgot your password?
                     </Link>
                   </div>
 
                   <div
                     className={
-                      "alert text-center bg-transparent border-0 p-0" +
+                      "alert text-center bg-transparent border-0 p-0 mb-3" +
                       (error || location.state?.passwordReset ? "" : " invisible") +
                       (error ? " alert-danger" : " alert-success")
                     }
@@ -173,15 +198,15 @@ const LoginPage = () => {
                     {error ? error : location.state?.passwordReset ? "Password reset successfully!" : "placeholder"}
                   </div>
 
-                  <div className="gap-2 mb-3">
-                    <Button variant="primary" type="submit" disabled={loading} size="lg" className="border-0 w-100 auth-gradient" /* ADD AUTH-GRADIENT CLASS */>
-                      {loading ? "Loading..." : "Log in"}
-                    </Button>
-                  </div>
+                  <Button type="submit" disabled={loading} size="lg" className="w-100 bv-btn-confirm mb-3">
+                    {loading ? "Loading..." : "Log in"}
+                  </Button>
 
                   <div className="text-center">
-                    <p className="text-muted mb-0">Don't have an account?</p>
-                    <Link to="/signup" className="text-decoration-none text-light fw-semibold">
+                    <p className="mb-0" style={{ color: "var(--text-muted)" }}>
+                      Don't have an account?
+                    </p>
+                    <Link to="/signup" className="view-more-link fw-semibold">
                       Sign Up
                     </Link>
                   </div>

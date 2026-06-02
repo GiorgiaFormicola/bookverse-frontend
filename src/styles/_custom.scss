@@ -1494,3 +1494,42 @@ html {
     font-size: 0.875rem;
   }
 }
+
+// ============================================================
+//  AUTH PAGES
+// ============================================================
+
+/* .auth-gradient {
+  background: linear-gradient(135deg, #7c3aed 0%, #a855f7 100%);
+} */
+/* .auth-gradient {
+  background: linear-gradient(135deg, #2d1060 0%, #4c1d95 50%, #3b0764 100%);
+} */
+
+/* .auth-gradient {
+  background:
+    radial-gradient(ellipse 80% 60% at 20% 20%, #3b0764 0%, transparent 60%), radial-gradient(ellipse 60% 50% at 80% 80%, #6b21a8 0%, transparent 55%),
+    radial-gradient(ellipse 50% 40% at 60% 10%, rgba(244, 114, 182, 0.3) 0%, transparent 50%), linear-gradient(160deg, #1a0533 0%, #2d1060 50%, #1e0a3c 100%);
+} */
+
+/* .auth-gradient {
+  background: linear-gradient(160deg, #1a0533 0%, #3b0764 40%, #6b21a8 70%, #86198f 100%);
+} */
+/* .auth-gradient {
+  background: linear-gradient(135deg, #1a0533 0%, #3b0764 30%, #6b21a8 70%, #86198f 100%);
+}
+ */
+
+.auth-gradient {
+  background:
+    radial-gradient(ellipse 70% 50% at 15% 50%, rgba(109, 40, 217, 0.6) 0%, transparent 60%),
+    radial-gradient(ellipse 50% 40% at 85% 20%, rgba(168, 85, 247, 0.4) 0%, transparent 55%),
+    radial-gradient(ellipse 40% 35% at 70% 85%, rgba(236, 72, 153, 0.25) 0%, transparent 50%), linear-gradient(160deg, #0d0520 0%, #1a0a38 50%, #150824 100%);
+}
+.bv-auth-card {
+  background: var(--surface);
+  box-shadow:
+    0 0 0 1px rgba(139, 92, 246, 0.2),
+    0 0 60px rgba(124, 58, 237, 0.3),
+    0 0 120px rgba(124, 58, 237, 0.15);
+}

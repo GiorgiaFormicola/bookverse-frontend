@@ -50,109 +50,113 @@ const ResetPasswordPage = () => {
       .finally(() => setLoading(false));
   };
 
-  if (!token) {
-    return (
-      <Container fluid className="min-vh-100 d-flex align-items-center justify-content-center">
-        <div className="text-center d-flex flex-column align-items-center gap-3">
-          <p className="mb-0">Invalid reset link.</p>
-          <Link to="/forgot-password" className="text-decoration-none text-light fw-semibold">
-            Request a new one
-          </Link>
-        </div>
-      </Container>
-    );
-  }
-
   return (
-    <Container fluid className="min-vh-100 d-flex align-items-center justify-content-center auth-gradient">
-      <Row className="justify-content-center w-100">
-        <Col xs={11} sm={8} md={6} lg={4}>
-          <Card className="border-0 shadow-lg p-4">
-            <div className="text-center mb-4">
-              <Book size={48} className="text-primary mb-2" />
-              <h3>Reset password</h3>
-              <p className="text-muted small mb-0">Enter your new password</p>
-            </div>
-            <Form noValidate onSubmit={handleSubmit}>
-              <Form.Group className="mb-3" controlId="newPassword">
-                <Form.Label className="d-flex align-items-center gap-2">
-                  New password
-                  <OverlayTrigger
-                    key="newPassword"
-                    placement="right"
-                    overlay={
-                      <Tooltip id="newPassword-tooltip" className="custom-tooltip">
-                        <strong>Password</strong> must be at least 8 characters long and include at least one uppercase letter, one lowercase letter, one number
-                        and one special character.
-                      </Tooltip>
-                    }
-                    popperConfig={{
-                      modifiers: [
-                        {
-                          name: "computeStyles",
-                          options: {
-                            gpuAcceleration: false,
-                          },
-                        },
-                        {
-                          name: "preventOverflow",
-                          options: {
-                            boundary: "clippingParents",
-                          },
-                        },
-                      ],
-                    }}
-                  >
-                    <span style={{ display: "inline-flex", flexShrink: 0, cursor: "pointer" }}>
-                      <InfoCircleFill />
+    <>
+      {!token ? (
+        <Container fluid className="min-vh-100 d-flex align-items-center justify-content-center">
+          <div className="bv-empty-state">
+            <h5 className="bv-empty-state__title">Invalid reset link</h5>
+            <p className="bv-empty-state__text">This link is invalid or has expired.</p>
+            <Link to="/forgot-password" className="bv-empty-state__link">
+              Request a new one
+            </Link>
+          </div>
+        </Container>
+      ) : (
+        <Container fluid className="min-vh-100 d-flex align-items-center justify-content-center">
+          <Row className="justify-content-center w-100">
+            <Col xs={11} sm={8} md={6} lg={4}>
+              <Card className="bv-auth-card border-0 p-4">
+                <div className="text-center mb-4">
+                  <div className="bv-brand d-flex align-items-center justify-content-center gap-2 mb-3">
+                    <span className="bv-brand__icon">
+                      <Book size={30} />
                     </span>
-                  </OverlayTrigger>
-                </Form.Label>
-                <InputGroup>
-                  <Form.Control
-                    type={showPassword ? "text" : "password"}
-                    placeholder="Enter your new password"
-                    value={newPassword}
-                    onChange={(e) => {
-                      setNewPassword(e.target.value);
-                      setError("");
-                    }}
-                    size="lg"
-                  />
-                  <InputGroup.Text onClick={() => setShowPassword(!showPassword)} style={{ cursor: "pointer" }}>
-                    {showPassword ? <EyeSlash /> : <Eye />}
-                  </InputGroup.Text>
-                </InputGroup>
-              </Form.Group>
-              <Form.Group className="mb-3" controlId="confirmPassword">
-                <Form.Label>Confirm Password</Form.Label>
-                <InputGroup>
-                  <Form.Control
-                    type={showPassword ? "text" : "password"}
-                    placeholder="Confirm your password"
-                    value={confirmPassword}
-                    onClick={() => setError("")}
-                    onChange={(e) => {
-                      setConfirmPassword(e.target.value);
-                      setError("");
-                    }}
-                    required
-                    size="lg"
-                  />
-                  <InputGroup.Text onClick={() => setShowPassword(!showPassword)} style={{ cursor: "pointer" }}>
-                    {showPassword ? <EyeSlash /> : <Eye />}
-                  </InputGroup.Text>
-                </InputGroup>
-              </Form.Group>
-              <div className={"alert alert-danger text-center bg-transparent border-0 p-0 mb-3" + (error ? "" : " invisible")}>{error || "placeholder"}</div>
-              <Button type="submit" disabled={loading || !newPassword} className="w-100 auth-gradient border-0" size="lg">
-                {loading ? <Spinner animation="border" size="sm" /> : "Reset password"}
-              </Button>
-            </Form>
-          </Card>
-        </Col>
-      </Row>
-    </Container>
+                    <span className="bv-brand__text">
+                      Book<span className="bv-brand__accent">Verse</span>
+                    </span>
+                  </div>
+                  <h3 style={{ fontFamily: "Space Grotesk", fontWeight: 700 }}>Reset password</h3>
+                  <p className="small mb-0" style={{ color: "var(--text-muted)" }}>
+                    Enter your new password
+                  </p>
+                </div>
+
+                <Form noValidate onSubmit={handleSubmit}>
+                  <Form.Group className="mb-3" controlId="newPassword">
+                    <Form.Label className="d-flex align-items-center gap-2">
+                      New password
+                      <OverlayTrigger
+                        placement="right"
+                        overlay={
+                          <Tooltip className="custom-tooltip">
+                            <strong>Password</strong> must be at least 8 characters and include uppercase, lowercase and a number.
+                          </Tooltip>
+                        }
+                        popperConfig={{
+                          modifiers: [
+                            { name: "computeStyles", options: { gpuAcceleration: false } },
+                            { name: "preventOverflow", options: { boundary: "clippingParents" } },
+                          ],
+                        }}
+                      >
+                        <span style={{ display: "inline-flex", flexShrink: 0, cursor: "pointer" }}>
+                          <InfoCircleFill />
+                        </span>
+                      </OverlayTrigger>
+                    </Form.Label>
+                    <InputGroup>
+                      <Form.Control
+                        type={showPassword ? "text" : "password"}
+                        placeholder="Enter your new password"
+                        value={newPassword}
+                        onChange={(e) => {
+                          setNewPassword(e.target.value);
+                          setError("");
+                        }}
+                        size="lg"
+                      />
+                      <InputGroup.Text onClick={() => setShowPassword(!showPassword)} style={{ cursor: "pointer" }}>
+                        {showPassword ? <EyeSlash /> : <Eye />}
+                      </InputGroup.Text>
+                    </InputGroup>
+                  </Form.Group>
+
+                  <Form.Group className="mb-3" controlId="confirmPassword">
+                    <Form.Label>Confirm Password</Form.Label>
+                    <InputGroup>
+                      <Form.Control
+                        type={showPassword ? "text" : "password"}
+                        placeholder="Confirm your password"
+                        value={confirmPassword}
+                        onClick={() => setError("")}
+                        onChange={(e) => {
+                          setConfirmPassword(e.target.value);
+                          setError("");
+                        }}
+                        required
+                        size="lg"
+                      />
+                      <InputGroup.Text onClick={() => setShowPassword(!showPassword)} style={{ cursor: "pointer" }}>
+                        {showPassword ? <EyeSlash /> : <Eye />}
+                      </InputGroup.Text>
+                    </InputGroup>
+                  </Form.Group>
+
+                  <div className={"alert bg-transparent text-center border-0 p-0 mb-3" + (error ? " alert-danger" : " invisible")}>
+                    {error || "placeholder"}
+                  </div>
+
+                  <Button type="submit" disabled={loading || !newPassword} className="w-100 bv-btn-confirm" size="lg">
+                    {loading ? <Spinner animation="border" size="sm" style={{ color: "var(--bg-deep)" }} /> : "Reset password"}
+                  </Button>
+                </Form>
+              </Card>
+            </Col>
+          </Row>
+        </Container>
+      )}
+    </>
   );
 };
 
