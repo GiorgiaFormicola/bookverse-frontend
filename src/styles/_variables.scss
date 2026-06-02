@@ -1,18 +1,5 @@
-// ============================================================
-//  BOOKVERSE — Override variabili Bootstrap
-//  Tema: Dark · Viola Elettrico · accento Lime
-//
-//  Ordine di import in App.scss (NON cambia):
-//    @import "./styles/variables";
-//    @import "bootstrap/scss/bootstrap";
-//    @import "./styles/custom";
-// ============================================================
-
 @import "bootstrap/scss/functions";
 
-// ---- Tipografia ----
-// Aggiungi nell'<head> di index.html (consigliato per performance):
-// <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,600;9..40,700&display=swap" rel="stylesheet">
 $font-family-sans-serif:
   "DM Sans",
   system-ui,
@@ -23,25 +10,22 @@ $headings-font-family:
   "Space Grotesk",
   #{$font-family-sans-serif};
 $headings-font-weight: 600;
-$headings-letter-spacing: -0.02em; // usato in _custom
+$headings-letter-spacing: -0.02em;
 
-// ---- Palette base (dark, tinta viola) ----
 $body-bg: #0d0d1a;
 $body-color: #ecebf5;
 
-// ---- Colori tema ----
-$primary: #8b5cf6; // Viola elettrico
+$primary: #8b5cf6;
 $secondary: #9696b4;
-$success: #34d399; // = stato "Letti"
-$info: #38bdf8; // = stato "In lettura"
-$warning: #fbbf24; // = stato "Da leggere"
+$success: #34d399;
+$info: #38bdf8;
+$warning: #fbbf24;
 $danger: #fb7185;
 $light: #1e1e2e;
 $dark: #14141f;
 
-$min-contrast-ratio: 2.4; // permette testo scuro leggibile su lime/ambra
+$min-contrast-ratio: 2.4;
 
-// ---- Border & radius (pill-forward) ----
 $border-color: #2a2a3e;
 $border-radius: 0.75rem;
 $border-radius-sm: 0.5rem;
@@ -49,32 +33,27 @@ $border-radius-lg: 1.125rem;
 $border-radius-xl: 1.25rem;
 $border-radius-pill: 50rem;
 
-// ---- Link ----
-$link-color: #b794ff; // viola chiaro
-$link-hover-color: #c4f042; // LIME (accento d'interazione)
+$link-color: #b794ff;
+$link-hover-color: #c4f042;
 $link-decoration: none;
 
-// ---- Input ----
 $input-bg: #14141f;
 $input-border-color: #2a2a3e;
 $input-color: #ecebf5;
 $input-border-radius: 0.75rem;
-$input-focus-border-color: #c4f042; // focus = lime
+$input-focus-border-color: #c4f042;
 $input-focus-box-shadow: 0 0 0 0.2rem rgba(196, 240, 66, 0.25);
 $input-placeholder-color: #6b6b88;
 
-// ---- Card ----
 $card-bg: #14141f;
 $card-border-color: #2a2a3e;
 $card-color: #ecebf5;
 $card-border-radius: 1.125rem;
 
-// ---- Modal ----
 $modal-content-bg: #1e1e2e;
 $modal-content-border-color: #2a2a3e;
 $modal-content-border-radius: 1.125rem;
 
-// ---- Dropdown ----
 $dropdown-bg: #1e1e2e;
 $dropdown-border-color: #2a2a3e;
 $dropdown-border-radius: 0.875rem;
@@ -85,26 +64,22 @@ $dropdown-link-hover-color: #ffffff;
 $dropdown-link-active-bg: rgba(139, 92, 246, 0.22);
 $dropdown-divider-bg: #2a2a3e;
 
-// ---- Navbar ----
 $navbar-dark-color: rgba(236, 235, 245, 0.7);
 $navbar-dark-hover-color: #ffffff;
 $navbar-dark-active-color: #ffffff;
 $navbar-dark-brand-color: #ffffff;
 
-// ---- Badge ----
 $badge-font-size: 0.74em;
 $badge-font-weight: 600;
 $badge-padding-x: 0.8em;
 $badge-padding-y: 0.42em;
 $badge-border-radius: 50rem;
 
-// ---- Button ----
 $btn-border-radius: 50rem;
 $btn-border-radius-lg: 50rem;
 $btn-border-radius-sm: 50rem;
 $btn-font-weight: 600;
 
-// ---- List group ----
 $list-group-bg: transparent;
 $list-group-border-color: #2a2a3e;
 $list-group-color: #ecebf5;
@@ -115,37 +90,29 @@ $list-group-active-bg: #8b5cf6;
 $list-group-active-border-color: #8b5cf6;
 $list-group-border-radius: 0.875rem;
 
-// ---- Form check ----
 $form-check-input-bg: #14141f;
 $form-check-input-border: 1px solid #3a3a52;
 $form-check-input-checked-bg-color: #8b5cf6;
 $form-check-input-checked-border-color: #8b5cf6;
 $form-check-input-focus-box-shadow: 0 0 0 0.2rem rgba(196, 240, 66, 0.25);
 
-// ---- Misc ----
 $placeholder-opacity-max: 0.15;
 $placeholder-opacity-min: 0.05;
 $alert-border-radius: 0.875rem;
 $spinner-border-width: 0.2em;
 $tooltip-border-radius: 0.875rem;
 
-// ============================================================
-//  Stati libro come COLORI TEMA custom
-//  Genera automaticamente .bg-*, .text-*, .border-*, .btn-*
-//  per: saved / reading / read / review + accent (lime)
-//  Uso in React-Bootstrap:  <Badge bg="saved" />  ecc.
-// ============================================================
 @import "bootstrap/scss/variables";
 
 $custom-colors: (
   "saved": #a78bfa,
-  // Salvati    — viola
+
   "reading": #38bdf8,
-  // In lettura — ciano
+
   "read": #34d399,
-  // Letti      — smeraldo
+
   "review": #f472b6,
-  // Recensiti  — magenta
-  "accent": #c4f042, // Lime       — accento d'interazione
+
+  "accent": #c4f042,
 );
 $theme-colors: map-merge($theme-colors, $custom-colors);

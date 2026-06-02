@@ -48,12 +48,7 @@
   --st-private-bg: rgba(107, 107, 136, 0.12);
 }
 
-// ============================================================
-//  LAYOUT
-// ============================================================
-// ============================================================
-//  BACKGROUND AMBIENT
-// ============================================================
+// Layout
 
 body {
   min-height: 100vh;
@@ -65,24 +60,20 @@ body {
   background-attachment: fixed;
 }
 
-// ============================================================
-//  GENERICS
-// ============================================================
+// User avatar
 .avatar,
 .review-avatar,
 img.rounded-circle {
   border: 2px solid var(--border);
 }
 
+// Form
 .form-control,
 .form-select {
   background-color: var(--surface);
   border-color: var(--border);
   color: var(--text-primary);
 
-  /*  &:hover:not(:focus) {
-    border-color: var(--border-strong);
-  } */
   &:focus {
     background-color: var(--surface);
     border-color: var(--border);
@@ -99,8 +90,11 @@ img.rounded-circle {
   color: var(--text-faint);
 }
 
-//BADGE
+::selection {
+  background: var(--text-faint);
+}
 
+//Badge
 @mixin soft-badge($color, $bg) {
   background-color: $bg !important;
   color: $color !important;
@@ -141,13 +135,7 @@ img.rounded-circle {
   }
 }
 
-::selection {
-  background: var(--text-faint);
-  /*   color: #0d0d1a; */
-}
-
-//BOTTONI
-// Close — grigio neutro
+//Buttons
 .bv-btn-close {
   background: var(--surface-hover) !important;
   border-color: var(--border-strong) !important;
@@ -160,7 +148,6 @@ img.rounded-circle {
   }
 }
 
-// Confirm — accent
 .bv-btn-confirm {
   background: var(--accent) !important;
   border-color: transparent !important;
@@ -177,7 +164,6 @@ img.rounded-circle {
   }
 }
 
-// Delete — danger soft
 .bv-btn-delete {
   background: rgba(251, 113, 133, 0.12) !important;
   border-color: rgba(251, 113, 133, 0.35) !important;
@@ -190,7 +176,6 @@ img.rounded-circle {
   }
 }
 
-// Edit - primario
 .bv-btn-edit {
   background: rgba(139, 92, 246, 0.12) !important;
   border-color: rgba(139, 92, 246, 0.35) !important;
@@ -216,6 +201,7 @@ img.rounded-circle {
   }
 }
 
+//Testo
 .text-saved {
   color: var(--st-saved) !important;
   fill: var(--st-saved) !important;
@@ -252,7 +238,7 @@ img.rounded-circle {
   fill: var(--text-muted) !important;
 }
 
-//alert
+//Alert
 .alert-success {
   background-color: rgba(52, 211, 153, 0.1);
   border-color: rgba(52, 211, 153, 0.3);
@@ -264,10 +250,7 @@ img.rounded-circle {
   color: #fda4af;
 }
 
-// ------------------------------------------------------------
-//  Tooltip
-// ------------------------------------------------------------
-
+//Tooltip
 .custom-tooltip .tooltip-inner {
   background-color: #3d2080;
   color: #e8d5ff;
@@ -287,10 +270,52 @@ img.rounded-circle {
 .custom-tooltip .tooltip-arrow::before {
   border-right-color: #3d2080;
 }
-// ============================================================
-//  NAVBAR
-// ============================================================
 
+// Empty state/info message
+.bv-empty-state {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  gap: 0.75rem;
+  padding: 3rem 1rem;
+  color: var(--text-faint);
+
+  &__icon {
+    opacity: 0.4;
+    color: var(--text-muted);
+  }
+
+  &__title {
+    font-family: "Space Grotesk", sans-serif;
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: var(--text-muted);
+    margin: 0;
+  }
+
+  &__text {
+    font-size: 0.85rem;
+    color: var(--text-faint);
+    margin: 0;
+    max-width: 360px;
+  }
+
+  &__link {
+    color: var(--st-review) !important;
+    text-decoration: none;
+    font-weight: 600;
+    font-size: 0.9rem;
+    transition: color 0.15s ease;
+
+    &:hover {
+      color: var(--accent) !important;
+    }
+  }
+}
+
+//Navbar
 .bv-navbar {
   background: rgba(13, 13, 26, 0.85);
   backdrop-filter: blur(12px);
@@ -298,7 +323,6 @@ img.rounded-circle {
   border-bottom: 1px solid var(--border);
   padding-block: 0.6rem;
 
-  // Nav link base
   .nav-link {
     color: var(--text-muted);
     font-size: 0.9rem;
@@ -315,7 +339,6 @@ img.rounded-circle {
       background-color: var(--surface-hover);
     }
 
-    // Underline lime sull'attivo
     &.active {
       color: var(--text-primary);
       background-color: transparent;
@@ -338,19 +361,6 @@ img.rounded-circle {
 // Brand
 .bv-brand {
   text-decoration: none;
-
-  /* &__icon {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    width: 32px;
-    height: 32px;
-    background: var(--primary-grad);
-    border-radius: 8px;
-    color: #fff;
-    flex-shrink: 0;
-  } */
-
   &__text {
     font-family: "Space Grotesk", sans-serif;
     font-weight: 700;
@@ -364,7 +374,7 @@ img.rounded-circle {
   }
 }
 
-// Avatar navbar
+// User navbar
 .bv-navbar .nav-link.active-user::after {
   display: none;
 }
@@ -385,7 +395,6 @@ img.rounded-circle {
   }
 }
 
-// Username navbar
 .bv-nav__username {
   font-size: 0.875rem;
   font-weight: 500;
@@ -412,10 +421,7 @@ img.rounded-circle {
   box-shadow: none !important;
 }
 
-// ============================================================
-//  OFFCANVAS MOBILE
-// ============================================================
-
+//Offcanvas navbar
 .bv-offcanvas {
   background: var(--surface-raised);
   border-left: 1px solid var(--border);
@@ -462,10 +468,7 @@ html {
   overflow-y: scroll;
 }
 
-// ============================================================
-//  BOTTOM NAV MOBILE
-// ============================================================
-
+//Navbar bottom mobile
 .bv-bottom-nav {
   position: sticky;
   bottom: 0;
@@ -496,7 +499,6 @@ html {
     &.active {
       color: var(--accent);
 
-      // Dot indicator sotto l'icona
       &::after {
         content: "";
         position: absolute;
@@ -512,10 +514,7 @@ html {
   }
 }
 
-// ============================================================
-//  DESKTOP FOOTER
-// ============================================================
-
+// Desktop footer
 .bv-footer {
   background: var(--surface);
   border-top: 1px solid var(--border);
@@ -531,14 +530,7 @@ html {
   }
 }
 
-// ============================================================
-//  HOMEPAGE
-// ============================================================
-
-// ============================================================
-//  STAT CARDS — DASHBOARD
-// ============================================================
-
+// Dashboard
 .bv-stat-card {
   border: 1px solid var(--border);
   border-radius: var(--bs-border-radius-lg);
@@ -659,10 +651,7 @@ html {
   }
 }
 
-// ============================================================
-//  BOOK CARD — HOMEPAGE GRID
-// ============================================================
-
+// Book card
 .bv-book-card {
   cursor: pointer;
   transition: transform 0.2s ease;
@@ -774,184 +763,12 @@ html {
   }
 }
 
-// ============================================================
-//  BOOK DETAIL PAGE
-// ============================================================
+// Detail page
 .bv-book-sidebar {
   background: var(--surface-raised);
   border: 1px solid var(--border);
   border-radius: var(--bs-border-radius-lg);
 }
-
-/* .bv-book-action {
-  display: flex;
-  align-items: center;
-  gap: 0.5rem;
-  width: 100%;
-  height: 100%;
-  padding: 0;
-  border-radius: var(--bs-border-radius-lg);
-  font-weight: 500;
-  font-size: 0.9rem;
-  transition: all 0.15s ease;
-  border: 1px solid var(--border);
-  cursor: pointer;
-  text-align: left;
-
-  p {
-    margin: 0;
-    flex: 1;
-  }
-  &:focus,
-  &:active,
-  &:focus-visible {
-    outline: none !important;
-    box-shadow: none !important;
-  }
-
-  &--save {
-    background: var(--primary-grad);
-    border-color: transparent;
-    color: #fff;
-
-    &:hover {
-      background: var(--primary-grad-hover);
-      border-color: transparent;
-      color: #fff;
-    }
-
-    &.saved {
-      background: var(--primary-tint);
-      border-color: var(--primary);
-      color: var(--primary-light);
-
-      &:hover {
-        background: rgba(139, 92, 246, 0.25);
-      }
-    }
-  }
-
-  // Recensisci — accent
-  &--review {
-    background: transparent;
-    border-color: var(--border);
-    color: var(--text-muted);
-
-    &:hover {
-      border-color: var(--accent);
-      color: var(--accent);
-      background: var(--accent-glow);
-    }
-
-    &.reviewed {
-      border-color: var(--accent);
-      color: var(--accent);
-      background: var(--accent-glow);
-    }
-  }
-} */
-
-// Salva — viola pieno
-/* .bv-book-save {
-  display: flex;
-  align-items: center;
-  gap: 0.5rem;
-  width: 100%;
-  height: 100%;
-  padding: 0;
-  font-weight: 600;
-  font-size: 0.9rem;
-  cursor: pointer;
-  border-radius: var(--bs-border-radius-lg);
-  background: var(--primary-grad);
-  border: none;
-  color: #fff;
-  transition: all 0.15s ease;
-
-  p {
-    margin: 0;
-    flex: 1;
-  }
-
-  &:hover,
-  &:focus,
-  &:active,
-  &:focus-visible {
-    background: var(--primary-grad-hover);
-    border: none;
-    color: #fff;
-    outline: none;
-    box-shadow: none;
-  }
-
-  &--saved {
-    background: var(--primary-tint);
-    border: 1px solid var(--primary);
-    color: var(--primary-light);
-
-    &:hover,
-    &:focus,
-    &:active,
-    &:focus-visible {
-      background: rgba(139, 92, 246, 0.25);
-      border-color: var(--primary);
-      color: var(--primary-light);
-      outline: none;
-      box-shadow: none;
-    }
-  }
-}
-
-// Recensisci — magenta
-.bv-book-review {
-  display: flex;
-  align-items: center;
-  gap: 0.5rem;
-  width: 100%;
-  height: 100%;
-  padding: 0;
-  font-weight: 600;
-  font-size: 0.9rem;
-  cursor: pointer;
-  border-radius: var(--bs-border-radius-lg);
-  background: transparent;
-  border: 1px solid var(--border);
-  color: var(--text-muted);
-  transition: all 0.15s ease;
-
-  p {
-    margin: 0;
-    flex: 1;
-  }
-
-  &:hover,
-  &:focus,
-  &:active,
-  &:focus-visible {
-    background: var(--st-review-bg);
-    border-color: var(--st-review);
-    color: var(--st-review);
-    outline: none;
-    box-shadow: none;
-  }
-
-  &--reviewed {
-    background: var(--st-review-bg);
-    border-color: var(--st-review);
-    color: var(--st-review);
-
-    &:hover,
-    &:focus,
-    &:active,
-    &:focus-visible {
-      background: rgba(244, 114, 182, 0.22);
-      border-color: var(--st-review);
-      color: var(--st-review);
-      outline: none;
-      box-shadow: none;
-    }
-  }
-} */
 
 .bv-book-save {
   display: flex;
@@ -1051,6 +868,16 @@ html {
   }
 }
 
+.bv-book-controls {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--bs-border-radius-lg);
+  > div {
+    flex: 1;
+  }
+}
+
+// Book stats
 .bv-book-stat {
   background: var(--surface);
   border: 1px solid var(--border);
@@ -1100,6 +927,7 @@ html {
   }
 }
 
+//Reviews
 .bv-review {
   background: transparent !important;
   border-color: var(--border) !important;
@@ -1132,7 +960,6 @@ html {
     line-height: 1.6;
   }
 
-  // Stelle
   .bi-star-fill {
     color: var(--st-toread) !important;
   }
@@ -1146,15 +973,6 @@ html {
   border-top: 2px solid var(--accent);
 }
 
-.bv-book-controls {
-  background: var(--surface);
-  border: 1px solid var(--border);
-  border-radius: var(--bs-border-radius-lg);
-  > div {
-    flex: 1;
-  }
-}
-
 .bv-review-form {
   background: var(--surface-raised);
   border: 1px solid var(--border);
@@ -1163,15 +981,9 @@ html {
   padding: 1.25rem;
 }
 
-//
-
-// ============================================================
-//  LIBRARY LIST ITEM
-// ============================================================
-
+// Booklist item
 .bv-library-item {
   background: transparent !important;
-  /*  border-bottom: 1px solid var(--border) !important; */
   padding: 0.75rem 0.5rem;
   transition: background-color 0.15s ease;
   cursor: pointer;
@@ -1236,60 +1048,7 @@ html {
   }
 }
 
-// ============================================================
-//  EMPTY STATE / INFO MESSAGE
-// ============================================================
-
-.bv-empty-state {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  text-align: center;
-  gap: 0.75rem;
-  padding: 3rem 1rem;
-  color: var(--text-faint);
-
-  &__icon {
-    opacity: 0.4;
-    color: var(--text-muted);
-  }
-
-  &__title {
-    font-family: "Space Grotesk", sans-serif;
-    font-size: 1.1rem;
-    font-weight: 600;
-    color: var(--text-muted);
-    margin: 0;
-  }
-
-  &__text {
-    font-size: 0.85rem;
-    color: var(--text-faint);
-    margin: 0;
-    max-width: 360px;
-  }
-
-  &__link {
-    color: var(--st-review) !important;
-    text-decoration: none;
-    font-weight: 600;
-    font-size: 0.9rem;
-    transition: color 0.15s ease;
-
-    &:hover {
-      color: var(--accent) !important;
-    }
-  }
-}
-
-// ============================================================
-//  SEARCH PAGE/ LIBRARY PAGE
-// ============================================================
-// ============================================================
-//  FILTER TOGGLE BUTTONS
-// ============================================================
-
+// Search filter toggle buttons
 .btn-check + .btn.bv-filter-btn {
   background-color: var(--surface-raised) !important;
   border-color: var(--border) !important;
@@ -1314,10 +1073,7 @@ html {
   }
 }
 
-// ============================================================
-//  STATUS FILTER TOGGLE BUTTONS
-// ============================================================
-
+// Book status filter toggle buttons
 .btn-check + .btn.bv-status-btn {
   background-color: var(--surface-raised) !important;
   border-color: var(--border) !important;
@@ -1325,7 +1081,6 @@ html {
   transition: all 0.15s ease;
 }
 
-// Hover per ogni stato
 .btn-check + .btn.bv-status-btn--toread:hover {
   background-color: var(--st-toread-bg) !important;
   border-color: var(--st-toread) !important;
@@ -1344,7 +1099,6 @@ html {
   color: var(--st-read) !important;
 }
 
-// Attivi per ogni stato
 .btn-check:checked + .btn.bv-status-btn--toread {
   background-color: var(--st-toread-bg) !important;
   border-color: var(--st-toread) !important;
@@ -1366,9 +1120,7 @@ html {
   font-weight: 600;
 }
 
-// ============================================================
-//  ACCOUNT PAGE
-// ============================================================
+//Account page
 .bv-account-section {
   background: var(--surface);
   border: 1px solid var(--border);
@@ -1377,9 +1129,7 @@ html {
   height: 100%;
 }
 
-// ============================================================
-//  TABS
-// ============================================================
+//Admin page
 
 .bv-tabs {
   border-bottom: 1px solid var(--border);
@@ -1408,10 +1158,6 @@ html {
     }
   }
 }
-
-// ============================================================
-//  ADMIN TABLE
-// ============================================================
 
 .bv-admin-table {
   color: var(--text-primary);
@@ -1495,37 +1241,14 @@ html {
   }
 }
 
-// ============================================================
-//  AUTH PAGES
-// ============================================================
-
-/* .auth-gradient {
-  background: linear-gradient(135deg, #7c3aed 0%, #a855f7 100%);
-} */
-/* .auth-gradient {
-  background: linear-gradient(135deg, #2d1060 0%, #4c1d95 50%, #3b0764 100%);
-} */
-
-/* .auth-gradient {
-  background:
-    radial-gradient(ellipse 80% 60% at 20% 20%, #3b0764 0%, transparent 60%), radial-gradient(ellipse 60% 50% at 80% 80%, #6b21a8 0%, transparent 55%),
-    radial-gradient(ellipse 50% 40% at 60% 10%, rgba(244, 114, 182, 0.3) 0%, transparent 50%), linear-gradient(160deg, #1a0533 0%, #2d1060 50%, #1e0a3c 100%);
-} */
-
-/* .auth-gradient {
-  background: linear-gradient(160deg, #1a0533 0%, #3b0764 40%, #6b21a8 70%, #86198f 100%);
-} */
-/* .auth-gradient {
-  background: linear-gradient(135deg, #1a0533 0%, #3b0764 30%, #6b21a8 70%, #86198f 100%);
-}
- */
-
+// Auth pages
 .auth-gradient {
   background:
     radial-gradient(ellipse 70% 50% at 15% 50%, rgba(109, 40, 217, 0.6) 0%, transparent 60%),
     radial-gradient(ellipse 50% 40% at 85% 20%, rgba(168, 85, 247, 0.4) 0%, transparent 55%),
     radial-gradient(ellipse 40% 35% at 70% 85%, rgba(236, 72, 153, 0.25) 0%, transparent 50%), linear-gradient(160deg, #0d0520 0%, #1a0a38 50%, #150824 100%);
 }
+
 .bv-auth-card {
   background: var(--surface);
   box-shadow:
@@ -1563,5 +1286,61 @@ html {
   to {
     opacity: 1;
     transform: scale(1.1);
+  }
+}
+
+// CSS
+.avatar {
+  max-width: 100%;
+  aspect-ratio: 1 / 1;
+  border-radius: 50%;
+  object-fit: cover;
+  display: block;
+}
+
+.review-avatar {
+  width: 3rem;
+  height: 3rem;
+  aspect-ratio: 1 / 1;
+  border-radius: 50%;
+  object-fit: cover;
+  display: block;
+}
+
+.book-cover {
+  width: 100%;
+  aspect-ratio: 3/4;
+  object-fit: cover;
+}
+
+.book-card .book-cover {
+  cursor: pointer;
+}
+
+.book-title {
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.hide-scrollbar {
+  scrollbar-width: none;
+}
+
+.hide-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+
+.home-section-fade {
+  animation: fadeIn 0.2s ease-in;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
   }
 }
