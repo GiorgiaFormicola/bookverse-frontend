@@ -60,9 +60,11 @@ const EditUserModal = ({ show, onHide, user, handleSaveUser }) => {
       </Modal.Header>
 
       <Modal.Body>
-        <div className="mb-3">
-          <strong>{user.username}</strong>
-          <div className="text-muted small">{user.email}</div>
+        <div className="mb-4">
+          <strong style={{ color: "var(--text-primary)" }}>{user.username}</strong>
+          <div style={{ color: "var(--text-muted)" }} className="small">
+            {user.email}
+          </div>
         </div>
 
         <Form.Group className="mb-3">
@@ -72,6 +74,7 @@ const EditUserModal = ({ show, onHide, user, handleSaveUser }) => {
             <option value="ADMIN">ADMIN</option>
           </Form.Select>
         </Form.Group>
+
         <Form.Group>
           <Form.Label>Status</Form.Label>
           <Form.Select disabled={userRole === "ADMIN"} value={userIsActive} onChange={(e) => setUserIsActive(e.target.value === "true")}>
@@ -82,11 +85,10 @@ const EditUserModal = ({ show, onHide, user, handleSaveUser }) => {
       </Modal.Body>
 
       <Modal.Footer>
-        <Button variant="secondary" onClick={onHide}>
+        <Button className="bv-btn-close" onClick={onHide}>
           Cancel
         </Button>
-
-        <Button variant="primary" onClick={() => handleSave()}>
+        <Button className="bv-btn-confirm" onClick={() => handleSave()}>
           Save Changes
         </Button>
       </Modal.Footer>

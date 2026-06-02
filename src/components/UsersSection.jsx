@@ -107,9 +107,9 @@ const UsersSection = () => {
     <>
       <UsersFilters filters={filters} handleFilterChange={handleFilterChange} handleSearch={handleSearch} />
 
-      <Card className="shadow-sm border-0 rounded-4">
-        <Card.Body>
-          <Table responsive hover align="middle">
+      <Card className="border-0 rounded-4 mt-3 overflow-hidden" style={{ background: "var(--surface-raised)" }}>
+        <Card.Body className="px-4 py-2">
+          <Table responsive hover align="middle" className="bv-admin-table mb-0">
             <thead>
               <tr>
                 <th>Username</th>
@@ -119,24 +119,23 @@ const UsersSection = () => {
                 <th>Actions</th>
               </tr>
             </thead>
-
             <tbody>
               {users.map((user) => (
                 <tr key={user.id}>
                   <td>{user.username}</td>
                   <td className="d-none d-md-table-cell">{user.email}</td>
                   <td>
-                    <Badge bg={user.role === "ADMIN" ? "danger" : "dark"}>{user.role}</Badge>
+                    <Badge bg={user.role === "ADMIN" ? "danger" : "secondary"}>{user.role}</Badge>
                   </td>
                   <td>
-                    <Badge bg={user.active === true ? "success" : "warning"}>{user.active ? "Active" : "Suspended"}</Badge>
+                    <Badge bg={user.active === true ? "read" : "toread"}>{user.active ? "Active" : "Suspended"}</Badge>
                   </td>
                   <td className="align-middle text-center">
                     <div className="d-flex flex-column gap-3">
                       <Button
                         disabled={user.id === currentUserId}
                         size="sm"
-                        variant={user.id === currentUserId ? "outline-secondary" : "outline-primary"}
+                        className={user.id === currentUserId ? "bv-btn-close" : "bv-btn-edit"}
                         onClick={() => {
                           setSelectedUser(user);
                           setShowModal(true);
@@ -144,11 +143,10 @@ const UsersSection = () => {
                       >
                         Edit
                       </Button>
-
                       <Button
                         disabled={user.id === currentUserId}
                         size="sm"
-                        variant={user.id === currentUserId ? "outline-secondary" : "outline-danger"}
+                        className={user.id === currentUserId ? "bv-btn-close" : "bv-btn-delete"}
                         onClick={() => handleDeleteClick(user)}
                       >
                         Delete
@@ -159,16 +157,14 @@ const UsersSection = () => {
               ))}
             </tbody>
           </Table>
-
           <div className="d-flex justify-content-center mt-3">
-            <Pagination>
+            <Pagination className="bv-pagination mb-0">
               <Pagination.Prev disabled={queryFilters.page === 0} onClick={() => handlePageChange(queryFilters.page - 1)} />
               {[...Array(totalPages)].map((_, i) => (
                 <Pagination.Item key={i} active={queryFilters.page === i} onClick={() => handlePageChange(i)}>
                   {i + 1}
                 </Pagination.Item>
               ))}
-
               <Pagination.Next disabled={queryFilters.page + 1 >= totalPages} onClick={() => handlePageChange(queryFilters.page + 1)} />
             </Pagination>
           </div>
@@ -178,7 +174,6 @@ const UsersSection = () => {
       {showModal && (
         <EditUserModal key={selectedUser?.id} show={showModal} onHide={() => setShowModal(false)} user={selectedUser} handleSaveUser={handleSaveUser} />
       )}
-
       <DeleteConfirmModal show={!!userToDelete} onHide={handleDeleteCancel} onConfirm={handleDeleteUser} username={userToDelete?.username} />
     </>
   );

@@ -76,7 +76,7 @@ const ProfilePage = () => {
       <Container fluid className="d-flex flex-column container-lg py-4 px-3 px-lg-4 px-xl-5  gap-3 gap-sm-2 gap-lg-3 gap-xl-5">
         <Row className=" justify-content-center align-items-end pt-md-2 pt-lg-3 mb-lg-5 mb-xl-2 g-2 g-md-5 g-lg-4">
           <Col xs={12} className="d-md-none text-end">
-            <Button className="bv-btn-confirm" onClick={() => navigate("/me/edit")}>
+            <Button className="bv-btn-edit" onClick={() => navigate("/me/edit")}>
               Edit profile
             </Button>
           </Col>
@@ -92,7 +92,7 @@ const ProfilePage = () => {
             <div className="d-flex flex-column h-100">
               <div className="d-none d-md-flex justify-content-between align-items-center pb-lg-4 pb-xl-2 mb-3 mb-xl-2 flex-grow-1">
                 <h1 className="mb-0">{user.displayName}</h1>
-                <Button className="bv-btn-confirm" onClick={() => setShowEditModal(true)}>
+                <Button className="bv-btn-edit" onClick={() => setShowEditModal(true)}>
                   Edit profile
                 </Button>
               </div>

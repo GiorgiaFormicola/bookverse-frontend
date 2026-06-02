@@ -7,7 +7,7 @@ const EditBookModal = ({ show, onHide, book, handleSaveBook }) => {
   const [coverFile, setCoverFile] = useState(null);
   const [coverPreview, setCoverPreview] = useState(null);
   const fileInputRef = useRef(null);
-  /* const isLocked = (field) => !isEmpty(book[field]); */
+  const isLocked = (field) => !isEmpty(book[field]);
 
   if (!book || !form) return null;
   const isEmpty = (val) => {
@@ -125,17 +125,24 @@ const EditBookModal = ({ show, onHide, book, handleSaveBook }) => {
             <Form.Group>
               <Form.Label>Cover</Form.Label>
               <div className="mb-2">
-                <img src={coverPreview ?? form.coverURL} alt="cover preview" className="rounded border book-cover" />
+                <img
+                  src={coverPreview ?? form.coverURL}
+                  alt="cover preview"
+                  className="rounded border book-cover"
+                  style={{ border: "1px solid var(--border)" }}
+                />
               </div>
               <InputGroup>
-                <Form.Control type="file" accept="image/*" ref={fileInputRef} onChange={handleCoverChange} />
+                <Form.Control type="file" accept="image/*" ref={fileInputRef} onChange={handleCoverChange} className="d-none" id="cover-upload" />
+                <Form.Label htmlFor="cover-upload" className="btn bv-btn-edit mb-0 flex-grow-1 rounded-start-pill" style={{ cursor: "pointer" }}>
+                  {coverFile ? coverFile.name : "Choose file"}
+                </Form.Label>
                 {coverFile && (
-                  <Button variant="outline-secondary" onClick={handleRemoveCover}>
+                  <Button className="bv-btn-close" onClick={handleRemoveCover}>
                     ✕
                   </Button>
                 )}
               </InputGroup>
-              {coverFile && <Form.Text className="text-muted">Nuovo file: {coverFile.name}</Form.Text>}
             </Form.Group>
           </Col>
           <Col md={6} className="mb-4">
@@ -253,11 +260,11 @@ const EditBookModal = ({ show, onHide, book, handleSaveBook }) => {
       </Modal.Body>
 
       <Modal.Footer>
-        <Button variant="secondary" onClick={onHide}>
+        <Button className="bv-btn-close" onClick={onHide}>
           Cancel
         </Button>
 
-        <Button disabled={!canSave} variant="primary" onClick={() => handleSave()}>
+        <Button disabled={!canSave} className="bv-btn-confirm" onClick={() => handleSave()}>
           Save Book
         </Button>
       </Modal.Footer>

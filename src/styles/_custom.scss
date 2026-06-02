@@ -160,7 +160,7 @@ img.rounded-circle {
   }
 }
 
-// Confirm — primario
+// Confirm — accent
 .bv-btn-confirm {
   background: var(--accent) !important;
   border-color: transparent !important;
@@ -187,6 +187,19 @@ img.rounded-circle {
   &:hover {
     background: rgba(251, 113, 133, 0.22) !important;
     border-color: #fb7185 !important;
+  }
+}
+
+// Edit - primario
+.bv-btn-edit {
+  background: rgba(139, 92, 246, 0.12) !important;
+  border-color: rgba(139, 92, 246, 0.35) !important;
+  color: var(--primary-light) !important;
+  font-weight: 600;
+
+  &:hover {
+    background: rgba(139, 92, 246, 0.22) !important;
+    border-color: var(--primary-light) !important;
   }
 }
 
@@ -1145,4 +1158,122 @@ html {
   border-radius: var(--bs-border-radius-lg);
   padding: 1.5rem;
   height: 100%;
+}
+
+// ============================================================
+//  TABS
+// ============================================================
+
+.bv-tabs {
+  border-bottom: 1px solid var(--border);
+
+  .nav-link {
+    color: var(--text-muted);
+    font-weight: 500;
+    border: none;
+    border-bottom: 2px solid transparent;
+    border-radius: 0;
+    padding: 0.75rem 1rem;
+    transition:
+      color 0.15s ease,
+      border-color 0.15s ease;
+
+    &:hover {
+      color: var(--text-primary);
+      border-bottom-color: var(--border-strong);
+      background: transparent;
+    }
+
+    &.active {
+      color: var(--accent);
+      background: transparent;
+      border-bottom-color: var(--accent);
+    }
+  }
+}
+
+// ============================================================
+//  ADMIN TABLE
+// ============================================================
+
+.bv-admin-table {
+  color: var(--text-primary);
+
+  thead tr th {
+    background: var(--surface-raised);
+    color: var(--text-muted);
+    font-size: 0.75rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    border-bottom: 1px solid var(--border);
+    padding-bottom: 1rem;
+  }
+
+  tbody tr {
+    border-bottom: 1px solid var(--border);
+    transition: background-color 0.15s ease;
+
+    &:last-child {
+      border-bottom: none;
+    }
+
+    &:hover {
+      background-color: var(--surface-hover) !important;
+    }
+
+    td {
+      border: none;
+      color: var(--text-muted);
+
+      &:first-child {
+        color: var(--text-primary);
+      }
+      &:nth-child(2) {
+        color: var(--text-primary);
+        font-weight: 500;
+      }
+    }
+  }
+}
+
+.bv-pagination {
+  .page-link {
+    background: var(--surface-raised);
+    border-color: var(--border);
+    color: var(--text-muted);
+    transition: all 0.15s ease;
+
+    &:hover {
+      background: var(--primary-tint);
+      border-color: var(--primary-light);
+      color: var(--text-primary);
+    }
+  }
+
+  .page-item.active .page-link {
+    background: var(--accent);
+    border-color: var(--accent);
+    color: var(--bg-deep);
+    font-weight: 600;
+  }
+
+  .page-item.disabled .page-link {
+    background: var(--surface);
+    border-color: var(--border);
+    color: var(--text-faint);
+  }
+}
+
+.bv-admin-filters {
+  background: var(--surface-raised);
+  border: 1px solid var(--border);
+  border-radius: var(--bs-border-radius-lg);
+  padding: 1.25rem;
+
+  .form-check-label {
+    color: var(--text-primary);
+    opacity: 75%;
+    font-size: 0.875rem;
+  }
 }

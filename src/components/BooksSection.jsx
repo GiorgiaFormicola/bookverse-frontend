@@ -128,16 +128,16 @@ const BooksSection = () => {
     <>
       <BooksFilters filters={filters} handleFilterChange={handleFilterChange} handleSearch={handleSearch} />
 
-      <Card className="shadow-sm border-0 rounded-4">
-        <Card.Body>
-          <Table responsive hover align="middle">
+      <Card className="border-0 rounded-4 mt-3 overflow-hidden" style={{ background: "var(--surface-raised)" }}>
+        <Card.Body className="px-4 py-2">
+          <Table responsive hover align="middle" className="bv-admin-table mb-0">
             <thead>
               <tr>
                 <th>Cover</th>
                 <th>Title</th>
                 <th className="d-none d-sm-table-cell">Authors</th>
                 <th className="d-none d-md-table-cell">Publisher</th>
-                <th className="d-none d-xl-table-cell">Published Date</th>
+                <th className="d-none d-xl-table-cell">Date</th>
                 <th className="d-none d-md-table-cell">Categories</th>
                 <th className="d-none">Description</th>
                 <th className="d-none d-xxl-table-cell">Pages</th>
@@ -146,11 +146,9 @@ const BooksSection = () => {
                 <th>Actions</th>
               </tr>
             </thead>
-
             <tbody>
               {books.map((book) => {
                 const issues = [];
-
                 if (!book.authors.length) issues.push("Missing Authors");
                 if (!book.categories.length) issues.push("Missing Categories");
                 if (!book.coverURL) issues.push("Missing Cover");
@@ -165,12 +163,10 @@ const BooksSection = () => {
                     <td>
                       <img src={book.coverURL ? book.coverURL : defaultCover} alt={book.title} className="book-cover rounded-3" />
                     </td>
-
                     <td>{book.title}</td>
                     <td className="d-none d-sm-table-cell">{book.authors.length ? book.authors.join(", ") : "-"}</td>
                     <td className="d-none d-md-table-cell">{book.publisher || "-"}</td>
                     <td className="d-none d-xl-table-cell">{book.publishedDate || "-"}</td>
-
                     <td className="d-none d-md-table-cell">{book.categories.length ? book.categories.join(", ") : "-"}</td>
                     <td className="text-truncate d-none" title={book.description}>
                       {book.description ? `${book.description.slice(0, 30)}${book.description.length > 30 ? "..." : ""}` : "-"}
@@ -179,22 +175,20 @@ const BooksSection = () => {
                     <td className="d-none d-lg-table-cell">
                       {[book.isbn10, book.isbn13].filter(Boolean).length ? [book.isbn10, book.isbn13].filter(Boolean).join(", ") : "-"}
                     </td>
-
                     <td className="d-none d-sm-table-cell">
                       <div className="d-flex flex-wrap gap-1">
                         {issues.map((issue) => (
-                          <Badge key={issue} bg="warning" text="dark">
+                          <Badge key={issue} bg="toread">
                             {issue}
                           </Badge>
                         ))}
                       </div>
                     </td>
-
                     <td className="align-middle text-center">
                       <div className="d-flex flex-column gap-3">
                         <Button
                           size="sm"
-                          variant="outline-primary"
+                          className="bv-btn-edit"
                           onClick={() => {
                             setSelectedBook(book);
                             setShowModal(true);
@@ -202,8 +196,7 @@ const BooksSection = () => {
                         >
                           Edit
                         </Button>
-
-                        <Button size="sm" variant="outline-danger" onClick={() => handleDeleteClick(book)}>
+                        <Button size="sm" className="bv-btn-delete" onClick={() => handleDeleteClick(book)}>
                           Delete
                         </Button>
                       </div>
@@ -214,23 +207,22 @@ const BooksSection = () => {
             </tbody>
           </Table>
           <div className="d-flex justify-content-center mt-3">
-            <Pagination>
+            <Pagination className="bv-pagination mb-0">
               <Pagination.Prev disabled={queryFilters.page === 0} onClick={() => handlePageChange(queryFilters.page - 1)} />
               {[...Array(totalPages)].map((_, i) => (
                 <Pagination.Item key={i} active={queryFilters.page === i} onClick={() => handlePageChange(i)}>
                   {i + 1}
                 </Pagination.Item>
               ))}
-
               <Pagination.Next disabled={queryFilters.page + 1 >= totalPages} onClick={() => handlePageChange(queryFilters.page + 1)} />
             </Pagination>
           </div>
         </Card.Body>
       </Card>
+
       {showModal && (
         <EditBookModal key={selectedBook?.id} show={showModal} onHide={() => setShowModal(false)} book={selectedBook} handleSaveBook={handleSaveBook} />
       )}
-
       <DeleteConfirmModal show={!!bookToDelete} onHide={handleDeleteCancel} onConfirm={handleDeleteBook} bookId={bookToDelete?.googleId} />
     </>
   );
