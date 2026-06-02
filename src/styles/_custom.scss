@@ -241,20 +241,7 @@ img.rounded-circle {
 // ------------------------------------------------------------
 //  Tooltip
 // ------------------------------------------------------------
-/* .custom-tooltip .tooltip-inner {
-  background-color: var(--primary-strong);
-  color: var(--text-primary);
-  font-size: 0.875em;
-  max-width: 30em;
-  padding: 0.875em;
-  border-radius: 1em;
-  strong {
-    color: var(--accent);
-  }
-}
-.custom-tooltip .tooltip-arrow::before {
-  border-right-color: var(--primary-strong);
-} */
+
 .custom-tooltip .tooltip-inner {
   background-color: #3d2080;
   color: #e8d5ff;
@@ -1147,4 +1134,15 @@ html {
   border-color: var(--st-read) !important;
   color: var(--st-read) !important;
   font-weight: 600;
+}
+
+// ============================================================
+//  ACCOUNT PAGE
+// ============================================================
+.bv-account-section {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--bs-border-radius-lg);
+  padding: 1.5rem;
+  height: 100%;
 }

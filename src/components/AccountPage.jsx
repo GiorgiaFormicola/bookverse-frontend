@@ -119,249 +119,249 @@ const AccountPage = () => {
         <Row className="mb-4">
           <Col>
             <h1 className="mb-1">Account settings</h1>
-            <p className="text-muted mb-0">Manage your account information</p>
+            <p style={{ color: "var(--text-muted)" }} className="mb-0 fw-semibold">
+              Manage your account information
+            </p>
           </Col>
         </Row>
 
-        <Row className="g-5">
-          <Col lg={12}>
-            <Row className="g-5">
-              {/* Username */}
-              <Col xs={12} md={6}>
-                <div className="border border-secondary rounded-3 pe-lg-4 h-100">
-                  <h5 className="fw-semibold mb-1">Username</h5>
-                  <p className="text-muted small mb-4">Change your public username</p>
-                  <Form noValidate onSubmit={handleUsernameSubmit}>
-                    <Form.Group className="mb-3">
-                      <Form.Label className="d-flex align-items-center gap-2">
-                        Username
-                        <OverlayTrigger
-                          placement="right"
-                          overlay={
-                            <Tooltip>
-                              <strong>Username</strong> must be 2–30 characters long and can contain lowercase letters, numbers, underscores and dots. It cannot
-                              end with a dot or contain consecutive dots.
-                            </Tooltip>
-                          }
-                        >
-                          <span style={{ display: "inline-flex", flexShrink: 0, cursor: "pointer" }}>
-                            <InfoCircleFill />
-                          </span>
-                        </OverlayTrigger>
-                      </Form.Label>
-                      <Form.Control
-                        type="text"
-                        value={username}
-                        onClick={() => {
-                          setUsernameSuccess(false);
-                          setUsernameError("");
-                        }}
-                        onChange={(e) => {
-                          setUsername(e.target.value);
-                          setUsernameError("");
-                          setUsernameSuccess(false);
-                        }}
-                        size="lg"
-                      />
-                    </Form.Group>
-                    <div
-                      className={
-                        "alert text-center bg-transparent border-0 p-0 mb-3" +
-                        (usernameError || usernameSuccess ? "" : " invisible") +
-                        (usernameError ? " alert-danger" : " alert-success")
+        <Row className="g-4">
+          {/* Username */}
+          <Col xs={12} md={6}>
+            <div className="bv-account-section">
+              <h5 className="fw-semibold mb-1">Username</h5>
+              <p style={{ color: "var(--text-muted)" }} className="small mb-4 fw-semibold">
+                Change your public username
+              </p>
+              <Form noValidate onSubmit={handleUsernameSubmit}>
+                <Form.Group className="mb-3">
+                  <Form.Label className="d-flex align-items-center gap-2">
+                    Username
+                    <OverlayTrigger
+                      placement="right"
+                      overlay={
+                        <Tooltip className="custom-tooltip">
+                          <strong>Username</strong> must be 2–30 characters, lowercase letters, numbers, underscores and dots only.
+                        </Tooltip>
                       }
                     >
-                      {usernameError || (usernameSuccess ? "Username updated successfully!" : "placeholder")}
-                    </div>
-                    <Button type="submit" disabled={usernameLoading || !username || username === user?.username} className="w-100" size="lg">
-                      {usernameLoading ? <Spinner animation="border" size="sm" /> : "Update username"}
-                    </Button>
-                  </Form>
+                      <span style={{ display: "inline-flex", flexShrink: 0, cursor: "pointer" }}>
+                        <InfoCircleFill />
+                      </span>
+                    </OverlayTrigger>
+                  </Form.Label>
+                  <Form.Control
+                    type="text"
+                    value={username}
+                    onClick={() => {
+                      setUsernameSuccess(false);
+                      setUsernameError("");
+                    }}
+                    onChange={(e) => {
+                      setUsername(e.target.value);
+                      setUsernameError("");
+                      setUsernameSuccess(false);
+                    }}
+                  />
+                </Form.Group>
+                <div
+                  className={
+                    "alert bg-transparent text-center border-0 p-0 mb-3" +
+                    (usernameError || usernameSuccess ? "" : " invisible") +
+                    (usernameError ? " alert-danger" : " alert-success")
+                  }
+                >
+                  {usernameError || (usernameSuccess ? "Username updated successfully!" : "placeholder")}
                 </div>
-              </Col>
-              {/* Email */}
-              <Col xs={12} md={6}>
-                <div className="border border-secondary rounded-3 ps-lg-4 h-100">
-                  <h5 className="fw-semibold mb-1">Email address</h5>
-                  <p className="text-muted small mb-4">Update the email associated with your account</p>
-                  <Form noValidate onSubmit={handleEmailSubmit}>
-                    <Form.Group className="mb-3">
-                      <Form.Label>Email</Form.Label>
-                      <Form.Control
-                        type="email"
-                        placeholder="Enter your new email"
-                        value={email}
-                        onClick={() => {
-                          setEmailSuccess(false);
-                          setEmailError("");
-                        }}
-                        onChange={(e) => {
-                          setEmail(e.target.value);
-                          setEmailError("");
-                          setEmailSuccess(false);
-                        }}
-                        size="lg"
-                      />
-                    </Form.Group>
-                    <div
-                      className={
-                        "alert text-center bg-transparent border-0 p-0 mb-3" +
-                        (emailError || emailSuccess ? "" : " invisible") +
-                        (emailError ? " alert-danger" : " alert-success")
-                      }
-                    >
-                      {emailError || (emailSuccess ? "Email updated successfully!" : "placeholder")}
-                    </div>
-                    <Button type="submit" disabled={emailLoading || !email || email === user?.email} className="w-100" size="lg">
-                      {emailLoading ? <Spinner animation="border" size="sm" /> : "Update email"}
-                    </Button>
-                  </Form>
+                <Button type="submit" disabled={usernameLoading || !username || username === user?.username} className="w-100 bv-btn-confirm">
+                  {usernameLoading ? <Spinner animation="border" size="sm" style={{ color: "var(--bg-deep)" }} /> : "Update username"}
+                </Button>
+              </Form>
+            </div>
+          </Col>
+
+          {/* Email */}
+          <Col xs={12} md={6}>
+            <div className="bv-account-section">
+              <h5 className="fw-semibold mb-1">Email address</h5>
+              <p style={{ color: "var(--text-muted)" }} className="small mb-4 fw-semibold">
+                Update the email associated with your account
+              </p>
+              <Form noValidate onSubmit={handleEmailSubmit}>
+                <Form.Group className="mb-3">
+                  <Form.Label>Email</Form.Label>
+                  <Form.Control
+                    type="email"
+                    placeholder="Enter your new email"
+                    value={email}
+                    onClick={() => {
+                      setEmailSuccess(false);
+                      setEmailError("");
+                    }}
+                    onChange={(e) => {
+                      setEmail(e.target.value);
+                      setEmailError("");
+                      setEmailSuccess(false);
+                    }}
+                  />
+                </Form.Group>
+                <div
+                  className={
+                    "alert bg-trasnparent text-center border-0 p-0 mb-3" +
+                    (emailError || emailSuccess ? "" : " invisible") +
+                    (emailError ? " alert-danger" : " alert-success")
+                  }
+                >
+                  {emailError || (emailSuccess ? "Email updated successfully!" : "placeholder")}
                 </div>
-              </Col>
-            </Row>
+                <Button type="submit" disabled={emailLoading || !email || email === user?.email} className="w-100 bv-btn-confirm">
+                  {emailLoading ? <Spinner animation="border" size="sm" style={{ color: "var(--bg-deep)" }} /> : "Update email"}
+                </Button>
+              </Form>
+            </div>
           </Col>
 
           {/* Password */}
-          <Col lg={12}>
-            <Row className="g-5">
-              <Col xs={12} md={6}>
-                <div className="border border-secondary rounded-3 pe-lg-4 me-xxl-3 h-100">
-                  <h5 className="fw-semibold mb-1">Password</h5>
-                  <p className="text-muted small mb-4">Change your account password</p>
-                  <Form noValidate onSubmit={handlePasswordSubmit}>
-                    <Form.Group className="mb-4">
-                      <Form.Label>Current password</Form.Label>
-                      <InputGroup>
-                        <Form.Control
-                          type={showCurrentPassword ? "text" : "password"}
-                          placeholder="Enter your current password"
-                          value={currentPassword}
-                          onClick={() => {
-                            setPasswordError("");
-                            setPasswordSuccess(false);
-                          }}
-                          onChange={(e) => {
-                            setCurrentPassword(e.target.value);
-                            setPasswordError("");
-                            setPasswordSuccess(false);
-                          }}
-                          size="lg"
-                        />
-                        <InputGroup.Text onClick={() => setShowCurrentPassword(!showCurrentPassword)} style={{ cursor: "pointer" }}>
-                          {showCurrentPassword ? <EyeSlash /> : <Eye />}
-                        </InputGroup.Text>
-                      </InputGroup>
-                    </Form.Group>
-                    <Form.Group className="mb-4">
-                      <Form.Label className="d-flex align-items-center gap-2">
-                        New password
-                        <OverlayTrigger
-                          placement="right"
-                          overlay={
-                            <Tooltip>
-                              <strong>Password</strong> must be at least 8 characters long and include at least one uppercase letter, one lowercase letter, one
-                              number and one special character.
-                            </Tooltip>
-                          }
-                        >
-                          <span style={{ display: "inline-flex", flexShrink: 0, cursor: "pointer" }}>
-                            <InfoCircleFill />
-                          </span>
-                        </OverlayTrigger>
-                      </Form.Label>
-                      <InputGroup>
-                        <Form.Control
-                          type={showNewPassword ? "text" : "password"}
-                          placeholder="Enter your new password"
-                          value={newPassword}
-                          onClick={() => {
-                            setPasswordError("");
-                            setPasswordSuccess(false);
-                          }}
-                          onChange={(e) => {
-                            setNewPassword(e.target.value);
-                            setPasswordError("");
-                            setPasswordSuccess(false);
-                          }}
-                          size="lg"
-                        />
-                        <InputGroup.Text onClick={() => setShowNewPassword(!showNewPassword)} style={{ cursor: "pointer" }}>
-                          {showNewPassword ? <EyeSlash /> : <Eye />}
-                        </InputGroup.Text>
-                      </InputGroup>
-                    </Form.Group>
-                    <Form.Group className="mb-3">
-                      <Form.Label>Confirm new password</Form.Label>
-                      <InputGroup>
-                        <Form.Control
-                          type={showConfirmPassword ? "text" : "password"}
-                          placeholder="Confirm your new password"
-                          value={confirmPassword}
-                          onClick={() => {
-                            setPasswordError("");
-                            setPasswordSuccess(false);
-                          }}
-                          onChange={(e) => {
-                            setConfirmPassword(e.target.value);
-                            setPasswordError("");
-                            setPasswordSuccess(false);
-                          }}
-                          size="lg"
-                        />
-                        <InputGroup.Text onClick={() => setShowConfirmPassword(!showConfirmPassword)} style={{ cursor: "pointer" }}>
-                          {showConfirmPassword ? <EyeSlash /> : <Eye />}
-                        </InputGroup.Text>
-                      </InputGroup>
-                    </Form.Group>
-                    <div
-                      className={
-                        "alert text-center bg-transparent border-0 p-0 mb-3" +
-                        (passwordError || passwordSuccess ? "" : " invisible") +
-                        (passwordError ? " alert-danger" : " alert-success")
+          <Col xs={12} md={6}>
+            <div className="bv-account-section">
+              <h5 className="fw-semibold mb-1">Password</h5>
+              <p style={{ color: "var(--text-muted)" }} className="small mb-4 fw-semibold">
+                Change your account password
+              </p>
+              <Form noValidate onSubmit={handlePasswordSubmit}>
+                <Form.Group className="mb-3">
+                  <Form.Label>Current password</Form.Label>
+                  <InputGroup>
+                    <Form.Control
+                      type={showCurrentPassword ? "text" : "password"}
+                      placeholder="Enter your current password"
+                      value={currentPassword}
+                      onClick={() => {
+                        setPasswordError("");
+                        setPasswordSuccess(false);
+                      }}
+                      onChange={(e) => {
+                        setCurrentPassword(e.target.value);
+                        setPasswordError("");
+                        setPasswordSuccess(false);
+                      }}
+                    />
+                    <InputGroup.Text onClick={() => setShowCurrentPassword(!showCurrentPassword)} style={{ cursor: "pointer" }}>
+                      {showCurrentPassword ? <EyeSlash /> : <Eye />}
+                    </InputGroup.Text>
+                  </InputGroup>
+                </Form.Group>
+                <Form.Group className="mb-3">
+                  <Form.Label className="d-flex align-items-center gap-2">
+                    New password
+                    <OverlayTrigger
+                      placement="right"
+                      overlay={
+                        <Tooltip className="custom-tooltip">
+                          <strong>Password</strong> must be at least 8 characters and include uppercase, lowercase and a number.
+                        </Tooltip>
                       }
                     >
-                      {passwordError || (passwordSuccess ? "Password updated successfully!" : "placeholder")}
-                    </div>
-                    <Button type="submit" disabled={passwordLoading || !currentPassword || !newPassword || !confirmPassword} className="w-100" size="lg">
-                      {passwordLoading ? <Spinner animation="border" size="sm" /> : "Update password"}
-                    </Button>
-                  </Form>
+                      <span style={{ display: "inline-flex", flexShrink: 0, cursor: "pointer" }}>
+                        <InfoCircleFill />
+                      </span>
+                    </OverlayTrigger>
+                  </Form.Label>
+                  <InputGroup>
+                    <Form.Control
+                      type={showNewPassword ? "text" : "password"}
+                      placeholder="Enter your new password"
+                      value={newPassword}
+                      onClick={() => {
+                        setPasswordError("");
+                        setPasswordSuccess(false);
+                      }}
+                      onChange={(e) => {
+                        setNewPassword(e.target.value);
+                        setPasswordError("");
+                        setPasswordSuccess(false);
+                      }}
+                    />
+                    <InputGroup.Text onClick={() => setShowNewPassword(!showNewPassword)} style={{ cursor: "pointer" }}>
+                      {showNewPassword ? <EyeSlash /> : <Eye />}
+                    </InputGroup.Text>
+                  </InputGroup>
+                </Form.Group>
+                <Form.Group className="mb-3">
+                  <Form.Label>Confirm new password</Form.Label>
+                  <InputGroup>
+                    <Form.Control
+                      type={showConfirmPassword ? "text" : "password"}
+                      placeholder="Confirm your new password"
+                      value={confirmPassword}
+                      onClick={() => {
+                        setPasswordError("");
+                        setPasswordSuccess(false);
+                      }}
+                      onChange={(e) => {
+                        setConfirmPassword(e.target.value);
+                        setPasswordError("");
+                        setPasswordSuccess(false);
+                      }}
+                    />
+                    <InputGroup.Text onClick={() => setShowConfirmPassword(!showConfirmPassword)} style={{ cursor: "pointer" }}>
+                      {showConfirmPassword ? <EyeSlash /> : <Eye />}
+                    </InputGroup.Text>
+                  </InputGroup>
+                </Form.Group>
+                <div
+                  className={
+                    "alert bg-transparent text-center border-0 p-0 mb-3" +
+                    (passwordError || passwordSuccess ? "" : " invisible") +
+                    (passwordError ? " alert-danger" : " alert-success")
+                  }
+                >
+                  {passwordError || (passwordSuccess ? "Password updated successfully!" : "placeholder")}
                 </div>
-              </Col>
-              {/* Delete account */}
-              <Col xs={12} md={6}>
-                <div className="border border-secondary rounded-3 ps-lg-4 me-xxl-3 h-100">
-                  <h5 className="fw-semibold mb-1">Delete account</h5>
-                  <p className="text-muted small mb-4 mb-md-5 pb-md-2">Delete your profile info, your library and your reviews</p>
-                  <Button variant="danger" className="w-100" size="lg" onClick={() => setShowDeleteConfirm(true)}>
-                    Delete my account
-                  </Button>
-                </div>
-              </Col>
-            </Row>
+                <Button type="submit" disabled={passwordLoading || !currentPassword || !newPassword || !confirmPassword} className="w-100 bv-btn-confirm">
+                  {passwordLoading ? <Spinner animation="border" size="sm" style={{ color: "var(--bg-deep)" }} /> : "Update password"}
+                </Button>
+              </Form>
+            </div>
+          </Col>
+
+          {/* Delete account */}
+          <Col xs={12} md={6}>
+            <div className="bv-account-section h-100 d-flex flex-column" style={{ borderColor: "rgba(251, 113, 133, 0.3)" }}>
+              <h5 className="fw-semibold mb-1" style={{ color: "#fb7185" }}>
+                Delete account
+              </h5>
+              <p style={{ color: "var(--text-muted)" }} className="small mb-4 fw-semibold">
+                Permanently delete your account, library and reviews. This action is irreversible.
+              </p>
+              <div className="mt-auto">
+                <Button className="w-100 bv-btn-delete" onClick={() => setShowDeleteConfirm(true)}>
+                  <Trash3Fill className="me-2" />
+                  Delete my account
+                </Button>
+              </div>
+            </div>
           </Col>
         </Row>
       </Container>
 
-      {/* Modal conferma eliminazione */}
       <Modal show={showDeleteConfirm} onHide={() => setShowDeleteConfirm(false)} centered>
         <Modal.Header closeButton className="px-4">
-          <Modal.Title className="text-danger">Delete account</Modal.Title>
+          <Modal.Title style={{ color: "#fb7185" }}>Delete account</Modal.Title>
         </Modal.Header>
         <Modal.Body className="px-4 text-center py-4">
-          <Trash3Fill size={48} className="text-danger mb-3" />
+          <Trash3Fill size={48} className="mb-3" style={{ color: "#fb7185" }} />
           <h5>Are you sure?</h5>
-          <p className="text-muted mb-0">
+          <p style={{ color: "var(--text-muted)" }} className="mb-0">
             This action is <strong>irreversible</strong>. <br /> Your account, library and reviews will be permanently deleted.
           </p>
         </Modal.Body>
         <Modal.Footer className="px-4 d-flex gap-2">
-          <Button variant="secondary" className="flex-grow-1" onClick={() => setShowDeleteConfirm(false)} disabled={deleteLoading}>
+          <Button className="flex-grow-1 bv-btn-close" onClick={() => setShowDeleteConfirm(false)} disabled={deleteLoading}>
             Cancel
           </Button>
           <Button
-            variant="danger"
-            className="flex-grow-1"
+            className="flex-grow-1 bv-btn-delete"
             onClick={() => {
               setDeleteLoading(true);
               dispatch(deleteProfile());
