@@ -2,7 +2,7 @@ import { useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
 import { useState, useEffect } from "react";
 import { instance } from "../config/api";
-import { Container, Row, Col, Button, Card, Alert } from "react-bootstrap";
+import { Container, Row, Col, Button, Card } from "react-bootstrap";
 import BookCard from "./BookCard";
 import DashboardCard from "./DashboardCard";
 import EditProfileModal from "./EditProfileModal";

@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { instance } from "../config/api";
-import { Row, Col, Alert, Card } from "react-bootstrap";
+import { Row, Col } from "react-bootstrap";
 import { Link } from "react-router-dom";
 import { ArrowClockwise } from "react-bootstrap-icons";
 import { ChevronRight } from "lucide-react";
