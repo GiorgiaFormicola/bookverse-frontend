@@ -1,16 +1,106 @@
-# React + Vite
+# 📚 BookVerse — Frontend
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+> _Where every story finds its shelf._
 
-Currently, two official plugins are available:
+BookVerse is a full-stack web application for book lovers. Discover new books, build your personal library, track your reading progress, and share reviews with other readers.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+This repository contains the **frontend** of the application, built with React + Vite.
 
-## React Compiler
+🔗 **Backend repository:** [bookverse-backend](https://github.com/GiorgiaFormicola/bookverse-backend)
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+---
 
-## Expanding the ESLint configuration
+## ✨ Features
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+- 🔍 **Search & Discover** — Search books by title, author, category or publisher via Google Books API, with automatic fallback to the local database if the API is unavailable
+- 📖 **Personal Library** — Save books and track your reading status (To Read, Reading, Read)
+- ⭐ **Reviews** — Rate and review books, read other readers' opinions
+- 📊 **Dashboard** — View your reading stats at a glance
+- 🔒 **Authentication** — Register, login, reset password via email
+- 👤 **Profile** — Customize your profile, bio and profile picture
+- 🛡️ **Admin Panel** — Manage users and books (admin only)
+
+---
+
+## 🛠️ Tech Stack
+
+| Technology       | Description         |
+| ---------------- | ------------------- |
+| React            | UI library          |
+| Vite             | Build tool          |
+| Redux            | State management    |
+| React Bootstrap  | UI components       |
+| Axios            | HTTP client         |
+| React Router DOM | Client-side routing |
+| Lucide React     | Icons               |
+| SCSS             | Custom styling      |
+
+---
+
+## 🚀 Getting Started
+
+### Prerequisites
+
+- [Node.js](https://nodejs.org/)
+- [npm](https://www.npmjs.com/)
+- The [backend](https://github.com/GiorgiaFormicola/bookverse-backend) running locally
+
+### Installation
+
+1. **Clone the repository**
+
+```bash
+git clone https://github.com/GiorgiaFormicola/bookverse-frontend.git
+cd bookverse-frontend
+```
+
+2. **Install dependencies**
+
+```bash
+npm install
+```
+
+3. **Create a `.env` file** in the root of the project
+
+```env
+VITE_API_URL=http://localhost:<YOUR_BACKEND_PORT>
+```
+
+> ⚠️ Make sure the backend is running before starting the frontend.
+
+4. **Start the development server**
+
+```bash
+npm run dev
+```
+
+The app will be available at `http://localhost:5173`
+
+---
+
+## 📁 Project Structure
+
+```
+src/
+├── components/       # React components
+├── config/           # Axios instance and interceptors
+├── redux/            # Redux store, actions and reducers
+├── styles/           # SCSS variables and custom styles
+└── App.jsx           # Main app with routing
+```
+
+---
+
+## 🔐 Environment Variables
+
+| Variable       | Description                 |
+| -------------- | --------------------------- |
+| `VITE_API_URL` | Base URL of the backend API |
+
+---
+
+## 👩‍💻 Author
+
+**Giorgia Formicola**
+
+- GitHub: [@GiorgiaFormicola](https://github.com/GiorgiaFormicola)
