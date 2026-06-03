@@ -92,16 +92,12 @@ const SignupPage = () => {
         displayName: signUpCredentials.displayName,
         birthdate: signUpCredentials.birthdate,
       })
-      .then((response) => {
-        console.log(response);
+      .then(() => {
         navigate("/login");
       })
       .catch((err) => {
-        if (err.response) {
-          setError(err.response.data?.message || "A server error occurred. Please try again later.");
-        } else {
-          setError("A network error occurred. Please try again later.");
-        }
+        if (err.handled) return;
+        setError(err.response?.data?.message || "A server error occurred. Please try again later.");
       })
       .finally(() => setLoading(false));
   };
@@ -117,7 +113,7 @@ const SignupPage = () => {
         <Col sm={12} md={11} lg={9} xl={8}>
           <Card className="bv-auth-card border-0 overflow-hidden">
             <Row className="g-0">
-              {/* Colonna sinistra — solo desktop */}
+              {/* Desktop column */}
               <Col md={6} className="d-none d-md-flex auth-gradient p-5">
                 <div className="d-flex flex-column justify-content-between h-100">
                   <div>
@@ -185,7 +181,6 @@ const SignupPage = () => {
                 </div>
               </Col>
 
-              {/* Colonna destra — form */}
               <Col sm={12} md={6} className="p-5" style={{ background: "var(--surface-raised)" }}>
                 {/* Mobile header */}
                 <div className="mb-4 text-center d-md-none">
@@ -204,6 +199,7 @@ const SignupPage = () => {
                   Create Account
                 </h3>
 
+                {/* Form */}
                 <Form
                   noValidate
                   onSubmit={(e) => {

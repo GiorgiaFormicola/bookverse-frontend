@@ -31,7 +31,7 @@ const ForgotPasswordPage = () => {
       .post("/auth/forgot-password", { email })
       .then(() => setSent(true))
       .catch((err) => {
-        if (err.response?.data?.error === "ACCOUNT_DISABLED") return;
+        if (err.handled) return;
         setError(err.response?.data?.message || "Something went wrong. Try again.");
       })
       .finally(() => setLoading(false));

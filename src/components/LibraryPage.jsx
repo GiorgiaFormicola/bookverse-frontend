@@ -56,8 +56,7 @@ const LibraryPage = () => {
         setHasNext(!response.data.last);
       })
       .catch((err) => {
-        console.log(err);
-        if (err.response?.data?.error === "ACCOUNT_DISABLED") return;
+        if (err.handled) return;
         setError(true);
       })
       .finally(() => setLoading(false));
@@ -97,6 +96,7 @@ const LibraryPage = () => {
 
   return (
     <Container fluid className="py-4 p-3 px-lg-4 container-lg d-flex flex-column gap-2 gap-lg-3 min-vh-100">
+      {/* Search bar */}
       <Row className="justify-content-center">
         <Col xs={12}>
           <Form
@@ -121,6 +121,7 @@ const LibraryPage = () => {
         </Col>
       </Row>
 
+      {/* Filters */}
       <Row className="justify-content-center">
         <Col xs={12} sm={9} lg={6} className="d-flex justify-content-center">
           <ToggleButtonGroup
@@ -183,6 +184,7 @@ const LibraryPage = () => {
         </Col>
       </Row>
 
+      {/* Bookslist */}
       <Row className="g-3 pt-3 pt-sm-1 pt-md-2 pt-lg-0">
         <Col xs={12}>
           {loading ? (

@@ -6,6 +6,7 @@ const EditBookModal = ({ show, onHide, book, handleSaveBook }) => {
   const [form, setForm] = useState(book);
   const [coverFile, setCoverFile] = useState(null);
   const [coverPreview, setCoverPreview] = useState(null);
+  const [saveError, setSaveError] = useState("");
   const fileInputRef = useRef(null);
   const isLocked = (field) => !isEmpty(book[field]);
 
@@ -109,7 +110,8 @@ const EditBookModal = ({ show, onHide, book, handleSaveBook }) => {
 
       handleSaveBook();
     } catch (err) {
-      console.log(err);
+      if (err.handled) return;
+      setSaveError(err.response?.data?.message || "Something went wrong. Try again.");
     }
   };
 
@@ -121,6 +123,7 @@ const EditBookModal = ({ show, onHide, book, handleSaveBook }) => {
 
       <Modal.Body>
         <Row className="g-3">
+          {/* Cover */}
           <Col md={6} className="mb-4">
             <Form.Group>
               <Form.Label>Cover</Form.Label>
@@ -145,6 +148,8 @@ const EditBookModal = ({ show, onHide, book, handleSaveBook }) => {
               </InputGroup>
             </Form.Group>
           </Col>
+
+          {/* Description */}
           <Col md={6} className="mb-4">
             <Form.Group>
               <Form.Label>Description</Form.Label>
@@ -164,6 +169,7 @@ const EditBookModal = ({ show, onHide, book, handleSaveBook }) => {
             </Form.Group>
           </Col>
 
+          {/* Authors */}
           <Col md={6} className="mb-2">
             <Form.Group>
               <Form.Label>Authors</Form.Label>
@@ -182,12 +188,11 @@ const EditBookModal = ({ show, onHide, book, handleSaveBook }) => {
               />
             </Form.Group>
           </Col>
+
+          {/* Publisher */}
           <Col md={6} className="mb-2">
             <Form.Group>
-              <Form.Label>
-                Publisher
-                {/* {isLocked("publisher") && <span className="text-muted ms-1 small">(already setted)</span>} */}
-              </Form.Label>
+              <Form.Label>Publisher</Form.Label>
               <Form.Control value={form.publisher ?? ""} onChange={(e) => updateField("publisher", e.target.value)} />
             </Form.Group>
           </Col>
@@ -209,12 +214,10 @@ const EditBookModal = ({ show, onHide, book, handleSaveBook }) => {
             </Form.Group>
           </Col>
 
+          {/* Date */}
           <Col md={6} className="mb-2">
             <Form.Group>
-              <Form.Label>
-                Published date
-                {/* {isLocked("publishedDate") && <span className="text-muted ms-1 small">(already setted)</span>} */}
-              </Form.Label>
+              <Form.Label>Published date</Form.Label>
               <Form.Control
                 type="text"
                 value={form.publishedDate ?? ""}
@@ -224,6 +227,7 @@ const EditBookModal = ({ show, onHide, book, handleSaveBook }) => {
             </Form.Group>
           </Col>
 
+          {/* Pages*/}
           <Col md={6}>
             <Form.Group>
               <Form.Label>Pages</Form.Label>
@@ -231,6 +235,7 @@ const EditBookModal = ({ show, onHide, book, handleSaveBook }) => {
             </Form.Group>
           </Col>
 
+          {/* ISBN-10 */}
           <Col md={6} className="mb-2">
             <Form.Group>
               <Form.Label>ISBN-10</Form.Label>
@@ -244,6 +249,7 @@ const EditBookModal = ({ show, onHide, book, handleSaveBook }) => {
             </Form.Group>
           </Col>
 
+          {/* ISBN-13 */}
           <Col md={6} className="mb-2">
             <Form.Group>
               <Form.Label>ISBN-13</Form.Label>
@@ -260,13 +266,19 @@ const EditBookModal = ({ show, onHide, book, handleSaveBook }) => {
       </Modal.Body>
 
       <Modal.Footer>
-        <Button className="bv-btn-close" onClick={onHide}>
-          Cancel
-        </Button>
-
-        <Button disabled={!canSave} className="bv-btn-confirm" onClick={() => handleSave()}>
-          Save Book
-        </Button>
+        <div className="w-100">
+          <div className={"alert bg-transparent border-0 p-0 mb-2 text-center" + (saveError ? " alert-danger" : " invisible")}>
+            {saveError || "placeholder"}
+          </div>
+          <div className="d-flex gap-2 justify-content-end">
+            <Button className="bv-btn-close" onClick={onHide}>
+              Cancel
+            </Button>
+            <Button disabled={!canSave} className="bv-btn-confirm" onClick={() => handleSave()}>
+              Save Book
+            </Button>
+          </div>
+        </div>
       </Modal.Footer>
     </Modal>
   );

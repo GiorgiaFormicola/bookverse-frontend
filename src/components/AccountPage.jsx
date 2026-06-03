@@ -32,6 +32,7 @@ const AccountPage = () => {
 
   const [showDeleteConfirm, setShowDeleteConfirm] = useState(false);
   const [deleteLoading, setDeleteLoading] = useState(false);
+  const [deleteError, setDeleteError] = useState("");
 
   const passwordRegex = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[a-zA-Z]).{8,}$/;
   const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/;
@@ -110,6 +111,19 @@ const AccountPage = () => {
       setPasswordError(err.response?.data?.message || "Something went wrong. Try again.");
     } finally {
       setPasswordLoading(false);
+    }
+  };
+
+  const handleDeleteAccount = async () => {
+    setDeleteLoading(true);
+    setDeleteError("");
+    try {
+      await dispatch(deleteProfile());
+    } catch (err) {
+      if (err.handled) return;
+      setDeleteError(err.response?.data?.message || "Something went wrong. Try again.");
+    } finally {
+      setDeleteLoading(false);
     }
   };
 
@@ -207,7 +221,7 @@ const AccountPage = () => {
                 </Form.Group>
                 <div
                   className={
-                    "alert bg-trasnparent text-center border-0 p-0 mb-3" +
+                    "alert bg-transparent text-center border-0 p-0 mb-3" +
                     (emailError || emailSuccess ? "" : " invisible") +
                     (emailError ? " alert-danger" : " alert-success")
                   }
@@ -355,19 +369,13 @@ const AccountPage = () => {
           <p style={{ color: "var(--text-muted)" }} className="mb-0">
             This action is <strong>irreversible</strong>. <br /> Your account, library and reviews will be permanently deleted.
           </p>
+          <div className={"alert bg-transparent border-0 p-0 mt-3" + (deleteError ? " alert-danger" : " invisible")}>{deleteError || "placeholder"}</div>
         </Modal.Body>
         <Modal.Footer className="px-4 d-flex gap-2">
           <Button className="flex-grow-1 bv-btn-close" onClick={() => setShowDeleteConfirm(false)} disabled={deleteLoading}>
             Cancel
           </Button>
-          <Button
-            className="flex-grow-1 bv-btn-delete"
-            onClick={() => {
-              setDeleteLoading(true);
-              dispatch(deleteProfile());
-            }}
-            disabled={deleteLoading}
-          >
+          <Button className="flex-grow-1 bv-btn-delete" onClick={handleDeleteAccount} disabled={deleteLoading}>
             {deleteLoading ? <Spinner animation="border" size="sm" /> : "Yes, delete my account"}
           </Button>
         </Modal.Footer>

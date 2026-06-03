@@ -28,11 +28,8 @@ const AppNavbar = () => {
     <>
       <Navbar sticky="top" className="bv-navbar">
         <Container fluid className="px-3 container-lg px-lg-4">
-          {/* Brand — icona quadrata + Book Verse con Verse in lime */}
           <Navbar.Brand as={Link} to="/" className="bv-brand d-flex align-items-center gap-2 me-lg-4">
-            {/*  <span className="bv-brand__icon"> */}
             <Book size={30} className="bv-brand__accent me-1" />
-            {/*  </span> */}
             <span className="bv-brand__text">
               Book<span className="bv-brand__accent">Verse</span>
             </span>

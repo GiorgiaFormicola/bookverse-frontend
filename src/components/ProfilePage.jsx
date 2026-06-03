@@ -21,7 +21,7 @@ const ProfilePage = () => {
   const [showEditModal, setShowEditModal] = useState(false);
   const [totalReviews, setTotalReviews] = useState(0);
 
-  const stats = Object.values(library).reduce(
+  const stats = Object.values(library ?? {}).reduce(
     (acc, book) => {
       acc.saved++;
       if (book.status === "READ") acc.read++;
@@ -36,7 +36,6 @@ const ProfilePage = () => {
     instance
       .get(`/me/books?isPublic=true&page=${pageNumber}&size=20`)
       .then((response) => {
-        console.log(response.data.content);
         if (append) {
           setBookshelf((prev) => [...prev, ...response.data.content]);
         } else {
@@ -46,8 +45,7 @@ const ProfilePage = () => {
         setHasNext(!response.data.last);
       })
       .catch((err) => {
-        console.log(err);
-        if (err.response?.data?.error === "ACCOUNT_DISABLED") return;
+        if (err.handled) return;
         setError(true);
       })
       .finally(() => setLoading(false));
@@ -58,7 +56,7 @@ const ProfilePage = () => {
       .get("/users/me")
       .then((response) => setTotalReviews(response.data.totalReviews))
       .catch((err) => {
-        if (err.response?.data?.error === "ACCOUNT_DISABLED") return;
+        if (err.handled) return;
       });
   };
 
@@ -74,6 +72,7 @@ const ProfilePage = () => {
   return (
     <>
       <Container fluid className="d-flex flex-column container-lg py-4 px-3 px-lg-4 px-xl-5  gap-3 gap-sm-2 gap-lg-3 gap-xl-5">
+        {/* Profile header */}
         <Row className=" justify-content-center align-items-end pt-md-2 pt-lg-3 mb-lg-5 mb-xl-2 g-2 g-md-5 g-lg-4">
           <Col xs={12} className="d-md-none text-end">
             <Button className="bv-btn-edit" onClick={() => navigate("/me/edit")}>
@@ -115,7 +114,9 @@ const ProfilePage = () => {
             </div>
           </Col>
         </Row>
+
         <Row className=" justify-content-center gap-sm-2 gap-md-3 mt-2 mt-sm-4 mt-md-5 mt-lg-0">
+          {/* Profile bio */}
           {user.bio && (
             <Col xl={10}>
               <div>
@@ -124,6 +125,7 @@ const ProfilePage = () => {
               </div>
             </Col>
           )}
+          {/* Profile bookshelf */}
           <Col xl={10}>
             <div>
               <h3 className="mt-2 mb-3">Bookshelf</h3>

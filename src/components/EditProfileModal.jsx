@@ -36,6 +36,7 @@ const EditProfileModal = ({ show, handleClose }) => {
       await dispatch(updateProfileInfo({ username: user.username, displayName: form.displayName, bio: form.bio || "" }));
       handleClose();
     } catch (err) {
+      if (err.handled) return;
       setError(err.response?.data?.message || "Something went wrong with your request");
     } finally {
       setLoading(false);
@@ -49,7 +50,7 @@ const EditProfileModal = ({ show, handleClose }) => {
           <Modal.Title>Edit profile</Modal.Title>
         </Modal.Header>
         <Modal.Body className="px-4">
-          {/* Sezione immagine profilo */}
+          {/* Profile picture */}
           <div className="d-flex justify-content-center my-3">
             <div className="position-relative d-inline-block">
               {uploadLoading ? (
@@ -84,7 +85,8 @@ const EditProfileModal = ({ show, handleClose }) => {
                         setUploadError(false);
                         try {
                           await dispatch(updateProfilePicture(data));
-                        } catch {
+                        } catch (err) {
+                          if (err.handled) return;
                           setUploadError(true);
                         } finally {
                           setUploadLoading(false);

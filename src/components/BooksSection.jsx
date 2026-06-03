@@ -70,11 +70,16 @@ const BooksSection = () => {
     instance
       .get("/books?" + searchParams.toString())
       .then((response) => {
-        console.log(response.data);
         setBooks(response.data.content);
         setTotalPages(response.data.totalPages);
       })
-      .catch((err) => console.log(err));
+      .catch((err) => {
+        if (err.handled) return;
+        if (err.response?.status >= 500) {
+          window.location.replace("/error?type=server");
+          return;
+        }
+      });
   };
 
   useEffect(() => {
@@ -113,11 +118,16 @@ const BooksSection = () => {
   const handleDeleteBook = () => {
     instance
       .delete("/books/" + bookToDelete.googleId)
-      .then((response) => {
-        console.log(response);
+      .then(() => {
         getBooks(queryFilters);
       })
-      .catch((err) => console.log(err))
+      .catch((err) => {
+        if (err.handled) return;
+        if (err.response?.status >= 500) {
+          window.location.replace("/error?type=server");
+          return;
+        }
+      })
       .finally(() => setBookToDelete(null));
   };
 
@@ -126,8 +136,9 @@ const BooksSection = () => {
   };
   return (
     <>
+      {/* Filters */}
       <BooksFilters filters={filters} handleFilterChange={handleFilterChange} handleSearch={handleSearch} />
-
+      {/* Table */}
       <Card className="border-0 rounded-4 mt-3 overflow-hidden" style={{ background: "var(--surface-raised)" }}>
         <Card.Body className="px-4 py-2">
           <Table responsive hover align="middle" className="bv-admin-table mb-0">
@@ -207,6 +218,7 @@ const BooksSection = () => {
             </tbody>
           </Table>
           <div className="d-flex justify-content-center mt-3">
+            {/* Pagination */}
             <Pagination className="bv-pagination mb-0">
               <Pagination.Prev disabled={queryFilters.page === 0} onClick={() => handlePageChange(queryFilters.page - 1)} />
               {[...Array(totalPages)].map((_, i) => (
@@ -219,7 +231,7 @@ const BooksSection = () => {
           </div>
         </Card.Body>
       </Card>
-
+      {/* Modals */}
       {showModal && (
         <EditBookModal key={selectedBook?.id} show={showModal} onHide={() => setShowModal(false)} book={selectedBook} handleSaveBook={handleSaveBook} />
       )}

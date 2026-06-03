@@ -18,7 +18,10 @@ const DisabledPage = () => {
     instance
       .post("/auth/reactivation-request", { email })
       .then(() => setSent(true))
-      .catch(() => setError(true))
+      .catch((err) => {
+        if (err.handled) return;
+        setError(true);
+      })
       .finally(() => setLoading(false));
   };
 

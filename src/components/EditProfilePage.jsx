@@ -49,8 +49,7 @@ const EditProfilePage = () => {
       await dispatch(updateProfileInfo({ username: user.username, displayName: form.displayName, bio: form.bio || "" }));
       navigate("/me");
     } catch (err) {
-      console.log(err);
-      if (err.response?.data?.error === "ACCOUNT_DISABLED") return;
+      if (err.handled) return;
       if (err.response?.data?.message) {
         setError(err.response.data.message);
       } else {
@@ -64,7 +63,6 @@ const EditProfilePage = () => {
   return (
     <>
       <Container fluid className="d-flex flex-column container-lg p-4 gap-3">
-        {/* Header con back */}
         <Row className="justify-content-center">
           <Col xs={12} className="position-relative d-flex align-items-center justify-content-center">
             <span
@@ -79,7 +77,7 @@ const EditProfilePage = () => {
           </Col>
         </Row>
 
-        {/* Avatar */}
+        {/* Profile picture */}
         <Row className="justify-content-center g-3 py-3">
           <Col xs={7} sm={5} md={4} lg={3} className="d-flex justify-content-center">
             <div className="position-relative d-inline-block">
@@ -161,7 +159,7 @@ const EditProfilePage = () => {
         </Row>
       </Container>
 
-      {/* Modal upload foto */}
+      {/* Modal upload profile picture */}
       <Modal show={show} onHide={handleClose} centered>
         <Modal.Header closeButton className="px-4">
           <Modal.Title className="fs-5">Upload profile picture</Modal.Title>
@@ -201,7 +199,7 @@ const EditProfilePage = () => {
                     await dispatch(updateProfilePicture(data));
                     handleClose();
                   } catch (err) {
-                    if (err.response?.data?.error === "ACCOUNT_DISABLED") return;
+                    if (err.handled) return;
                     setUploadError(true);
                   } finally {
                     setUploadLoading(false);

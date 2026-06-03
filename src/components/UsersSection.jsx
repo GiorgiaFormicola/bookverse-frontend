@@ -49,11 +49,16 @@ const UsersSection = () => {
     instance
       .get("/users?" + searchParams.toString())
       .then((response) => {
-        console.log(response.data);
         setUsers(response.data.content);
         setTotalPages(response.data.totalPages);
       })
-      .catch((err) => console.log(err));
+      .catch((err) => {
+        if (err.handled) return;
+        if (err.response?.status >= 500) {
+          window.location.replace("/error?type=server");
+          return;
+        }
+      });
   };
 
   useEffect(() => {
@@ -92,11 +97,16 @@ const UsersSection = () => {
   const handleDeleteUser = () => {
     instance
       .delete("/users/" + userToDelete.id)
-      .then((response) => {
-        console.log(response);
+      .then(() => {
         getUsers(queryFilters);
       })
-      .catch((err) => console.log(err))
+      .catch((err) => {
+        if (err.handled) return;
+        if (err.response?.status >= 500) {
+          window.location.replace("/error?type=server");
+          return;
+        }
+      })
       .finally(() => setUserToDelete(null));
   };
 
@@ -105,8 +115,10 @@ const UsersSection = () => {
   };
   return (
     <>
+      {/* Filters */}
       <UsersFilters filters={filters} handleFilterChange={handleFilterChange} handleSearch={handleSearch} />
 
+      {/* Table */}
       <Card className="border-0 rounded-4 mt-3 overflow-hidden" style={{ background: "var(--surface-raised)" }}>
         <Card.Body className="px-4 py-2">
           <Table responsive hover align="middle" className="bv-admin-table mb-0">
@@ -171,6 +183,7 @@ const UsersSection = () => {
         </Card.Body>
       </Card>
 
+      {/* Modals */}
       {showModal && (
         <EditUserModal key={selectedUser?.id} show={showModal} onHide={() => setShowModal(false)} user={selectedUser} handleSaveUser={handleSaveUser} />
       )}

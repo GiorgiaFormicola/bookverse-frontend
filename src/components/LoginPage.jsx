@@ -57,7 +57,7 @@ const LoginPage = () => {
         navigate("/");
       })
       .catch((err) => {
-        if (err.response?.data?.error === "ACCOUNT_DISABLED") return;
+        if (err.handled) return;
         if (err.response) {
           if (err.response.status === 400) {
             setError("Wrong credentials supplied");
@@ -82,7 +82,7 @@ const LoginPage = () => {
         <Col sm={12} md={11} lg={9} xl={7}>
           <Card className="bv-auth-card border-0 overflow-hidden">
             <Row className="g-0">
-              {/* Colonna sinistra — solo desktop */}
+              {/* Desktop column */}
               <Col md={6} className="d-none d-md-flex auth-gradient p-5">
                 <div className="d-flex flex-column justify-content-between h-100">
                   <div>
@@ -124,7 +124,6 @@ const LoginPage = () => {
                 </div>
               </Col>
 
-              {/* Colonna destra — form */}
               <Col sm={12} md={6} className="p-5" style={{ background: "var(--surface-raised)" }}>
                 {/* Mobile header */}
                 <div className="mb-4 text-center d-md-none">
@@ -143,6 +142,7 @@ const LoginPage = () => {
                   Log in
                 </h3>
 
+                {/* Form */}
                 <Form
                   noValidate
                   onSubmit={(e) => {

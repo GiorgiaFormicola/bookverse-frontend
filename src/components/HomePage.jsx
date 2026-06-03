@@ -19,6 +19,7 @@ const HomePage = () => {
   return (
     <>
       <Container fluid className="d-flex flex-column container-lg py-4 px-3 px-lg-4 gap-5 gap-lg-3">
+        {/* Dashboard */}
         <div className="my-2 mt-lg-2">
           <Row className="mb-4">
             <Col>
@@ -29,6 +30,7 @@ const HomePage = () => {
             <Dashboard />
           </Row>
         </div>
+        {/* Sections */}
         <HomePageSection
           filter="TO_READ"
           title="Start reading"

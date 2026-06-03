@@ -59,8 +59,8 @@ const BookDetailPage = () => {
         setBook(response.data);
       })
       .catch((err) => {
-        console.log(err);
-        if (err.response?.data?.error === "ACCOUNT_DISABLED") return;
+        if (err.handled) return;
+
         setBookError(true);
       })
       .finally(() => setBookLoading(false));
@@ -71,7 +71,7 @@ const BookDetailPage = () => {
       .get(`/books/${params.googleId}/stats`)
       .then((response) => setBookStats(response.data))
       .catch((err) => {
-        if (err.response?.data?.error === "ACCOUNT_DISABLED") return;
+        if (err.handled) return;
       });
   };
 
@@ -89,23 +89,18 @@ const BookDetailPage = () => {
         setHasNext(!response.data.last);
       })
       .catch((err) => {
-        console.log(err);
-        if (err.response?.data?.error === "ACCOUNT_DISABLED") return;
+        if (err.handled) return;
         setReviewsError(true);
       })
       .finally(() => setReviewsLoading(false));
   };
 
   const getUserReview = () => {
-    const url = `/books/${params.googleId}/reviews/me`;
-    console.log("URL:", JSON.stringify(url));
     instance
-      .get(url)
+      .get(`/books/${params.googleId}/reviews/me`)
       .then((response) => setCurrentUserReview(response.data))
       .catch((err) => {
-        if (err.response?.data?.error === "ACCOUNT_DISABLED") return;
-
-        console.log(err);
+        if (err.handled) return;
       });
   };
 
@@ -121,8 +116,7 @@ const BookDetailPage = () => {
         getUserReview();
       })
       .catch((err) => {
-        if (err.response?.data?.error === "ACCOUNT_DISABLED") return;
-        console.log(err);
+        if (err.handled) return;
       });
   };
 
@@ -135,8 +129,7 @@ const BookDetailPage = () => {
         getBookStats();
       })
       .catch((err) => {
-        if (err.response?.data?.error === "ACCOUNT_DISABLED") return;
-        console.log(err);
+        if (err.handled) return;
       });
   };
 
@@ -152,8 +145,7 @@ const BookDetailPage = () => {
         setEditingReview(false);
       })
       .catch((err) => {
-        if (err.response?.data?.error === "ACCOUNT_DISABLED") return;
-        console.log(err);
+        if (err.handled) return;
       });
   };
 
@@ -239,8 +231,10 @@ const BookDetailPage = () => {
             <span>Back</span>
           </span>
         </div>
+
         {mappedBook && (
           <Row className="justify-content-center gap-4 gap-lg-0 pt-4 pt-lg-4 mt-lg-1 mt-xxl-2">
+            {/* Book cover and stats/action buttons */}
             <Col xs={12} sm={12} md={12} lg={3} className="align-self-stretch">
               <div className="bv-book-sidebar px-3 py-4 px-sm-4 px-lg-3 px-xl-2 h-100">
                 <Row className="g-3 g-sm-4 g-lg-3 justify-content-center">
@@ -289,6 +283,8 @@ const BookDetailPage = () => {
                 </Row>
               </div>
             </Col>
+
+            {/* Book info */}
             <Col xs={12} sm={12} md={12} lg={9}>
               <Row className="g-3">
                 <Col xs={12} className="order-lg-0">
@@ -342,6 +338,8 @@ const BookDetailPage = () => {
                     )}
                   </div>
                 </Col>
+
+                {/* Book reviews */}
                 <Col xs={12} className=" order-last pt-2 pt-lg-0">
                   <h5 className="mb-3">Rewiews ({totalReviews})</h5>
                   {!reviewsLoading && !reviewsError && totalReviews === 0 && (
@@ -404,6 +402,7 @@ const BookDetailPage = () => {
                     </Col>
                   )}
 
+                  {/* Review form */}
                   {showForm && (
                     <Col xs={12} ref={reviewFormRef}>
                       <div className="bv-review-form mt-3">

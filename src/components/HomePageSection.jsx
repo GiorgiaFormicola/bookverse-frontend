@@ -18,8 +18,7 @@ const HomePageSection = ({ filter, reviewed, title, loading, setLoading, onEmpty
         if (response.data.content.length === 0) onEmpty?.();
       })
       .catch((err) => {
-        console.log(err);
-        if (err.response?.data?.error === "ACCOUNT_DISABLED") return;
+        if (err.handled) return;
         setError(true);
       })
       .finally(() => setLoading(false));

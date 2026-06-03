@@ -35,8 +35,8 @@ export const getProfileInfo = () => {
           type: SET_AUTH_CHECKED,
         });
       })
-      .catch((error) => {
-        console.log(error);
+      .catch(() => {
+        dispatch({ type: SET_AUTH_CHECKED });
       });
   };
 };
@@ -44,73 +44,56 @@ export const getProfileInfo = () => {
 export const updateProfileInfo = (body) => {
   return (dispatch) => {
     return instance.put("/users/me", body).then((response) => {
-      console.log(response.data);
       dispatch({
         type: UPDATE_PROFILE,
         payload: response.data,
       });
       return response.data;
     });
-    /* .catch((error) => {
-        console.log(error);
-      }); */
   };
 };
 
 export const updateProfilePicture = (formData) => {
   return (dispatch) => {
     return instance.patch("/users/me/picture", formData).then((response) => {
-      console.log(response.data);
       dispatch({
         type: UPDATE_PROFILE,
         payload: response.data,
       });
       return response.data;
     });
-    /* .catch((error) => {
-        console.log(error);
-      }); */
   };
 };
 
 export const updateProfileEmail = (body) => {
   return (dispatch) => {
-    instance.patch("/users/me/email", body).then((response) => {
-      console.log(response.data);
+    return instance.patch("/users/me/email", body).then((response) => {
       dispatch({
         type: UPDATE_PROFILE,
         payload: response.data,
       });
       return response.data;
     });
-    /*  .catch((error) => {
-        console.log(error);
-      }); */
   };
 };
 
 export const updateProfilePassword = (body) => {
   return (dispatch) => {
-    instance.patch("/users/me/password", body).then((response) => {
-      console.log(response.data);
+    return instance.patch("/users/me/password", body).then((response) => {
       dispatch({
         type: UPDATE_PROFILE,
         payload: response.data,
       });
       return response.data;
     });
-    /*   .catch((error) => {
-        console.log(error);
-      }); */
   };
 };
 
 export const deleteProfile = () => {
   return (dispatch) => {
-    instance
+    return instance
       .delete("/users/me")
-      .then((response) => {
-        console.log(response);
+      .then(() => {
         localStorage.removeItem("token");
         dispatch({
           type: CLEAR_PROFILE,
@@ -119,7 +102,8 @@ export const deleteProfile = () => {
         window.location.replace("/login");
       })
       .catch((error) => {
-        console.log(error);
+        if (error.handled) return;
+        throw error;
       });
   };
 };
@@ -129,7 +113,6 @@ export const addBookToLibrary = (book) => {
     instance
       .post("/me/books", book)
       .then((response) => {
-        console.log(response);
         const googleId = response.data.book.googleId;
         const isPublic = response.data.public;
         const status = response.data.status;
@@ -146,7 +129,7 @@ export const addBookToLibrary = (book) => {
         });
       })
       .catch((error) => {
-        console.log(error);
+        if (error.handled) return;
       });
   };
 };
@@ -155,15 +138,14 @@ export const removeBookFromLibrary = (googleId) => {
   return (dispatch) => {
     instance
       .delete("/me/books/" + googleId)
-      .then((response) => {
-        console.log(response);
+      .then(() => {
         dispatch({
           type: REMOVE_BOOK,
           payload: googleId,
         });
       })
       .catch((error) => {
-        console.log(error);
+        if (error.handled) return;
       });
   };
 };
@@ -173,7 +155,6 @@ export const setBookPrivacy = (googleId, boolean) => {
     instance
       .patch("/me/books/" + googleId + "/visibility", { isPublic: boolean })
       .then((response) => {
-        console.log(response);
         const googleId = response.data.book.googleId;
         const isPublic = response.data.public;
         const status = response.data.status;
@@ -190,7 +171,7 @@ export const setBookPrivacy = (googleId, boolean) => {
         });
       })
       .catch((error) => {
-        console.log(error);
+        if (error.handled) return;
       });
   };
 };
@@ -200,7 +181,6 @@ export const updateBookStatus = (googleId, statusValue) => {
     instance
       .patch("/me/books/" + googleId + "/status", { status: statusValue })
       .then((response) => {
-        console.log(response);
         const googleId = response.data.book.googleId;
         const isPublic = response.data.public;
         const status = response.data.status;
@@ -217,7 +197,7 @@ export const updateBookStatus = (googleId, statusValue) => {
         });
       })
       .catch((error) => {
-        console.log(error);
+        if (error.handled) return;
       });
   };
 };

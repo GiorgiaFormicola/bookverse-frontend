@@ -35,10 +35,12 @@ instance.interceptors.response.use(
       } catch (err) {
         //
       }
+      error.handled = true;
       window.location.replace("/disabled");
       return Promise.reject(error);
     }
     if (error.response?.status === 401) {
+      error.handled = true;
       if (window.location.pathname === "/login") {
         store.dispatch({
           type: SET_ERROR,
@@ -56,12 +58,8 @@ instance.interceptors.response.use(
     }
 
     if (!error.response) {
+      error.handled = true;
       window.location.replace("/error?type=network");
-      return Promise.reject(error);
-    }
-
-    if (error.response?.status >= 500) {
-      window.location.replace("/error?type=server");
       return Promise.reject(error);
     }
 

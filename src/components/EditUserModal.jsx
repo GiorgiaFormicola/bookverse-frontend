@@ -4,6 +4,7 @@ import { instance } from "../config/api";
 const EditUserModal = ({ show, onHide, user, handleSaveUser }) => {
   const [userRole, setUserRole] = useState(user?.role);
   const [userIsActive, setUserIsActive] = useState(user?.active ? "true" : "false");
+  const [saveError, setSaveError] = useState("");
 
   if (!user) return null;
 
@@ -18,7 +19,7 @@ const EditUserModal = ({ show, onHide, user, handleSaveUser }) => {
 
   const handleSave = async () => {
     if (!user) return;
-
+    setSaveError("");
     try {
       if (userRole !== "ADMIN") {
         if (userRole !== originalUser.role) {
@@ -49,7 +50,8 @@ const EditUserModal = ({ show, onHide, user, handleSaveUser }) => {
 
       handleSaveUser();
     } catch (err) {
-      console.log(err);
+      if (err.handled) return;
+      setSaveError(err.response?.data?.message || "Something went wrong. Try again.");
     }
   };
 
@@ -67,6 +69,7 @@ const EditUserModal = ({ show, onHide, user, handleSaveUser }) => {
           </div>
         </div>
 
+        {/* Role */}
         <Form.Group className="mb-3">
           <Form.Label>Role</Form.Label>
           <Form.Select value={userRole} onChange={(e) => handleRoleChange(e.target.value)}>
@@ -75,6 +78,7 @@ const EditUserModal = ({ show, onHide, user, handleSaveUser }) => {
           </Form.Select>
         </Form.Group>
 
+        {/* Status */}
         <Form.Group>
           <Form.Label>Status</Form.Label>
           <Form.Select disabled={userRole === "ADMIN"} value={userIsActive} onChange={(e) => setUserIsActive(e.target.value === "true")}>
@@ -84,13 +88,16 @@ const EditUserModal = ({ show, onHide, user, handleSaveUser }) => {
         </Form.Group>
       </Modal.Body>
 
-      <Modal.Footer>
-        <Button className="bv-btn-close" onClick={onHide}>
-          Cancel
-        </Button>
-        <Button className="bv-btn-confirm" onClick={() => handleSave()}>
-          Save Changes
-        </Button>
+      <Modal.Footer className="flex-column gap-2">
+        <div className={"alert bg-transparent border-0 p-0 w-100 text-center" + (saveError ? " alert-danger" : " invisible")}>{saveError || "placeholder"}</div>
+        <div className="d-flex gap-2 w-100">
+          <Button className="flex-grow-1 bv-btn-close" onClick={onHide}>
+            Cancel
+          </Button>
+          <Button className="flex-grow-1 bv-btn-confirm" onClick={() => handleSave()}>
+            Save Changes
+          </Button>
+        </div>
       </Modal.Footer>
     </Modal>
   );

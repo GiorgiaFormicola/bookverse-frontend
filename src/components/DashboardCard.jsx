@@ -5,17 +5,15 @@ const DashboardCard = ({ statName, statValue, children, color }) => {
 
   return (
     <>
-      {location.pathname === "/" && (
-        <Col xs={6} lg={3}>
-          <div className={`bv-stat-card bv-stat-card--${color} ${location.pathname === "/me" ? "px-lg-3" : ""}`}>
-            <div className="bv-stat-card__icon">{children}</div>
-            <div className="bv-stat-card__body">
-              <div className="bv-stat-card__label mb-1">{statName}</div>
-              <div className="bv-stat-card__value">{statValue}</div>
-            </div>
+      <Col xs={6} lg={3}>
+        <div className={`bv-stat-card bv-stat-card--${color} ${location.pathname === "/me" ? "px-lg-3" : ""}`}>
+          <div className="bv-stat-card__icon">{children}</div>
+          <div className="bv-stat-card__body">
+            <div className="bv-stat-card__label mb-1">{statName}</div>
+            <div className="bv-stat-card__value">{statValue}</div>
           </div>
-        </Col>
-      )}
+        </div>
+      </Col>
     </>
   );
 };

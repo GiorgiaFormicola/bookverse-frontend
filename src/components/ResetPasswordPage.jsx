@@ -44,7 +44,7 @@ const ResetPasswordPage = () => {
       .post("/auth/reset-password", { tokenId: token, newPassword })
       .then(() => navigate("/login", { state: { passwordReset: true } }))
       .catch((err) => {
-        if (err.response?.data?.error === "ACCOUNT_DISABLED") return;
+        if (err.handled) return;
         setError(err.response?.data?.message || "Something went wrong. Try again.");
       })
       .finally(() => setLoading(false));
@@ -82,6 +82,7 @@ const ResetPasswordPage = () => {
                   </p>
                 </div>
 
+                {/* Form */}
                 <Form noValidate onSubmit={handleSubmit}>
                   <Form.Group className="mb-3" controlId="newPassword">
                     <Form.Label className="d-flex align-items-center gap-2">
