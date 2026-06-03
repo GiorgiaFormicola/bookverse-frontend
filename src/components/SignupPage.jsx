@@ -184,12 +184,12 @@ const SignupPage = () => {
               <Col sm={12} md={6} className="p-5" style={{ background: "var(--surface-raised)" }}>
                 {/* Mobile header */}
                 <div className="mb-4 text-center d-md-none">
-                  <div className="bv-brand d-flex align-items-center justify-content-center gap-2 mb-3">
+                  <div className="bv-brand d-flex flex-column align-items-center justify-content-center gap-2 mb-3">
                     <span className="bv-brand__icon">
-                      <Book size={16} />
+                      <Book size={50} />
                     </span>
-                    <span className="bv-brand__text">
-                      Book <span className="bv-brand__accent">Verse</span>
+                    <span className="bv-brand__text fs-2">
+                      Book<span className="bv-brand__accent">Verse</span>
                     </span>
                   </div>
                   <h2 style={{ fontFamily: "Space Grotesk", fontWeight: 700 }}>Sign up</h2>

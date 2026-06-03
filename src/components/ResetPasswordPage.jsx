@@ -70,7 +70,7 @@ const ResetPasswordPage = () => {
                 <div className="text-center mb-4">
                   <div className="bv-brand d-flex align-items-center justify-content-center gap-2 mb-3">
                     <span className="bv-brand__icon">
-                      <Book size={30} />
+                      <Book size={30} className="text-accent" />
                     </span>
                     <span className="bv-brand__text">
                       Book<span className="bv-brand__accent">Verse</span>

@@ -1,6 +1,6 @@
 import { Container, Row, Col, Card } from "react-bootstrap";
 
-import { WifiOff, ExclamationTriangle } from "react-bootstrap-icons";
+import { WifiOff, ExclamationTriangle, Book } from "react-bootstrap-icons";
 import { RESET_AUTH } from "../redux/actions";
 import { useDispatch } from "react-redux";
 
@@ -12,8 +12,17 @@ const ErrorPage = () => {
   return (
     <Container fluid className="min-vh-100 d-flex align-items-center justify-content-center">
       <Row className="justify-content-center w-100">
-        <Col xs={11} sm={8} md={6} lg={4}>
+        <Col xs={11} sm={10} md={8} lg={7} xl={6} xxl={5}>
           <Card className="bv-auth-card border-0 p-4 text-center">
+            <div className="bv-brand d-flex align-items-center justify-content-center gap-2 mb-4 mt-2">
+              <span className="bv-brand__icon">
+                <Book size={30} className="text-accent" />
+              </span>
+              <span className="bv-brand__text">
+                Book<span className="bv-brand__accent">Verse</span>
+              </span>
+            </div>
+
             {isNetwork ? (
               <WifiOff size={48} className="mx-auto mb-3" style={{ color: "var(--st-toread)" }} />
             ) : (
