@@ -146,13 +146,15 @@ const BooksSection = () => {
               <tr>
                 <th>Cover</th>
                 <th>Title</th>
-                <th className="d-none d-sm-table-cell">Authors</th>
+                <th className="d-none d-md-table-cell">Authors</th>
                 <th className="d-none d-md-table-cell">Publisher</th>
-                <th className="d-none d-xl-table-cell">Date</th>
-                <th className="d-none d-md-table-cell">Categories</th>
+                <th className="d-none d-lg-table-cell">Identifiers</th>
+                <th className="d-none d-xl-table-cell">Categories</th>
+                <th className="d-none d-xxl-table-cell">Published Date</th>
+
                 <th className="d-none">Description</th>
                 <th className="d-none d-xxl-table-cell">Pages</th>
-                <th className="d-none d-lg-table-cell">Identifiers</th>
+
                 <th className="d-none d-sm-table-cell">Issues</th>
                 <th>Actions</th>
               </tr>
@@ -172,20 +174,22 @@ const BooksSection = () => {
                 return (
                   <tr key={book.id}>
                     <td>
-                      <img src={book.coverURL ? book.coverURL : defaultCover} alt={book.title} className="book-cover rounded-3" />
+                      <img src={book.coverURL ? book.coverURL : defaultCover} alt={book.title} className="book-cover rounded-1" />
                     </td>
                     <td>{book.title}</td>
-                    <td className="d-none d-sm-table-cell">{book.authors.length ? book.authors.join(", ") : "-"}</td>
+                    <td className="d-none d-md-table-cell">{book.authors.length ? book.authors.join(", ") : "-"}</td>
                     <td className="d-none d-md-table-cell">{book.publisher || "-"}</td>
-                    <td className="d-none d-xl-table-cell">{book.publishedDate || "-"}</td>
-                    <td className="d-none d-md-table-cell">{book.categories.length ? book.categories.join(", ") : "-"}</td>
+                    <td className="d-none d-lg-table-cell">
+                      {[book.isbn10, book.isbn13].filter(Boolean).length ? [book.isbn10, book.isbn13].filter(Boolean).join(", ") : "-"}
+                    </td>
+                    <td className="d-none d-xl-table-cell">{book.categories.length ? book.categories.join(", ") : "-"}</td>
+                    <td className="d-none d-xxl-table-cell">{book.publishedDate || "-"}</td>
+
                     <td className="text-truncate d-none" title={book.description}>
                       {book.description ? `${book.description.slice(0, 30)}${book.description.length > 30 ? "..." : ""}` : "-"}
                     </td>
                     <td className="d-none d-xxl-table-cell">{book.pages || "-"}</td>
-                    <td className="d-none d-lg-table-cell">
-                      {[book.isbn10, book.isbn13].filter(Boolean).length ? [book.isbn10, book.isbn13].filter(Boolean).join(", ") : "-"}
-                    </td>
+
                     <td className="d-none d-sm-table-cell">
                       <div className="d-flex flex-wrap gap-1">
                         {issues.map((issue) => (
