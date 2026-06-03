@@ -129,6 +129,7 @@ const EditProfileModal = ({ show, handleClose }) => {
               </Form.Label>
               <Form.Control
                 type="text"
+                maxLength={50}
                 placeholder="Choose your profile name"
                 value={form.displayName}
                 onFocus={() => setError(false)}
@@ -141,6 +142,7 @@ const EditProfileModal = ({ show, handleClose }) => {
               <Form.Control
                 as="textarea"
                 rows={5}
+                maxLength={500}
                 placeholder="Let other readers know something about you!"
                 value={form.bio}
                 onFocus={() => setError(false)}

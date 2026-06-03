@@ -28,6 +28,10 @@ const EditProfilePage = () => {
       setError("Provide a valid displayname");
       return false;
     }
+    if (form.bio && form.bio.length > 500) {
+      setError("Bio must be maximum 500 characters");
+      return false;
+    }
     return true;
   };
 
@@ -127,6 +131,7 @@ const EditProfilePage = () => {
                 </Form.Label>
                 <Form.Control
                   type="text"
+                  maxLength={50}
                   placeholder="Choose your profile name"
                   value={form.displayName}
                   onClick={() => setError("")}
@@ -140,6 +145,7 @@ const EditProfilePage = () => {
                 <Form.Control
                   as="textarea"
                   rows={8}
+                  maxLength={500}
                   placeholder="Let other readers know something about you!"
                   value={form.bio}
                   onClick={() => setError("")}
