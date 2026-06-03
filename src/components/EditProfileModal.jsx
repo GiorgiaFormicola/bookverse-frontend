@@ -21,6 +21,10 @@ const EditProfileModal = ({ show, handleClose }) => {
       setError("Provide a valid display name");
       return false;
     }
+    if (form.bio && form.bio.length > 500) {
+      setError("Bio must be maximum 500 characters");
+      return false;
+    }
     return true;
   };
 
