@@ -21,6 +21,10 @@ const EditProfileModal = ({ show, handleClose }) => {
       setError("Provide a valid display name");
       return false;
     }
+    if (form.bio && form.bio.length > 500) {
+      setError("Bio must be maximum 500 characters");
+      return false;
+    }
     return true;
   };
 
@@ -125,6 +129,7 @@ const EditProfileModal = ({ show, handleClose }) => {
               </Form.Label>
               <Form.Control
                 type="text"
+                maxLength={50}
                 placeholder="Choose your profile name"
                 value={form.displayName}
                 onFocus={() => setError(false)}
@@ -137,6 +142,7 @@ const EditProfileModal = ({ show, handleClose }) => {
               <Form.Control
                 as="textarea"
                 rows={5}
+                maxLength={500}
                 placeholder="Let other readers know something about you!"
                 value={form.bio}
                 onFocus={() => setError(false)}
