@@ -25,9 +25,3 @@ dist-ssr
 
 # Environment
 .env
-
-# Tests
-LoginPageOld.jsx
-SignupPageOld.jsx
-BookDetailPageOld.jsx
-BookDetailPageTest.jsx
