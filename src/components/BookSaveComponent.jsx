@@ -31,11 +31,11 @@ const BookSaveComponent = ({ book }) => {
       {location.pathname === "/books/" + book.googleId && (
         <Button
           variant="link"
-          className={`bv-book-save ${isSaved ? "bv-book-save--remove" : "bv-book-save--add"} d-flex align-items-center px-3 px-sm-4 p-lg-3 gap-0 w-100 flex-grow-1`}
+          className={`bv-book-save ${isSaved ? "bv-book-save--remove" : "bv-book-save--add"} d-flex align-items-center gap-lg-1 py-3 px-5 px-lg-3 fs-6 rounded-3 w-100`}
           onClick={handleClick}
         >
-          {isSaved ? <SuitHeartFill size={20} /> : <SuitHeart size={20} />}
-          <p className="mb-0 flex-grow-1 text-center">{isSaved ? "Remove from library" : "Add to library"}</p>
+          {isSaved ? <SuitHeartFill size={25} /> : <SuitHeart size={25} />}
+          <p className="mb-0 flex-grow-1 text-center">{isSaved ? "Delete from library" : "Add to library"}</p>
         </Button>
       )}
 

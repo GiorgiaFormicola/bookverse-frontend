@@ -5,10 +5,10 @@ const BookReviewComponent = ({ isReviewed, handleReviewClick }) => {
   return (
     <Button
       variant="link"
-      className={`bv-book-review ${isReviewed ? "bv-book-review--done" : "bv-book-review--add"} d-flex align-items-center px-3 px-sm-4 gap-0 p-lg-3  w-100 flex-grow-1`}
+      className={`bv-book-review ${isReviewed ? "bv-book-review--done" : "bv-book-review--add"} d-flex align-items-center py-3 px-5 gap-lg-1 px-lg-3  fs-6 rounded-3 w-100`}
       onClick={handleReviewClick}
     >
-      {isReviewed ? <StarFill size={20} /> : <Star size={20} />}
+      {isReviewed ? <StarFill size={25} /> : <Star size={25} />}
       <p className="mb-0 flex-grow-1 text-center">{isReviewed ? "Edit your review" : "Add your review"}</p>
     </Button>
   );

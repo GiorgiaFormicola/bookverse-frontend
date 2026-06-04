@@ -233,59 +233,66 @@ const BookDetailPage = () => {
         </div>
 
         {mappedBook && (
-          <Row className="justify-content-center gap-4 gap-lg-0 pt-4 pt-lg-4 mt-lg-1 mt-xxl-2">
+          <Row className="justify-content-center g-4 pt-4 pt-lg-0 mt-lg-1 mt-xxl-2">
             {/* Book cover and stats/action buttons */}
-            <Col xs={12} sm={12} md={12} lg={3} className="align-self-stretch">
-              <div className="bv-book-sidebar px-3 py-4 px-sm-4 px-lg-3 px-xl-2 h-100">
-                <Row className="g-3 g-sm-4 g-lg-3 justify-content-center">
-                  <Col xs={6} sm={5} md={4} lg={12} xl={11}>
-                    <img src={mappedBook.coverURL} className="book-cover rounded-2"></img>
-                  </Col>
-                  <Col xs={6} sm={6} md={8} lg={12} xl={11} className="flex-grow-1 px-lg-2 ms-xl-2 me-xl-2">
-                    <div className="d-flex flex-column justify-content-between h-100 gap-3">
-                      <div className="flex-grow-1">
-                        <BookSaveComponent book={book} />
-                      </div>
-
-                      {isInLibrary && (
-                        <div className="d-flex flex-column gap-2 flex-grow-1 bv-book-controls py-3">
+            <Col xs={12} md={11} lg={3}>
+              <Row className="justify-content-center g-3">
+                <Col xs={6} sm={5} md={4} lg={12} className="mb-4 mb-lg-2">
+                  <img src={mappedBook.coverURL} className="book-cover rounded-2"></img>
+                </Col>
+                <Col xs={12}>
+                  <Row className="g-3">
+                    <Col xs={12} sm={6} lg={12}>
+                      <BookSaveComponent book={book} />
+                    </Col>
+                    <Col xs={12} sm={6} lg={12}>
+                      <BookReviewComponent isReviewed={!!currentUserReview} handleReviewClick={handleReviewClick} />
+                    </Col>
+                  </Row>
+                </Col>
+                <Col xs={12} className="mb-4">
+                  <Row className="g-3">
+                    {isInLibrary && (
+                      <>
+                        <Col xs={12} sm={6} lg={12}>
                           <BookStatusComponent bookId={book.googleId} />
+                        </Col>
+                        <Col xs={12} sm={6} lg={12}>
                           <BookPrivacyComponent bookId={book.googleId} />
-                        </div>
-                      )}
-
-                      {!isInLibrary && bookStats && (
-                        <div className="d-flex flex-column gap-2 flex-grow-1">
-                          <div className="d-flex gap-2 flex-grow-1">
-                            <BookStat statValue={bookStats.saved} statName="saved" color="saved">
-                              <BookmarkFill size={20} className="text-saved" />
-                            </BookStat>
-                            <BookStat statValue={bookStats.read} statName="read" color="read">
-                              <BookCheck size={20} className="text-read" />
-                            </BookStat>
-                          </div>
-                          <div className="d-flex gap-2 flex-grow-1">
-                            <BookStat statValue={bookStats.reading} statName="reading" color="reading">
-                              <BookOpen size={20} className="text-reading" />
-                            </BookStat>
-                            <BookStat statValue={bookStats.reviews} statName="reviews" color="review">
-                              <Star size={20} className="text-review" />
-                            </BookStat>
-                          </div>
-                        </div>
-                      )}
-
-                      <div className="flex-grow-1">
-                        <BookReviewComponent isReviewed={!!currentUserReview} handleReviewClick={handleReviewClick} />
-                      </div>
-                    </div>
-                  </Col>
-                </Row>
-              </div>
+                        </Col>
+                      </>
+                    )}
+                    {!isInLibrary && bookStats && (
+                      <>
+                        <Col xs={6} sm={3} lg={6}>
+                          <BookStat statValue={bookStats.saved} statName="saved" color="saved">
+                            <BookmarkFill size={25} className="text-saved" />
+                          </BookStat>
+                        </Col>
+                        <Col xs={6} sm={3} lg={6}>
+                          <BookStat statValue={bookStats.read} statName="read" color="read">
+                            <BookCheck size={25} className="text-read" />
+                          </BookStat>
+                        </Col>
+                        <Col xs={6} sm={3} lg={6}>
+                          <BookStat statValue={bookStats.reading} statName="reading" color="reading">
+                            <BookOpen size={25} className="text-reading" />
+                          </BookStat>
+                        </Col>
+                        <Col xs={6} sm={3} lg={6}>
+                          <BookStat statValue={bookStats.reviews} statName="reviews" color="review">
+                            <Star size={25} className="text-review" />
+                          </BookStat>
+                        </Col>
+                      </>
+                    )}
+                  </Row>
+                </Col>
+              </Row>
             </Col>
 
             {/* Book info */}
-            <Col xs={12} sm={12} md={12} lg={9}>
+            <Col xs={12} md={11} lg={9} className="ps-lg-5">
               <Row className="g-3">
                 <Col xs={12} className="order-lg-0">
                   <div className="mt-lg-3">
@@ -314,25 +321,25 @@ const BookDetailPage = () => {
 
                 <Col xs={12} className="order-lg-1 ">
                   <Row className="text-muted justify-content-between g-2 g-lg-5">
-                    <Col xs={6} lg={3}>
+                    <Col xs={6} md={3}>
                       <p className="mb-1 mb-lg-0">
                         Publisher: <br className="d-lg-none" />
                         <span className="text-faint">{mappedBook.publisher ? mappedBook.publisher : "Unknown"}</span>
                       </p>
                     </Col>
-                    <Col xs={6} lg={3}>
+                    <Col xs={6} md={3}>
                       <p className="mb-1 mb-lg-0">
                         Published: <br className="d-lg-none" />
                         <span className="text-faint">{mappedBook.publishedDate ? mappedBook.publishedDate : "Unknown"}</span>
                       </p>
                     </Col>
-                    <Col xs={6} lg={3}>
+                    <Col xs={6} md={3}>
                       <p className="mb-1 mb-lg-0">
                         Pages: <br className="d-lg-none" />
                         <span className="text-faint">{mappedBook.pages !== 0 ? mappedBook.pages : "Not available"}</span>
                       </p>
                     </Col>
-                    <Col xs={6} lg={3}>
+                    <Col xs={6} md={3}>
                       <p className="mb-1 mb-lg-0">
                         ISBN: <br className="d-lg-none" />
                         <span className="text-faint">

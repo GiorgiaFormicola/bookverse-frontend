@@ -12,11 +12,12 @@ const BookStatusComponent = ({ bookId }) => {
   };
 
   return (
-    <div className="d-flex align-items-center px-3 px-sm-4 py-1 px-lg-3 py-lg-2 rounded-3 gap-2 bg-transparent w-100 flex-grow-1">
-      {savedBookStatus === "TO_READ" && <Book size={25} className="text-toread" />}
+    /*  <div className="d-flex align-items-center px-3 px-sm-4 py-1 px-lg-3 py-lg-2 rounded-3 gap-2 bg-transparent w-100 flex-grow-1 "> */
+    <div className="d-flex align-items-center py-3 justify-content-center px-4 rounded-3 gap-3 w-100 bv-book-control">
+      {savedBookStatus === "TO_READ" && <Book size={30} className="text-toread" />}
       {savedBookStatus === "READING" && <BookOpen size={25} className="text-reading" />}
       {savedBookStatus === "READ" && <BookCheck size={25} className="text-read" />}
-      <Form.Select value={savedBookStatus} onChange={(e) => updateStatus(e.target.value)}>
+      <Form.Select className="py-3 py-lg-2 py-xxl-3" size="md" value={savedBookStatus} onChange={(e) => updateStatus(e.target.value)}>
         <option value="TO_READ">To read...</option>
         <option value="READING">Now reading...</option>
         <option value="READ">Already read!</option>
