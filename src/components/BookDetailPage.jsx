@@ -33,6 +33,8 @@ const BookDetailPage = () => {
   const [hasNext, setHasNext] = useState(false);
   const [showForm, setShowForm] = useState(false);
   const [bookStats, setBookStats] = useState(null);
+  const [reviewLoading, setReviewLoading] = useState(false);
+  const [deleteLoading, setDeleteLoading] = useState(false);
 
   const defaultCover = "https://neelkanthpublishers.com/assets/bookcover_cover.png";
 
@@ -109,31 +111,42 @@ const BookDetailPage = () => {
   };
 
   const updateReview = (reviewId, body) => {
-    instance
+    setReviewLoading(true);
+    return instance
       .put("/reviews/" + reviewId, body)
       .then(() => {
         getBookReviews(0, false);
         getUserReview();
+        setShowForm(false);
+        setEditingReview(false);
+        setUserReview({ rating: 0, comment: "" });
       })
       .catch((err) => {
         if (err.handled) return;
-      });
+      })
+      .finally(() => setReviewLoading(false));
   };
 
   const addReview = (bookId, body) => {
-    instance
+    setReviewLoading(true);
+    return instance
       .post("/books/" + bookId + "/reviews", body)
       .then(() => {
         getBookReviews(0, false);
         getUserReview();
         getBookStats();
+        setShowForm(false);
+        setEditingReview(false);
+        setUserReview({ rating: 0, comment: "" });
       })
       .catch((err) => {
         if (err.handled) return;
-      });
+      })
+      .finally(() => setReviewLoading(false));
   };
 
   const deleteReview = (reviewId) => {
+    setDeleteLoading(true);
     instance
       .delete("/reviews/" + reviewId)
       .then(() => {
@@ -146,7 +159,8 @@ const BookDetailPage = () => {
       })
       .catch((err) => {
         if (err.handled) return;
-      });
+      })
+      .finally(() => setDeleteLoading(false));
   };
 
   useEffect(() => {
@@ -414,7 +428,7 @@ const BookDetailPage = () => {
                       <div className="bv-review-form mt-3">
                         <h5 className="fw-semibold mb-3">{currentUserReview ? "Edit" : "Leave"} your review</h5>
 
-                        <div className="d-flex gap-2 mb-3">
+                        <div className="d-flex gap-2 mb-3 align-items-center">
                           {[1, 2, 3, 4, 5].map((star) => (
                             <StarFill
                               key={star}
@@ -426,6 +440,7 @@ const BookDetailPage = () => {
                               onClick={() => setUserReview({ ...userReview, rating: star })}
                             />
                           ))}
+                          <small className="text-faint">{userReview.rating > 0 ? `${userReview.rating}/5 selected` : "Select a rating"}</small>
                         </div>
 
                         <Form
@@ -437,9 +452,6 @@ const BookDetailPage = () => {
                             } else {
                               addReview(params.googleId, userReview);
                             }
-                            setShowForm(false);
-                            setEditingReview(false);
-                            setUserReview({ rating: 0, comment: "" });
                           }}
                         >
                           <Form.Group className="mb-3">
@@ -453,33 +465,41 @@ const BookDetailPage = () => {
                             />
                           </Form.Group>
 
-                          <div className="d-flex justify-content-between align-items-center">
-                            <small className="text-faint">{userReview.rating > 0 ? `${userReview.rating}/5 selected` : "Select a rating"}</small>
-                            <div className="d-flex gap-2">
+                          <div className="d-flex justify-content-evenly justify-content-sm-end gap-sm-2 align-items-center">
+                            <Button
+                              type="button"
+                              className="px-4 fw-semibold bv-btn-close"
+                              onClick={() => {
+                                setShowForm(false);
+                                setEditingReview(false);
+                                setUserReview({ rating: 0, comment: "" });
+                              }}
+                            >
+                              Close
+                            </Button>
+                            <Button
+                              type="submit"
+                              disabled={reviewLoading || userReview.rating === 0 || userReview.comment.trim() === "" || (currentUserReview && !isFormDirty)}
+                              className="px-4 fw-semibold bv-btn-confirm"
+                            >
+                              {reviewLoading ? (
+                                <Spinner animation="border" size="sm" style={{ color: "var(--bg-deep)" }} />
+                              ) : currentUserReview ? (
+                                "Edit"
+                              ) : (
+                                "Publish"
+                              )}
+                            </Button>
+                            {currentUserReview && (
                               <Button
                                 type="button"
-                                className="px-4 fw-semibold bv-btn-close"
-                                onClick={() => {
-                                  setShowForm(false);
-                                  setEditingReview(false);
-                                  setUserReview({ rating: 0, comment: "" });
-                                }}
+                                disabled={deleteLoading}
+                                className="px-4 fw-semibold bv-btn-delete"
+                                onClick={() => deleteReview(currentUserReview.id)}
                               >
-                                Close
+                                {deleteLoading ? <Spinner animation="border" size="sm" /> : "Delete"}
                               </Button>
-                              <Button
-                                type="submit"
-                                disabled={userReview.rating === 0 || userReview.comment.trim() === "" || (currentUserReview && !isFormDirty)}
-                                className="px-4 fw-semibold bv-btn-confirm"
-                              >
-                                {currentUserReview ? "Edit" : "Publish"}
-                              </Button>
-                              {currentUserReview && (
-                                <Button type="button" className="px-4 fw-semibold bv-btn-delete" onClick={() => deleteReview(currentUserReview.id)}>
-                                  Delete
-                                </Button>
-                              )}
-                            </div>
+                            )}
                           </div>
                         </Form>
                       </div>
