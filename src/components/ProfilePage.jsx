@@ -144,8 +144,7 @@ const ProfilePage = () => {
                   <div className="bv-empty-state w-100">
                     <ArrowClockwise
                       size={40}
-                      className="bv-empty-state__icon"
-                      style={{ cursor: "pointer" }}
+                      className="bv-empty-state__icon cursor-pointer"
                       onClick={() => {
                         setError(false);
                         setHasNext(false);
@@ -155,8 +154,7 @@ const ProfilePage = () => {
                     <h5 className="bv-empty-state__title">Something went wrong</h5>
                     <p className="bv-empty-state__text">Something went wrong loading your bookshelf.</p>
                     <span
-                      className="bv-empty-state__link"
-                      style={{ cursor: "pointer" }}
+                      className="bv-empty-state__link cursor-pointer"
                       onClick={() => {
                         setError(false);
                         setHasNext(false);
@@ -171,7 +169,7 @@ const ProfilePage = () => {
                     <BookOpen size={40} className="bv-empty-state__icon" />
                     <h5 className="bv-empty-state__title">Your bookshelf is empty</h5>
                     <p className="bv-empty-state__text">To add a saved book to your bookshelf change its privacy to public</p>
-                    <span className="bv-empty-state__link" style={{ cursor: "pointer" }} onClick={() => navigate("/library")}>
+                    <span className="bv-empty-state__link cursor-pointer" onClick={() => navigate("/library")}>
                       Go to your library
                     </span>
                   </div>
@@ -182,7 +180,7 @@ const ProfilePage = () => {
                     })}
                     {hasNext && (
                       <Col xs={12} className="text-center">
-                        <ThreeDots size={50} style={{ cursor: "pointer", color: "var(--text-faint)" }} onClick={() => loadNextPage()} />
+                        <ThreeDots className="cursor-pointer text-faint" size={50} onClick={() => loadNextPage()} />
                       </Col>
                     )}
                   </>

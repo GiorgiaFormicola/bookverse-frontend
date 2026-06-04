@@ -37,11 +37,11 @@ const AppFooter = () => {
                 <span className="bv-brand__accent">
                   <Book size={25} />
                 </span>
-                <span className="bv-brand__text mt-1" style={{ fontSize: "1rem" }}>
+                <span className="bv-brand__text mt-1 fs-6">
                   Book<span className="bv-brand__accent">Verse</span>
                 </span>
               </div>
-              <p className="mb-0" style={{ color: "var(--text-faint)", fontSize: "0.8rem" }}>
+              <p className="mb-0 text-faint" style={{ fontSize: "0.8rem" }}>
                 Where every story finds its shelf.
               </p>
             </Col>
@@ -57,9 +57,9 @@ const AppFooter = () => {
                   <Instagram size={17} />
                 </a>
               </div>
-              <p className="mb-0 d-flex align-items-center gap-1" style={{ color: "var(--text-faint)", fontSize: "0.8rem" }}>
+              <p className="mb-0 d-flex align-items-center gap-1 text-faint" style={{ fontSize: "0.8rem" }}>
                 © {currentYear} BookVerse — Made with
-                <Heart size={11} fill="currentColor" style={{ color: "var(--st-review)" }} />
+                <Heart size={11} fill="currentColor" className="text-review" />
               </p>
             </Col>
           </Row>

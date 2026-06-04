@@ -83,10 +83,9 @@ const AppNavbar = () => {
             <img
               src={user?.profilePictureURL}
               alt={user?.username}
-              className="bv-nav__avatar d-lg-none"
+              className="bv-nav__avatar d-lg-none cursor-pointer"
               width={40}
               height={40}
-              style={{ cursor: "pointer" }}
               onClick={() => setShowOffcanvas(true)}
             />
           </Nav>

@@ -32,11 +32,9 @@ const DisabledPage = () => {
           <Card className="bv-auth-card border-0 p-4 py-5 px-lg-5">
             {sent ? (
               <div className="text-center d-flex flex-column align-items-center gap-3 py-4">
-                <EnvelopeFill size={48} style={{ color: "var(--accent)" }} />
-                <h5 style={{ fontFamily: "Space Grotesk", fontWeight: 700 }}>Request sent!</h5>
-                <p className="mb-0" style={{ color: "var(--text-muted)" }}>
-                  We'll get back to you as soon as possible.
-                </p>
+                <EnvelopeFill size={48} className="text-accent" />
+                <h5>Request sent!</h5>
+                <p className="mb-0 text-muted">We'll get back to you as soon as possible.</p>
               </div>
             ) : (
               <>
@@ -49,11 +47,9 @@ const DisabledPage = () => {
                       Book<span className="bv-brand__accent">Verse</span>
                     </span>
                   </div>
-                  <ShieldExclamation size={48} className="mb-3" style={{ color: "var(--st-toread)" }} />
-                  <h3 style={{ fontFamily: "Space Grotesk", fontWeight: 700 }}>Account disabled</h3>
-                  <p className="small mb-0" style={{ color: "var(--text-muted)" }}>
-                    Your account has been temporarily disabled by an administrator. You can request reactivation below.
-                  </p>
+                  <ShieldExclamation size={48} className="mb-3 text-toread" />
+                  <h3>Account disabled</h3>
+                  <p className="small mb-0 text-muted">Your account has been temporarily disabled by an administrator. You can request reactivation below.</p>
                 </div>
                 <div className={"alert text-center border-0 p-0 mb-3" + (error ? " alert-danger" : " invisible")}>
                   {error ? "Something went wrong. Try again." : "placeholder"}

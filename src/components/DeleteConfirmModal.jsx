@@ -5,18 +5,18 @@ const DeleteConfirmModal = ({ show, onHide, onConfirm, username, bookId }) => {
   return (
     <Modal show={show} onHide={onHide} centered>
       <Modal.Header closeButton>
-        <Modal.Title style={{ color: "#fb7185" }}>Confirm deletion</Modal.Title>
+        <Modal.Title className="text-danger">Confirm deletion</Modal.Title>
       </Modal.Header>
 
       <Modal.Body className="text-center py-4">
-        <Trash3Fill size={40} className="mb-3" style={{ color: "#fb7185" }} />
+        <Trash3Fill size={40} className="mb-3 text-danger" />
         {username && (
-          <p className="mb-0" style={{ color: "var(--text-muted)" }}>
+          <p className="mb-0 text-muted">
             Are you sure you want to delete user <strong style={{ color: "var(--text-primary)" }}>{username}</strong>? <br /> This operation is irreversible.
           </p>
         )}
         {bookId && (
-          <p className="mb-0" style={{ color: "var(--text-muted)" }}>
+          <p className="mb-0 text-muted">
             Are you sure you want to delete book <strong style={{ color: "var(--text-primary)" }}>{bookId}</strong>? <br /> This operation is irreversible.
           </p>
         )}

@@ -94,30 +94,22 @@ const LoginPage = () => {
                         Book<span className="bv-brand__accent">Verse</span>
                       </span>
                     </div>
-                    <h2 className="mb-3" style={{ fontFamily: "Space Grotesk", fontWeight: 700 }}>
-                      Welcome Back
-                    </h2>
+                    <h2 className="mb-3">Welcome Back</h2>
                     <p style={{ color: "rgba(236,235,245,0.7)" }}>
                       Your personal library awaits. Discover, read, and share your thoughts on thousands of books.
                     </p>
                   </div>
                   <Row className="justify-content-between row-cols-3 mt-4">
                     <Col>
-                      <h3 className="h1 mb-0 text-nowrap" style={{ fontFamily: "Space Grotesk", color: "var(--accent)" }}>
-                        10K+
-                      </h3>
+                      <h3 className="h1 mb-0 text-nowrap text-accent">10K+</h3>
                       <small style={{ color: "rgba(236,235,245,0.6)" }}>Books</small>
                     </Col>
                     <Col>
-                      <h3 className="h1 mb-0 text-nowrap" style={{ fontFamily: "Space Grotesk", color: "var(--accent)" }}>
-                        5K+
-                      </h3>
+                      <h3 className="h1 mb-0 text-nowrap text-accent">5K+</h3>
                       <small style={{ color: "rgba(236,235,245,0.6)" }}>Readers</small>
                     </Col>
                     <Col>
-                      <h3 className="h1 mb-0 text-nowrap" style={{ fontFamily: "Space Grotesk", color: "var(--accent)" }}>
-                        20K+
-                      </h3>
+                      <h3 className="h1 mb-0 text-nowrap text-accent">20K+</h3>
                       <small style={{ color: "rgba(236,235,245,0.6)" }}>Reviews</small>
                     </Col>
                   </Row>
@@ -135,12 +127,10 @@ const LoginPage = () => {
                       Book<span className="bv-brand__accent">Verse</span>
                     </span>
                   </div>
-                  <h2 style={{ fontFamily: "Space Grotesk", fontWeight: 700 }}>Log in</h2>
+                  <h2>Log in</h2>
                 </div>
 
-                <h3 className="mb-4 d-none d-md-block" style={{ fontFamily: "Space Grotesk", fontWeight: 700 }}>
-                  Log in
-                </h3>
+                <h3 className="mb-4 d-none d-md-block">Log in</h3>
 
                 {/* Form */}
                 <Form
@@ -175,7 +165,7 @@ const LoginPage = () => {
                         required
                         size="lg"
                       />
-                      <InputGroup.Text onClick={() => setShowPassword(!showPassword)} style={{ cursor: "pointer" }}>
+                      <InputGroup.Text className="cursor-pointer" onClick={() => setShowPassword(!showPassword)}>
                         {showPassword ? <EyeSlash /> : <Eye />}
                       </InputGroup.Text>
                     </InputGroup>
@@ -209,9 +199,7 @@ const LoginPage = () => {
                   </Button>
 
                   <div className="text-center">
-                    <p className="mb-0" style={{ color: "var(--text-muted)" }}>
-                      Don't have an account?
-                    </p>
+                    <p className="mb-0 text-muted">Don't have an account?</p>
                     <Link to="/signup" className="view-more-link fw-semibold">
                       Sign Up
                     </Link>

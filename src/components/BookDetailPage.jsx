@@ -192,8 +192,7 @@ const BookDetailPage = () => {
         <div className="bv-empty-state">
           <ArrowClockwise
             size={40}
-            className="bv-empty-state__icon"
-            style={{ cursor: "pointer" }}
+            className="bv-empty-state__icon cursor-pointer"
             onClick={() => {
               setBookError(false);
               setBookLoading(true);
@@ -203,8 +202,7 @@ const BookDetailPage = () => {
           <h5 className="bv-empty-state__title">Something went wrong</h5>
           <p className="bv-empty-state__text">Something went wrong loading the book.</p>
           <span
-            className="bv-empty-state__link"
-            style={{ cursor: "pointer" }}
+            className="bv-empty-state__link cursor-pointer"
             onClick={() => {
               setBookError(false);
               setBookLoading(true);
@@ -223,8 +221,7 @@ const BookDetailPage = () => {
       <Container fluid className="d-flex flex-column container-lg py-4 px-3 px-lg-4 gap-4 gap-lg-3 py-5 position-relative">
         <div className="position-absolute top-0 pt-1 mt-4">
           <span
-            className="d-flex align-items-center gap-1 view-more-link fw-semibold"
-            style={{ cursor: "pointer", width: "fit-content" }}
+            className="d-flex align-items-center gap-1 view-more-link fw-semibold w-auto cursor-pointer"
             onClick={() => navigate(location.state?.from || "/", { state: location.state })}
           >
             <ChevronLeft size={20} />
@@ -364,8 +361,7 @@ const BookDetailPage = () => {
                     <div className="bv-empty-state">
                       <ArrowClockwise
                         size={40}
-                        className="bv-empty-state__icon"
-                        style={{ cursor: "pointer" }}
+                        className="bv-empty-state__icon cursor-pointer"
                         onClick={() => {
                           setReviewsError(false);
                           setReviewsLoading(true);
@@ -375,8 +371,7 @@ const BookDetailPage = () => {
                       <h5 className="bv-empty-state__title">Something went wrong</h5>
                       <p className="bv-empty-state__text">Something went wrong loading reviews.</p>
                       <span
-                        className="bv-empty-state__link"
-                        style={{ cursor: "pointer" }}
+                        className="bv-empty-state__link cursor-pointer"
                         onClick={() => {
                           setReviewsError(false);
                           setReviewsLoading(true);
@@ -394,7 +389,7 @@ const BookDetailPage = () => {
                         ))}
                         {hasNext && (
                           <Col xs={12} className="text-center">
-                            <ThreeDots size={50} style={{ cursor: "pointer" }} onClick={loadNextPage} />
+                            <ThreeDots size={50} className="cursor-pointer" onClick={loadNextPage} />
                           </Col>
                         )}
                       </ListGroup>
@@ -425,8 +420,7 @@ const BookDetailPage = () => {
                               key={star}
                               size={26}
                               role="button"
-                              className={star <= (hoveredRating || userReview.rating) ? "text-accent" : "text-faint opacity-25"}
-                              style={{ cursor: "pointer" }}
+                              className={star <= (hoveredRating || userReview.rating) ? "text-accent cursor-pointer" : "text-faint opacity-25 cursor-pointer"}
                               onMouseEnter={() => setHoveredRating(star)}
                               onMouseLeave={() => setHoveredRating(0)}
                               onClick={() => setUserReview({ ...userReview, rating: star })}
@@ -460,9 +454,7 @@ const BookDetailPage = () => {
                           </Form.Group>
 
                           <div className="d-flex justify-content-between align-items-center">
-                            <small style={{ color: "var(--text-faint)" }}>
-                              {userReview.rating > 0 ? `${userReview.rating}/5 selected` : "Select a rating"}
-                            </small>
+                            <small className="text-faint">{userReview.rating > 0 ? `${userReview.rating}/5 selected` : "Select a rating"}</small>
                             <div className="d-flex gap-2">
                               <Button
                                 type="button"

@@ -202,8 +202,7 @@ const LibraryPage = () => {
             <div className="bv-empty-state">
               <ArrowClockwise
                 size={40}
-                className="bv-empty-state__icon"
-                style={{ cursor: "pointer" }}
+                className="bv-empty-state__icon cursor-pointer"
                 onClick={() => {
                   setError(false);
                   handleSearch(query, filter, 0, false);
@@ -212,8 +211,7 @@ const LibraryPage = () => {
               <h5 className="bv-empty-state__title">Something went wrong</h5>
               <p className="bv-empty-state__text">Something went wrong loading the results.</p>
               <span
-                className="bv-empty-state__link"
-                style={{ cursor: "pointer" }}
+                className="bv-empty-state__link cursor-pointer"
                 onClick={() => {
                   setError(false);
                   handleSearch(query, filter, 0, false);
@@ -259,7 +257,7 @@ const LibraryPage = () => {
               </ListGroup>
               {hasNext && (
                 <div className="text-center pt-2 pt-sm-3">
-                  <ThreeDots size={50} style={{ cursor: "pointer", color: "var(--text-faint)" }} onClick={() => loadNextPage()} />
+                  <ThreeDots size={50} className="cursor-pointer text-faint" onClick={() => loadNextPage()} />
                 </div>
               )}
             </>

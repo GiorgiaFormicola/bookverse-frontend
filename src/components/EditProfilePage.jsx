@@ -69,11 +69,7 @@ const EditProfilePage = () => {
       <Container fluid className="d-flex flex-column container-lg p-4 gap-3">
         <Row className="justify-content-center">
           <Col xs={12} className="position-relative d-flex align-items-center justify-content-center">
-            <span
-              className="position-absolute start-0 d-flex align-items-center gap-1 view-more-link fw-semibold"
-              style={{ cursor: "pointer" }}
-              onClick={() => navigate(-1)}
-            >
+            <span className="cursor-pointer position-absolute start-0 d-flex align-items-center gap-1 view-more-link fw-semibold" onClick={() => navigate(-1)}>
               <ChevronLeft size={15} />
               <span>Back</span>
             </span>
@@ -87,8 +83,8 @@ const EditProfilePage = () => {
             <div className="position-relative d-inline-block">
               <img src={user.profilePictureURL} alt={user.username} className="avatar" />
               <div
-                className="position-absolute bottom-0 end-0 translate-middle-x translate-middle-y"
-                style={{ cursor: "pointer", border: "2px solid var(--bg-deep)", borderRadius: "50%", lineHeight: 0 }}
+                className="cursor-pointer position-absolute bottom-0 end-0 translate-middle-x translate-middle-y rounded-circle"
+                style={{ border: "2px solid var(--bg-deep)", lineHeight: 0 }}
                 onClick={handleShow}
               >
                 <PlusCircleFill size={32} className="text-accent" />
@@ -124,7 +120,7 @@ const EditProfilePage = () => {
                       ],
                     }}
                   >
-                    <span style={{ display: "inline-flex", flexShrink: 0, cursor: "pointer" }}>
+                    <span className="d-inline-flex flex-shrink-0 cursor-pointer">
                       <InfoCircleFill />
                     </span>
                   </OverlayTrigger>
@@ -176,9 +172,9 @@ const EditProfilePage = () => {
             <Spinner animation="border" style={{ color: "var(--primary-light)" }} />
           ) : uploadError ? (
             <div className="bv-empty-state py-3">
-              <ArrowClockwise size={30} className="bv-empty-state__icon" style={{ cursor: "pointer" }} onClick={() => setUploadError(false)} />
+              <ArrowClockwise size={30} className="bv-empty-state__icon cursor-pointer" onClick={() => setUploadError(false)} />
               <p className="bv-empty-state__text mb-0">Something went wrong uploading the picture.</p>
-              <span className="bv-empty-state__link" style={{ cursor: "pointer" }} onClick={() => setUploadError(false)}>
+              <span className="bv-empty-state__link cursor-pointer" onClick={() => setUploadError(false)}>
                 Try again
               </span>
             </div>
@@ -189,7 +185,7 @@ const EditProfilePage = () => {
         <Modal.Footer className="px-4">
           <Form>
             <Form.Group>
-              <Form.Label htmlFor="file-upload" className="bv-btn-confirm btn mb-0 fw-semibold" style={{ cursor: "pointer" }}>
+              <Form.Label htmlFor="file-upload" className="bv-btn-confirm btn mb-0 fw-semibold cursor-pointer">
                 Upload picture
               </Form.Label>
               <Form.Control

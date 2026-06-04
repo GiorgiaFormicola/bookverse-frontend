@@ -40,18 +40,12 @@ instance.interceptors.response.use(
       return Promise.reject(error);
     }
     if (error.response?.status === 401) {
-      error.handled = true;
       if (window.location.pathname === "/login") {
-        store.dispatch({
-          type: SET_ERROR,
-          payload: errorPayload,
-        });
         return Promise.reject(error);
       } else {
+        error.handled = true;
         localStorage.removeItem("token");
-
         store.dispatch({ type: CLEAR_PROFILE });
-
         window.location.replace("/login");
         return Promise.reject(error);
       }

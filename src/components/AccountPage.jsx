@@ -133,9 +133,7 @@ const AccountPage = () => {
         <Row className="mb-4">
           <Col>
             <h1 className="mb-1">Account settings</h1>
-            <p style={{ color: "var(--text-muted)" }} className="mb-0 fw-semibold">
-              Manage your account information
-            </p>
+            <p className="mb-0 fw-semibold text-muted">Manage your account information</p>
           </Col>
         </Row>
 
@@ -144,9 +142,7 @@ const AccountPage = () => {
           <Col xs={12} md={6}>
             <div className="bv-account-section">
               <h5 className="fw-semibold mb-1">Username</h5>
-              <p style={{ color: "var(--text-muted)" }} className="small mb-4 fw-semibold">
-                Change your public username
-              </p>
+              <p className="small mb-4 fw-semibold text-muted">Change your public username</p>
               <Form noValidate onSubmit={handleUsernameSubmit}>
                 <Form.Group className="mb-3">
                   <Form.Label className="d-flex align-items-center gap-2">
@@ -159,7 +155,7 @@ const AccountPage = () => {
                         </Tooltip>
                       }
                     >
-                      <span style={{ display: "inline-flex", flexShrink: 0, cursor: "pointer" }}>
+                      <span className="cursor-pointer d-inline-flex flex-shrink-0">
                         <InfoCircleFill />
                       </span>
                     </OverlayTrigger>
@@ -198,9 +194,7 @@ const AccountPage = () => {
           <Col xs={12} md={6}>
             <div className="bv-account-section">
               <h5 className="fw-semibold mb-1">Email address</h5>
-              <p style={{ color: "var(--text-muted)" }} className="small mb-4 fw-semibold">
-                Update the email associated with your account
-              </p>
+              <p className="small mb-4 fw-semibold text-muted">Update the email associated with your account</p>
               <Form noValidate onSubmit={handleEmailSubmit}>
                 <Form.Group className="mb-3">
                   <Form.Label>Email</Form.Label>
@@ -239,9 +233,7 @@ const AccountPage = () => {
           <Col xs={12} md={6}>
             <div className="bv-account-section">
               <h5 className="fw-semibold mb-1">Password</h5>
-              <p style={{ color: "var(--text-muted)" }} className="small mb-4 fw-semibold">
-                Change your account password
-              </p>
+              <p className="small mb-4 fw-semibold text-muted">Change your account password</p>
               <Form noValidate onSubmit={handlePasswordSubmit}>
                 <Form.Group className="mb-3">
                   <Form.Label>Current password</Form.Label>
@@ -260,7 +252,7 @@ const AccountPage = () => {
                         setPasswordSuccess(false);
                       }}
                     />
-                    <InputGroup.Text onClick={() => setShowCurrentPassword(!showCurrentPassword)} style={{ cursor: "pointer" }}>
+                    <InputGroup.Text className="cursor-pointer" onClick={() => setShowCurrentPassword(!showCurrentPassword)}>
                       {showCurrentPassword ? <EyeSlash /> : <Eye />}
                     </InputGroup.Text>
                   </InputGroup>
@@ -276,7 +268,7 @@ const AccountPage = () => {
                         </Tooltip>
                       }
                     >
-                      <span style={{ display: "inline-flex", flexShrink: 0, cursor: "pointer" }}>
+                      <span className="cursor-pointer d-inline-flex flex-shrink-0">
                         <InfoCircleFill />
                       </span>
                     </OverlayTrigger>
@@ -296,7 +288,7 @@ const AccountPage = () => {
                         setPasswordSuccess(false);
                       }}
                     />
-                    <InputGroup.Text onClick={() => setShowNewPassword(!showNewPassword)} style={{ cursor: "pointer" }}>
+                    <InputGroup.Text className="cursor-pointer" onClick={() => setShowNewPassword(!showNewPassword)}>
                       {showNewPassword ? <EyeSlash /> : <Eye />}
                     </InputGroup.Text>
                   </InputGroup>
@@ -318,7 +310,7 @@ const AccountPage = () => {
                         setPasswordSuccess(false);
                       }}
                     />
-                    <InputGroup.Text onClick={() => setShowConfirmPassword(!showConfirmPassword)} style={{ cursor: "pointer" }}>
+                    <InputGroup.Text className="cursor-pointer" onClick={() => setShowConfirmPassword(!showConfirmPassword)}>
                       {showConfirmPassword ? <EyeSlash /> : <Eye />}
                     </InputGroup.Text>
                   </InputGroup>
@@ -342,12 +334,8 @@ const AccountPage = () => {
           {/* Delete account */}
           <Col xs={12} md={6}>
             <div className="bv-account-section h-100 d-flex flex-column" style={{ borderColor: "rgba(251, 113, 133, 0.3)" }}>
-              <h5 className="fw-semibold mb-1" style={{ color: "#fb7185" }}>
-                Delete account
-              </h5>
-              <p style={{ color: "var(--text-muted)" }} className="small mb-4 fw-semibold">
-                Permanently delete your account, library and reviews. This action is irreversible.
-              </p>
+              <h5 className="fw-semibold mb-1 text-danger">Delete account</h5>
+              <p className="small mb-4 fw-semibold text-muted">Permanently delete your account, library and reviews. This action is irreversible.</p>
               <div className="mt-auto">
                 <Button className="w-100 bv-btn-delete" onClick={() => setShowDeleteConfirm(true)}>
                   <Trash3Fill className="me-2" />
@@ -361,12 +349,12 @@ const AccountPage = () => {
 
       <Modal show={showDeleteConfirm} onHide={() => setShowDeleteConfirm(false)} centered>
         <Modal.Header closeButton className="px-4">
-          <Modal.Title style={{ color: "#fb7185" }}>Delete account</Modal.Title>
+          <Modal.Title className="text-danger">Delete account</Modal.Title>
         </Modal.Header>
         <Modal.Body className="px-4 text-center py-4">
-          <Trash3Fill size={48} className="mb-3" style={{ color: "#fb7185" }} />
+          <Trash3Fill size={48} className="my-3 text-danger" />
           <h5>Are you sure?</h5>
-          <p style={{ color: "var(--text-muted)" }} className="mb-0">
+          <p className="mb-0 text-muted">
             This action is <strong>irreversible</strong>. <br /> Your account, library and reviews will be permanently deleted.
           </p>
           <div className={"alert bg-transparent border-0 p-0 mt-3" + (deleteError ? " alert-danger" : " invisible")}>{deleteError || "placeholder"}</div>

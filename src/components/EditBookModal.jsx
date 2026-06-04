@@ -128,16 +128,11 @@ const EditBookModal = ({ show, onHide, book, handleSaveBook }) => {
             <Form.Group>
               <Form.Label>Cover</Form.Label>
               <div className="mb-2">
-                <img
-                  src={coverPreview ?? form.coverURL}
-                  alt="cover preview"
-                  className="rounded border book-cover"
-                  style={{ border: "1px solid var(--border)" }}
-                />
+                <img src={coverPreview ?? form.coverURL} alt="cover preview" className="rounded border book-cover" />
               </div>
               <InputGroup>
                 <Form.Control type="file" accept="image/*" ref={fileInputRef} onChange={handleCoverChange} className="d-none" id="cover-upload" />
-                <Form.Label htmlFor="cover-upload" className="btn bv-btn-edit mb-0 flex-grow-1 rounded-start-pill" style={{ cursor: "pointer" }}>
+                <Form.Label htmlFor="cover-upload" className="btn bv-btn-edit mb-0 flex-grow-1 rounded-start-pill cursor-pointer">
                   {coverFile ? coverFile.name : "Choose file"}
                 </Form.Label>
                 {coverFile && (

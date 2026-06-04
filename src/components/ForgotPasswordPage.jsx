@@ -44,10 +44,8 @@ const ForgotPasswordPage = () => {
           <Card className="bv-auth-card border-0 px-4 px-lg-5 py-5">
             {sent ? (
               <div className="text-center d-flex flex-column align-items-center gap-3 py-3">
-                <EnvelopeFill size={48} style={{ color: "var(--accent)" }} />
-                <p className="mb-0" style={{ color: "var(--text-muted)" }}>
-                  Check your inbox! We sent you a link to reset your password.
-                </p>
+                <EnvelopeFill size={48} className="text-accent" />
+                <p className="mb-0 text-muted">Check your inbox! We sent you a link to reset your password.</p>
                 <Link to="/login" className="view-more-link fw-semibold">
                   Back to login
                 </Link>
@@ -63,10 +61,8 @@ const ForgotPasswordPage = () => {
                       Book<span className="bv-brand__accent">Verse</span>
                     </span>
                   </div>
-                  <h3 style={{ fontFamily: "Space Grotesk", fontWeight: 700 }}>Forgot password</h3>
-                  <p className="small mb-0" style={{ color: "var(--text-muted)" }}>
-                    Enter your email and we'll send you a reset link
-                  </p>
+                  <h3>Forgot password</h3>
+                  <p className="small mb-0 text-muted">Enter your email and we'll send you a reset link</p>
                 </div>
 
                 <Form noValidate onSubmit={handleSubmit}>

@@ -23,13 +23,9 @@ const ErrorPage = () => {
               </span>
             </div>
 
-            {isNetwork ? (
-              <WifiOff size={48} className="mx-auto mb-3" style={{ color: "var(--st-toread)" }} />
-            ) : (
-              <ExclamationTriangle size={48} className="mx-auto mb-3" style={{ color: "var(--st-review)" }} />
-            )}
-            <h3 style={{ fontFamily: "Space Grotesk", fontWeight: 700 }}>{isNetwork ? "Connection error" : "Server error"}</h3>
-            <p className="mb-4" style={{ color: "var(--text-muted)" }}>
+            {isNetwork ? <WifiOff size={48} className="mx-auto mb-3 text-toread" /> : <ExclamationTriangle size={48} className="mx-auto mb-3 text-review" />}
+            <h3>{isNetwork ? "Connection error" : "Server error"}</h3>
+            <p className="mb-4 text-muted">
               {isNetwork ? "Check your internet connection and try again." : "Something went wrong on our end. Please try again later."}
             </p>
             <button

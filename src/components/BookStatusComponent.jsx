@@ -12,7 +12,6 @@ const BookStatusComponent = ({ bookId }) => {
   };
 
   return (
-    /*  <div className="d-flex align-items-center px-3 px-sm-4 py-1 px-lg-3 py-lg-2 rounded-3 gap-2 bg-transparent w-100 flex-grow-1 "> */
     <div className="d-flex align-items-center py-3 justify-content-center px-4 rounded-3 gap-3 w-100 bv-book-control">
       {savedBookStatus === "TO_READ" && <Book size={30} className="text-toread" />}
       {savedBookStatus === "READING" && <BookOpen size={25} className="text-reading" />}

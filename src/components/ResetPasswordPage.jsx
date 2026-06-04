@@ -76,10 +76,8 @@ const ResetPasswordPage = () => {
                       Book<span className="bv-brand__accent">Verse</span>
                     </span>
                   </div>
-                  <h3 style={{ fontFamily: "Space Grotesk", fontWeight: 700 }}>Reset password</h3>
-                  <p className="small mb-0" style={{ color: "var(--text-muted)" }}>
-                    Enter your new password
-                  </p>
+                  <h3>Reset password</h3>
+                  <p className="small mb-0 text-muted">Enter your new password</p>
                 </div>
 
                 {/* Form */}
@@ -101,7 +99,7 @@ const ResetPasswordPage = () => {
                           ],
                         }}
                       >
-                        <span style={{ display: "inline-flex", flexShrink: 0, cursor: "pointer" }}>
+                        <span className="d-inline-flex flex-shrink-0 cursor-pointer">
                           <InfoCircleFill />
                         </span>
                       </OverlayTrigger>
@@ -117,7 +115,7 @@ const ResetPasswordPage = () => {
                         }}
                         size="lg"
                       />
-                      <InputGroup.Text onClick={() => setShowPassword(!showPassword)} style={{ cursor: "pointer" }}>
+                      <InputGroup.Text className="cursor-pointer" onClick={() => setShowPassword(!showPassword)}>
                         {showPassword ? <EyeSlash /> : <Eye />}
                       </InputGroup.Text>
                     </InputGroup>
@@ -138,7 +136,7 @@ const ResetPasswordPage = () => {
                         required
                         size="lg"
                       />
-                      <InputGroup.Text onClick={() => setShowPassword(!showPassword)} style={{ cursor: "pointer" }}>
+                      <InputGroup.Text className="cursor-pointer" onClick={() => setShowPassword(!showPassword)}>
                         {showPassword ? <EyeSlash /> : <Eye />}
                       </InputGroup.Text>
                     </InputGroup>

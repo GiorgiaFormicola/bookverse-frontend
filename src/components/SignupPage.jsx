@@ -124,9 +124,7 @@ const SignupPage = () => {
                         Book <span className="bv-brand__accent">Verse</span>
                       </span>
                     </div>
-                    <h2 className="mb-3" style={{ fontFamily: "Space Grotesk", fontWeight: 700 }}>
-                      Join Our Community
-                    </h2>
+                    <h2 className="mb-3">Join Our Community</h2>
                     <p style={{ color: "rgba(236,235,245,0.7)" }}>
                       Start your reading journey today. Track your progress, share reviews, and discover your next favorite book.
                     </p>
@@ -134,9 +132,9 @@ const SignupPage = () => {
                   <Row className="row-cols-1 gap-4 mt-4 flex-grow-1 py-5">
                     <Col>
                       <div className="d-flex align-items-center gap-3">
-                        <Search size={24} style={{ color: "var(--accent)" }} />
+                        <Search size={24} className="text-accent" />
                         <div>
-                          <strong style={{ fontFamily: "Space Grotesk" }}>Search & Discover</strong>
+                          <strong>Search & Discover</strong>
                           <p className="mb-0 small" style={{ color: "rgba(236,235,245,0.6)" }}>
                             Find your next favourite read
                           </p>
@@ -145,9 +143,9 @@ const SignupPage = () => {
                     </Col>
                     <Col>
                       <div className="d-flex align-items-center gap-3">
-                        <Star size={24} style={{ color: "var(--accent)" }} />
+                        <Star size={24} className="text-accent" />
                         <div>
-                          <strong style={{ fontFamily: "Space Grotesk" }}>Rate & Review</strong>
+                          <strong>Rate & Review</strong>
                           <p className="mb-0 small" style={{ color: "rgba(236,235,245,0.6)" }}>
                             Share your thoughts on books
                           </p>
@@ -156,9 +154,9 @@ const SignupPage = () => {
                     </Col>
                     <Col>
                       <div className="d-flex align-items-center gap-3">
-                        <People size={24} style={{ color: "var(--accent)" }} />
+                        <People size={24} className="text-accent" />
                         <div>
-                          <strong style={{ fontFamily: "Space Grotesk" }}>Connect</strong>
+                          <strong>Connect</strong>
                           <p className="mb-0 small" style={{ color: "rgba(236,235,245,0.6)" }}>
                             See what others are reading
                           </p>
@@ -167,9 +165,9 @@ const SignupPage = () => {
                     </Col>
                     <Col>
                       <div className="d-flex align-items-center gap-3">
-                        <BarChartLine size={24} style={{ color: "var(--accent)" }} />
+                        <BarChartLine size={24} className="text-accent" />
                         <div>
-                          <strong style={{ fontFamily: "Space Grotesk" }}>Track Progress</strong>
+                          <strong>Track Progress</strong>
                           <p className="mb-0 small" style={{ color: "rgba(236,235,245,0.6)" }}>
                             Monitor your reading goals
                           </p>
@@ -191,12 +189,10 @@ const SignupPage = () => {
                       Book<span className="bv-brand__accent">Verse</span>
                     </span>
                   </div>
-                  <h2 style={{ fontFamily: "Space Grotesk", fontWeight: 700 }}>Sign up</h2>
+                  <h2>Sign up</h2>
                 </div>
 
-                <h3 className="mb-4 d-none d-md-block" style={{ fontFamily: "Space Grotesk", fontWeight: 700 }}>
-                  Create Account
-                </h3>
+                <h3 className="mb-4 d-none d-md-block">Create Account</h3>
 
                 {/* Form */}
                 <Form
@@ -223,7 +219,7 @@ const SignupPage = () => {
                           ],
                         }}
                       >
-                        <span style={{ display: "inline-flex", flexShrink: 0, cursor: "pointer" }}>
+                        <span className="d-inline-flex flex-shrink-0 cursor-pointer">
                           <InfoCircleFill />
                         </span>
                       </OverlayTrigger>
@@ -283,7 +279,7 @@ const SignupPage = () => {
                           ],
                         }}
                       >
-                        <span style={{ display: "inline-flex", flexShrink: 0, cursor: "pointer" }}>
+                        <span className="d-inline-flex flex-shrink-0 cursor-pointer">
                           <InfoCircleFill />
                         </span>
                       </OverlayTrigger>
@@ -298,7 +294,7 @@ const SignupPage = () => {
                         required
                         size="lg"
                       />
-                      <InputGroup.Text onClick={() => setShowPassword(!showPassword)} style={{ cursor: "pointer" }}>
+                      <InputGroup.Text className="cursor-pointer" onClick={() => setShowPassword(!showPassword)}>
                         {showPassword ? <EyeSlash /> : <Eye />}
                       </InputGroup.Text>
                     </InputGroup>
@@ -316,7 +312,7 @@ const SignupPage = () => {
                         required
                         size="lg"
                       />
-                      <InputGroup.Text onClick={() => setShowPassword(!showPassword)} style={{ cursor: "pointer" }}>
+                      <InputGroup.Text className="cursor-pointer" onClick={() => setShowPassword(!showPassword)}>
                         {showPassword ? <EyeSlash /> : <Eye />}
                       </InputGroup.Text>
                     </InputGroup>
@@ -331,9 +327,7 @@ const SignupPage = () => {
                   </Button>
 
                   <div className="text-center">
-                    <p className="mb-0" style={{ color: "var(--text-muted)" }}>
-                      Already have an account?
-                    </p>
+                    <p className="mb-0 text-muted">Already have an account?</p>
                     <Link to="/login" className="view-more-link fw-semibold">
                       Log In
                     </Link>

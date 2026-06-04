@@ -63,18 +63,16 @@ const EditProfileModal = ({ show, handleClose }) => {
                 </div>
               ) : uploadError ? (
                 <div className="d-flex flex-column align-items-center gap-2 py-3" style={{ width: 200 }}>
-                  <p className="mb-0 small" style={{ color: "var(--danger)" }}>
-                    Something went wrong uploading the picture.
-                  </p>
-                  <ArrowClockwise size={24} style={{ cursor: "pointer", color: "var(--text-muted)" }} onClick={() => setUploadError(false)} />
+                  <p className="mb-0 small text-danger">Something went wrong uploading the picture.</p>
+                  <ArrowClockwise size={24} className="cursor-pointer text-muted" onClick={() => setUploadError(false)} />
                 </div>
               ) : (
                 <>
                   <img src={user.profilePictureURL} alt={user.username} className="avatar" style={{ width: 200 }} />
                   <Form.Label
                     htmlFor="modal-file-upload"
-                    className="position-absolute bottom-0 end-0 bg-dark rounded-circle d-flex align-items-center justify-content-center mb-0"
-                    style={{ cursor: "pointer", width: 30, height: 30 }}
+                    className="position-absolute bottom-0 end-0 bg-dark rounded-circle d-flex align-items-center justify-content-center mb-0 cursor-pointer"
+                    style={{ width: 30, height: 30 }}
                   >
                     <PlusCircleFill size={30} className="text-accent" />
                     <Form.Control
@@ -122,7 +120,7 @@ const EditProfileModal = ({ show, handleClose }) => {
                     </Tooltip>
                   }
                 >
-                  <span style={{ display: "inline-flex", flexShrink: 0, cursor: "pointer" }}>
+                  <span className="d-inline-flex flex-shrink-0 cursor-pointer">
                     <InfoCircleFill />
                   </span>
                 </OverlayTrigger>

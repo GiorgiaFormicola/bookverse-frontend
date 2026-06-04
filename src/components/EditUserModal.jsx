@@ -63,10 +63,8 @@ const EditUserModal = ({ show, onHide, user, handleSaveUser }) => {
 
       <Modal.Body>
         <div className="mb-4">
-          <strong style={{ color: "var(--text-primary)" }}>{user.username}</strong>
-          <div style={{ color: "var(--text-muted)" }} className="small">
-            {user.email}
-          </div>
+          <strong>{user.username}</strong>
+          <div className="small text-muted">{user.email}</div>
         </div>
 
         {/* Role */}
