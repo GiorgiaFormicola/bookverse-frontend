@@ -124,7 +124,7 @@ const EditBookModal = ({ show, onHide, book, handleSaveBook }) => {
       <Modal.Body>
         <Row className="g-3">
           {/* Cover */}
-          <Col md={6} className="mb-4">
+          <Col md={4} className="mb-2">
             <Form.Group>
               <Form.Label>Cover</Form.Label>
               <div className="mb-2">
@@ -150,13 +150,13 @@ const EditBookModal = ({ show, onHide, book, handleSaveBook }) => {
           </Col>
 
           {/* Description */}
-          <Col md={6} className="mb-4">
+          <Col md={8} className="mb-2">
             <Form.Group>
               <Form.Label>Description</Form.Label>
               <Form.Control
                 className="py-2"
                 as="textarea"
-                rows={22}
+                rows={15}
                 value={form.description ?? ""}
                 onChange={(e) => updateField("description", e.target.value)}
               />

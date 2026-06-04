@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { Card, Table, Badge, Button, Pagination } from "react-bootstrap";
 import UsersFilters from "./UsersFilters";
 import EditUserModal from "./EditUserModal";
@@ -13,6 +13,9 @@ const UsersSection = () => {
   const [showModal, setShowModal] = useState(false);
   const [userToDelete, setUserToDelete] = useState(null);
   const [totalPages, setTotalPages] = useState(1);
+  const [isFirst, setIsFirst] = useState(true);
+  const [isLast, setIsLast] = useState(false);
+  const tableRef = useRef(null);
 
   const [filters, setFilters] = useState({
     username: "",
@@ -31,6 +34,19 @@ const UsersSection = () => {
     sortBy: "username",
     order: "asc",
   });
+
+  const getVisiblePages = () => {
+    const maxVisible = 6;
+    let start = Math.max(0, queryFilters.page - Math.floor(maxVisible / 2));
+    let end = start + maxVisible - 1;
+
+    if (end >= totalPages) {
+      end = totalPages - 1;
+      start = Math.max(0, end - maxVisible + 1);
+    }
+
+    return Array.from({ length: end - start + 1 }, (_, i) => start + i);
+  };
 
   const getUsers = (params) => {
     const searchParams = new URLSearchParams({
@@ -51,6 +67,8 @@ const UsersSection = () => {
       .then((response) => {
         setUsers(response.data.content);
         setTotalPages(response.data.totalPages);
+        setIsFirst(response.data.first);
+        setIsLast(response.data.last);
       })
       .catch((err) => {
         if (err.handled) return;
@@ -82,6 +100,8 @@ const UsersSection = () => {
       ...prev,
       page,
     }));
+    const top = tableRef.current?.getBoundingClientRect().top + window.scrollY - 70;
+    window.scrollTo({ top, behavior: "smooth" });
   };
 
   const handleSaveUser = () => {
@@ -119,15 +139,16 @@ const UsersSection = () => {
       <UsersFilters filters={filters} handleFilterChange={handleFilterChange} handleSearch={handleSearch} />
 
       {/* Table */}
-      <Card className="border-0 rounded-4 mt-3 overflow-hidden" style={{ background: "var(--surface-raised)" }}>
+      <Card ref={tableRef} className="border-0 rounded-4 mt-3 overflow-hidden" style={{ background: "var(--surface-raised)" }}>
         <Card.Body className="px-4 py-2">
           <Table responsive hover align="middle" className="bv-admin-table mb-0">
             <thead>
               <tr>
                 <th>Username</th>
                 <th className="d-none d-md-table-cell">Email</th>
-                <th>Role</th>
-                <th>Status</th>
+                <th className="d-sm-none">Info</th>
+                <th className="d-none d-sm-table-cell">Role</th>
+                <th className="d-none d-sm-table-cell">Status</th>
                 <th>Actions</th>
               </tr>
             </thead>
@@ -136,10 +157,16 @@ const UsersSection = () => {
                 <tr key={user.id}>
                   <td>{user.username}</td>
                   <td className="d-none d-md-table-cell">{user.email}</td>
-                  <td>
+                  <td className="d-sm-none">
+                    <div className="d-flex flex-column gap-3">
+                      <Badge bg={user.role === "ADMIN" ? "danger" : "secondary"}>{user.role}</Badge>
+                      <Badge bg={user.active === true ? "read" : "toread"}>{user.active ? "Active" : "Suspended"}</Badge>
+                    </div>
+                  </td>
+                  <td className="d-none d-sm-table-cell">
                     <Badge bg={user.role === "ADMIN" ? "danger" : "secondary"}>{user.role}</Badge>
                   </td>
-                  <td>
+                  <td className="d-none d-sm-table-cell">
                     <Badge bg={user.active === true ? "read" : "toread"}>{user.active ? "Active" : "Suspended"}</Badge>
                   </td>
                   <td className="align-middle text-center">
@@ -171,13 +198,13 @@ const UsersSection = () => {
           </Table>
           <div className="d-flex justify-content-center mt-3">
             <Pagination className="bv-pagination mb-0">
-              <Pagination.Prev disabled={queryFilters.page === 0} onClick={() => handlePageChange(queryFilters.page - 1)} />
-              {[...Array(totalPages)].map((_, i) => (
+              <Pagination.Prev disabled={isFirst} onClick={() => handlePageChange(queryFilters.page - 1)} />
+              {getVisiblePages().map((i) => (
                 <Pagination.Item key={i} active={queryFilters.page === i} onClick={() => handlePageChange(i)}>
                   {i + 1}
                 </Pagination.Item>
               ))}
-              <Pagination.Next disabled={queryFilters.page + 1 >= totalPages} onClick={() => handlePageChange(queryFilters.page + 1)} />
+              <Pagination.Next disabled={isLast} onClick={() => handlePageChange(queryFilters.page + 1)} />
             </Pagination>
           </div>
         </Card.Body>

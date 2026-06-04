@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { Card, Badge, Table, Button, Pagination } from "react-bootstrap";
 import BooksFilters from "./BooksFilters";
 import EditBookModal from "./EditBookModal";
@@ -11,7 +11,10 @@ const BooksSection = () => {
   const [showModal, setShowModal] = useState(false);
   const [bookToDelete, setBookToDelete] = useState(null);
   const [totalPages, setTotalPages] = useState(1);
+  const [isFirst, setIsFirst] = useState(true);
+  const [isLast, setIsLast] = useState(false);
   const defaultCover = "https://neelkanthpublishers.com/assets/bookcover_cover.png";
+  const tableRef = useRef(null);
 
   const [filters, setFilters] = useState({
     title: "",
@@ -47,6 +50,19 @@ const BooksSection = () => {
     order: "asc",
   });
 
+  const getVisiblePages = () => {
+    const maxVisible = 6;
+    let start = Math.max(0, queryFilters.page - Math.floor(maxVisible / 2));
+    let end = start + maxVisible - 1;
+
+    if (end >= totalPages) {
+      end = totalPages - 1;
+      start = Math.max(0, end - maxVisible + 1);
+    }
+
+    return Array.from({ length: end - start + 1 }, (_, i) => start + i);
+  };
+
   const getBooks = (params) => {
     const searchParams = new URLSearchParams({
       ...(params.title && { title: params.title }),
@@ -72,6 +88,8 @@ const BooksSection = () => {
       .then((response) => {
         setBooks(response.data.content);
         setTotalPages(response.data.totalPages);
+        setIsFirst(response.data.first);
+        setIsLast(response.data.last);
       })
       .catch((err) => {
         if (err.handled) return;
@@ -103,6 +121,8 @@ const BooksSection = () => {
       ...prev,
       page,
     }));
+    const top = tableRef.current?.getBoundingClientRect().top + window.scrollY - 70;
+    window.scrollTo({ top, behavior: "smooth" });
   };
 
   const handleSaveBook = () => {
@@ -137,9 +157,11 @@ const BooksSection = () => {
   return (
     <>
       {/* Filters */}
+
       <BooksFilters filters={filters} handleFilterChange={handleFilterChange} handleSearch={handleSearch} />
+
       {/* Table */}
-      <Card className="border-0 rounded-4 mt-3 overflow-hidden" style={{ background: "var(--surface-raised)" }}>
+      <Card ref={tableRef} className="border-0 rounded-4 mt-3 overflow-hidden" style={{ background: "var(--surface-raised)" }}>
         <Card.Body className="px-4 py-2">
           <Table responsive hover align="middle" className="bv-admin-table mb-0">
             <thead>
@@ -150,7 +172,7 @@ const BooksSection = () => {
                 <th className="d-none d-md-table-cell">Publisher</th>
                 <th className="d-none d-lg-table-cell">Identifiers</th>
                 <th className="d-none d-xl-table-cell">Categories</th>
-                <th className="d-none d-xxl-table-cell">Published Date</th>
+                <th className="d-none d-xxl-table-cell">Published</th>
 
                 <th className="d-none">Description</th>
                 <th className="d-none d-xxl-table-cell">Pages</th>
@@ -224,13 +246,13 @@ const BooksSection = () => {
           <div className="d-flex justify-content-center mt-3">
             {/* Pagination */}
             <Pagination className="bv-pagination mb-0">
-              <Pagination.Prev disabled={queryFilters.page === 0} onClick={() => handlePageChange(queryFilters.page - 1)} />
-              {[...Array(totalPages)].map((_, i) => (
+              <Pagination.Prev disabled={isFirst} onClick={() => handlePageChange(queryFilters.page - 1)} />
+              {getVisiblePages().map((i) => (
                 <Pagination.Item key={i} active={queryFilters.page === i} onClick={() => handlePageChange(i)}>
                   {i + 1}
                 </Pagination.Item>
               ))}
-              <Pagination.Next disabled={queryFilters.page + 1 >= totalPages} onClick={() => handlePageChange(queryFilters.page + 1)} />
+              <Pagination.Next disabled={isLast} onClick={() => handlePageChange(queryFilters.page + 1)} />
             </Pagination>
           </div>
         </Card.Body>

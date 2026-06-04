@@ -11,7 +11,7 @@ const Review = ({ review, isUserReview, handleReviewClick }) => {
   };
 
   return (
-    <ListGroup.Item className={`bv-review ${isUserReview ? "bv-review--own" : ""}`}>
+    <ListGroup.Item className="bv-review">
       <div className="d-flex align-items-center gap-2 mb-2">
         <img src={user.profilePictureURL} alt={user.username} className="review-avatar" />
         <div className="flex-grow-1">

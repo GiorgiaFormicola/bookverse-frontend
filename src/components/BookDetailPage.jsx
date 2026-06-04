@@ -2,7 +2,7 @@ import { useLocation, useNavigate, useParams } from "react-router-dom";
 import { useSelector } from "react-redux";
 import { useState, useEffect, useRef } from "react";
 import { instance } from "../config/api";
-import { Container, Row, Col, Badge, ListGroup, Form, Button } from "react-bootstrap";
+import { Container, Row, Col, Badge, ListGroup, Form, Button, Spinner } from "react-bootstrap";
 import BookSaveComponent from "./BookSaveComponent";
 import BookStatusComponent from "./BookStatusComponent";
 import BookReviewComponent from "./BookReviewComponent";
@@ -178,10 +178,10 @@ const BookDetailPage = () => {
 
   if (bookLoading || reviewsLoading) {
     return (
-      <div className="d-flex align-items-center justify-content-center gap-2" style={{ minHeight: "60vh" }}>
-        <span className="bv-loader-dot" style={{ animationDelay: "0ms" }} />
-        <span className="bv-loader-dot" style={{ animationDelay: "150ms" }} />
-        <span className="bv-loader-dot" style={{ animationDelay: "300ms" }} />
+      <div className="position-fixed top-0 start-0 w-100 h-100 d-flex align-items-center justify-content-center gap-3">
+        <Spinner animation="grow" size="sm" style={{ color: "var(--primary-light)" }} />
+        <Spinner animation="grow" size="sm" style={{ color: "var(--accent)" }} />
+        <Spinner animation="grow" size="sm" style={{ color: "var(--st-review)" }} />
       </div>
     );
   }
@@ -220,8 +220,8 @@ const BookDetailPage = () => {
 
   return (
     <>
-      <Container fluid className="d-flex flex-column container-lg py-4 px-3 px-lg-4 gap-4 gap-lg-3 position-relative">
-        <div className="position-absolute top-0 mt-2 pt-1 mt-lg-3">
+      <Container fluid className="d-flex flex-column container-lg py-4 px-3 px-lg-4 gap-4 gap-lg-3 py-5 position-relative">
+        <div className="position-absolute top-0 pt-1 mt-4">
           <span
             className="d-flex align-items-center gap-1 view-more-link fw-semibold"
             style={{ cursor: "pointer", width: "fit-content" }}
@@ -239,7 +239,7 @@ const BookDetailPage = () => {
               <div className="bv-book-sidebar px-3 py-4 px-sm-4 px-lg-3 px-xl-2 h-100">
                 <Row className="g-3 g-sm-4 g-lg-3 justify-content-center">
                   <Col xs={6} sm={5} md={4} lg={12} xl={11}>
-                    <img src={mappedBook.coverURL} className="book-cover rounded-3"></img>
+                    <img src={mappedBook.coverURL} className="book-cover rounded-2"></img>
                   </Col>
                   <Col xs={6} sm={6} md={8} lg={12} xl={11} className="flex-grow-1 px-lg-2 ms-xl-2 me-xl-2">
                     <div className="d-flex flex-column justify-content-between h-100 gap-3">
@@ -302,41 +302,45 @@ const BookDetailPage = () => {
                     ))}
                   </div>
                 </Col>
-                <Col xs={12} className="order-lg-2 pb-xxl-4">
-                  {mappedBook.description && (
-                    <div className="mb-2">
-                      <p className="text-muted mb-0">{mappedBook.description}</p>
-                    </div>
-                  )}
-                </Col>
+                {
+                  <Col xs={12} className="order-lg-2 flex-grow-1">
+                    {mappedBook.description && (
+                      <div className="mb-2">
+                        <p className="text-muted mb-0">{mappedBook.description}</p>
+                      </div>
+                    )}
+                  </Col>
+                }
 
                 <Col xs={12} className="order-lg-1 ">
-                  <div className="text-muted small d-flex flex-wrap gap-3 justify-content-between">
-                    {mappedBook.publisher && (
+                  <Row className="text-muted justify-content-between g-2 g-lg-5">
+                    <Col xs={6} lg={3}>
                       <p className="mb-1 mb-lg-0">
                         Publisher: <br className="d-lg-none" />
-                        <span className="text-light">{mappedBook.publisher}</span>
+                        <span className="text-faint">{mappedBook.publisher ? mappedBook.publisher : "Unknown"}</span>
                       </p>
-                    )}
-                    {mappedBook.publishedDate && (
+                    </Col>
+                    <Col xs={6} lg={3}>
                       <p className="mb-1 mb-lg-0">
                         Published: <br className="d-lg-none" />
-                        <span className="text-light">{mappedBook.publishedDate}</span>
+                        <span className="text-faint">{mappedBook.publishedDate ? mappedBook.publishedDate : "Unknown"}</span>
                       </p>
-                    )}
-                    {mappedBook.pages && (
+                    </Col>
+                    <Col xs={6} lg={3}>
                       <p className="mb-1 mb-lg-0">
                         Pages: <br className="d-lg-none" />
-                        <span className="text-light">{mappedBook.pages}</span>
+                        <span className="text-faint">{mappedBook.pages !== 0 ? mappedBook.pages : "Not available"}</span>
                       </p>
-                    )}
-                    {(mappedBook.isbn10 || mappedBook.isbn13) && (
+                    </Col>
+                    <Col xs={6} lg={3}>
                       <p className="mb-1 mb-lg-0">
                         ISBN: <br className="d-lg-none" />
-                        <span className="text-light">{mappedBook.isbn10 ? mappedBook.isbn10 : mappedBook.isbn13}</span>
+                        <span className="text-faint">
+                          {mappedBook.isbn10 || mappedBook.isbn13 ? (mappedBook.isbn10 ? mappedBook.isbn10 : mappedBook.isbn13) : "Not available"}
+                        </span>
                       </p>
-                    )}
-                  </div>
+                    </Col>
+                  </Row>
                 </Col>
 
                 {/* Book reviews */}

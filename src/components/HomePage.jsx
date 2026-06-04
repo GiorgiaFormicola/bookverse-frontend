@@ -27,12 +27,12 @@ const HomePage = () => {
               <h1 className="mb-4">Your Dashboard</h1>
             </Col>
           </Row>
-          <Row className="g-3 g-sm-4 g-lg-3 g-xl-4 mb-5">
+          <Row className="g-3 g-sm-4 g-lg-3 g-xl-4">
             <Dashboard />
           </Row>
         </div>
         {!hasBooks ? (
-          <div className="bv-empty-state">
+          <div className="bv-empty-state mt-lg-5">
             <Book size={40} className="bv-empty-state__icon" />
             <h5 className="bv-empty-state__title">Start your adventure</h5>
             <p className="bv-empty-state__text">Search and discover books to add to your library</p>
@@ -42,14 +42,16 @@ const HomePage = () => {
           </div>
         ) : (
           <>
-            {hasToRead && <HomePageSection filter="TO_READ" title="Start reading" loading={isLoading} setLoading={setLoadingSection1}></HomePageSection>}
-            {hasReading && <HomePageSection filter="READING" title="Continue reading" loading={isLoading} setLoading={setLoadingSection2}></HomePageSection>}
-            {hasRead && (
-              <HomePageSection filter="READ" reviewed={false} title="Leave a review" loading={isLoading} setLoading={setLoadingSection3}></HomePageSection>
-            )}
+            {/* Sections */}
+            <div className="mt-5">
+              {hasToRead && <HomePageSection filter="TO_READ" title="Start reading" loading={isLoading} setLoading={setLoadingSection1}></HomePageSection>}
+              {hasReading && <HomePageSection filter="READING" title="Continue reading" loading={isLoading} setLoading={setLoadingSection2}></HomePageSection>}
+              {hasRead && (
+                <HomePageSection filter="READ" reviewed={false} title="Leave a review" loading={isLoading} setLoading={setLoadingSection3}></HomePageSection>
+              )}
+            </div>
           </>
         )}
-        {/* Sections */}
       </Container>
     </>
   );

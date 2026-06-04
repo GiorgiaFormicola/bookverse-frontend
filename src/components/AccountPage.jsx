@@ -155,7 +155,7 @@ const AccountPage = () => {
                       placement="right"
                       overlay={
                         <Tooltip className="custom-tooltip">
-                          <strong>Username</strong> must be 2–30 characters, lowercase letters, numbers, underscores and dots only.
+                          <strong>Username</strong> must be 2–30 characters long and can contain only lowercase letters, numbers, underscores and dots.
                         </Tooltip>
                       }
                     >

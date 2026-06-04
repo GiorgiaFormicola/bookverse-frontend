@@ -71,7 +71,7 @@ const SearchPage = () => {
                 onChange={(e) => setQuery(e.target.value)}
               />
               <Button type="submit" className="rounded-end-pill bg-dark border-secondary border-opacity-25">
-                <Search size={20} className="text-accent" />
+                <Search size={20} className="text-accent my-1" />
               </Button>
             </InputGroup>
           </Form>
@@ -80,7 +80,7 @@ const SearchPage = () => {
 
       {/* Filters */}
       <Row className="justify-content-center">
-        <Col xs={12} sm={9} lg={6} className="d-flex justify-content-center">
+        <Col xs={12} sm={9} lg={8} className="d-flex justify-content-center">
           <ToggleButtonGroup
             type="radio"
             name="filters"
@@ -114,9 +114,9 @@ const SearchPage = () => {
         <Col xs={12}>
           {loading ? (
             <div className="d-flex gap-3 justify-content-center align-items-center py-5">
-              <Spinner animation="grow" style={{ color: "var(--text-muted)" }} />
-              <Spinner animation="grow" style={{ color: "var(--text-muted)" }} />
-              <Spinner animation="grow" style={{ color: "var(--text-muted)" }} />
+              <Spinner animation="grow" size="sm" style={{ color: "var(--primary-light)" }} />
+              <Spinner animation="grow" size="sm" style={{ color: "var(--accent)" }} />
+              <Spinner animation="grow" size="sm" style={{ color: "var(--st-review)" }} />
             </div>
           ) : error ? (
             <div className="bv-empty-state">

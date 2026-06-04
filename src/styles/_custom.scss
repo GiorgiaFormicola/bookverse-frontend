@@ -934,15 +934,6 @@ html {
   padding: 1rem 0.5rem;
   position: relative;
 
-  &--own {
-    border-top: 2px solid var(--st-accent) !important;
-    border-left: 1px solid var(--border) !important;
-    border-right: 1px solid var(--border) !important;
-    border-bottom: 1px solid var(--border) !important;
-    border-radius: 0 0 var(--bs-border-radius-lg) var(--bs-border-radius-lg) !important;
-    background: var(--surface-raised) !important;
-  }
-
   &__name {
     font-size: 0.9rem;
     color: var(--text-primary);
@@ -1022,6 +1013,10 @@ html {
     font-weight: 600;
     color: var(--text-primary);
     line-height: 1.3;
+    display: -webkit-box;
+    -webkit-line-clamp: 4;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
 
     @media (min-width: 992px) {
       font-size: 1.2rem;
@@ -1045,6 +1040,13 @@ html {
     @media (min-width: 992px) {
       font-size: 0.9rem;
     }
+  }
+}
+
+@media (hover: none) {
+  .bv-library-item.list-group-item-action:hover {
+    background-color: transparent !important;
+    color: inherit !important;
   }
 }
 
@@ -1197,6 +1199,13 @@ html {
         font-weight: 500;
       }
     }
+  }
+}
+
+@media (hover: none) {
+  .bv-admin-table {
+    --bs-table-hover-bg: transparent;
+    --bs-table-hover-color: inherit;
   }
 }
 

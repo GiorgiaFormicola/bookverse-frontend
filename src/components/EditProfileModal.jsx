@@ -148,13 +148,14 @@ const EditProfileModal = ({ show, handleClose }) => {
                 onFocus={() => setError(false)}
                 onChange={(e) => setForm((prev) => ({ ...prev, bio: e.target.value }))}
               />
+              <p className="fw-normal small text-faint text-end mb-0 mt-2">{form.bio?.length || 0}/500</p>
             </Form.Group>
             <div className={"alert alert-danger text-center bg-transparent border-0 p-0 mb-2" + (error ? "" : " invisible")} role="alert">
               {error || "Error placeholder"}
             </div>
 
             <Button disabled={!hasChanged() || loading} className="w-100 fw-semibold my-2 fs-4 bv-btn-confirm" type="submit">
-              {loading ? "Updating profile..." : "Save"}
+              {loading ? <Spinner animation="border" size="sm" /> : "Save"}
             </Button>
           </Form>
         </Modal.Body>

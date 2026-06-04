@@ -151,6 +151,7 @@ const EditProfilePage = () => {
                   onClick={() => setError("")}
                   onChange={(e) => setForm((prev) => ({ ...prev, bio: e.target.value }))}
                 />
+                <p className="fw-normal small text-faint text-end mb-0 mt-2">{form.bio?.length || 0}/500</p>
               </Form.Group>
 
               <div className={"alert alert-danger bg-transparent text-center border-0 p-0 mb-3" + (error ? "" : " invisible")} role="alert">
