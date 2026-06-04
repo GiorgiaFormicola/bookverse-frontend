@@ -110,7 +110,7 @@ export const deleteProfile = () => {
 
 export const addBookToLibrary = (book) => {
   return (dispatch) => {
-    instance
+    return instance
       .post("/me/books", book)
       .then((response) => {
         const googleId = response.data.book.googleId;
@@ -136,7 +136,7 @@ export const addBookToLibrary = (book) => {
 
 export const removeBookFromLibrary = (googleId) => {
   return (dispatch) => {
-    instance
+    return instance
       .delete("/me/books/" + googleId)
       .then(() => {
         dispatch({
