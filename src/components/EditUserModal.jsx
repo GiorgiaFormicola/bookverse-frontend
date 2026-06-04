@@ -1,10 +1,11 @@
 import { useState } from "react";
-import { Modal, Form, Button } from "react-bootstrap";
+import { Modal, Form, Button, Spinner } from "react-bootstrap";
 import { instance } from "../config/api";
 const EditUserModal = ({ show, onHide, user, handleSaveUser }) => {
   const [userRole, setUserRole] = useState(user?.role);
   const [userIsActive, setUserIsActive] = useState(user?.active ? "true" : "false");
   const [saveError, setSaveError] = useState("");
+  const [loading, setLoading] = useState(false);
 
   if (!user) return null;
 
@@ -20,6 +21,7 @@ const EditUserModal = ({ show, onHide, user, handleSaveUser }) => {
   const handleSave = async () => {
     if (!user) return;
     setSaveError("");
+    setLoading(true);
     try {
       if (userRole !== "ADMIN") {
         if (userRole !== originalUser.role) {
@@ -52,6 +54,8 @@ const EditUserModal = ({ show, onHide, user, handleSaveUser }) => {
     } catch (err) {
       if (err.handled) return;
       setSaveError(err.response?.data?.message || "Something went wrong. Try again.");
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -92,8 +96,8 @@ const EditUserModal = ({ show, onHide, user, handleSaveUser }) => {
           <Button className="flex-grow-1 bv-btn-close" onClick={onHide}>
             Cancel
           </Button>
-          <Button className="flex-grow-1 bv-btn-confirm" onClick={() => handleSave()}>
-            Save Changes
+          <Button disabled={loading} className="flex-grow-1 bv-btn-confirm" onClick={() => handleSave()}>
+            {loading ? <Spinner animation="border" size="sm" style={{ color: "var(--bg-deep)" }} /> : "Save Changes"}
           </Button>
         </div>
       </Modal.Footer>

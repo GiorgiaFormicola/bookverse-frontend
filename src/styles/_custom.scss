@@ -135,6 +135,13 @@ img.rounded-circle {
   }
 }
 
+.badge {
+  max-width: 100%;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
 //Buttons
 .bv-btn-close {
   background: var(--surface-hover) !important;

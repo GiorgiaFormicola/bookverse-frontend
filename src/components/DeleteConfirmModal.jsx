@@ -1,7 +1,18 @@
-import { Modal, Button } from "react-bootstrap";
+import { Modal, Button, Spinner } from "react-bootstrap";
 import { Trash3Fill } from "react-bootstrap-icons";
+import { useState } from "react";
 
 const DeleteConfirmModal = ({ show, onHide, onConfirm, username, bookId }) => {
+  const [loading, setLoading] = useState(false);
+  const handleConfirm = async () => {
+    setLoading(true);
+    try {
+      await onConfirm();
+    } finally {
+      setLoading(false);
+    }
+  };
+
   return (
     <Modal show={show} onHide={onHide} centered>
       <Modal.Header closeButton>
@@ -12,22 +23,22 @@ const DeleteConfirmModal = ({ show, onHide, onConfirm, username, bookId }) => {
         <Trash3Fill size={40} className="mb-3 text-danger" />
         {username && (
           <p className="mb-0 text-muted">
-            Are you sure you want to delete user <strong style={{ color: "var(--text-primary)" }}>{username}</strong>? <br /> This operation is irreversible.
+            Are you sure you want to delete user <strong>{username}</strong>? <br /> This operation is irreversible.
           </p>
         )}
         {bookId && (
           <p className="mb-0 text-muted">
-            Are you sure you want to delete book <strong style={{ color: "var(--text-primary)" }}>{bookId}</strong>? <br /> This operation is irreversible.
+            Are you sure you want to delete book <strong>{bookId}</strong>? <br /> This operation is irreversible.
           </p>
         )}
       </Modal.Body>
 
       <Modal.Footer className="d-flex gap-2">
-        <Button className="flex-grow-1 bv-btn-close" onClick={onHide}>
+        <Button disabled={loading} className="flex-grow-1 bv-btn-close" onClick={onHide}>
           Cancel
         </Button>
-        <Button className="flex-grow-1 bv-btn-delete" onClick={onConfirm}>
-          Delete
+        <Button disabled={loading} className="flex-grow-1 bv-btn-delete" onClick={handleConfirm}>
+          {loading ? <Spinner animation="border" size="sm" /> : "Delete"}
         </Button>
       </Modal.Footer>
     </Modal>

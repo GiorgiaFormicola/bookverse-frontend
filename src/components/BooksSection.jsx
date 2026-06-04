@@ -136,10 +136,11 @@ const BooksSection = () => {
   };
 
   const handleDeleteBook = () => {
-    instance
+    return instance
       .delete("/books/" + bookToDelete.googleId)
       .then(() => {
         getBooks(queryFilters);
+        setBookToDelete(null);
       })
       .catch((err) => {
         if (err.handled) return;
@@ -147,8 +148,7 @@ const BooksSection = () => {
           window.location.replace("/error?type=server");
           return;
         }
-      })
-      .finally(() => setBookToDelete(null));
+      });
   };
 
   const handleDeleteCancel = () => {

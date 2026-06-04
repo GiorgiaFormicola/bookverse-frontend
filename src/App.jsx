@@ -20,6 +20,7 @@ import ForgotPasswordPage from "./components/ForgotPasswordPage";
 import ResetPasswordPage from "./components/ResetPasswordPage";
 import AccountPage from "./components/AccountPage";
 import ErrorPage from "./components/ErrorPage";
+import ScrollToTop from "./components/ScrollToTop";
 
 function App() {
   useEffect(() => {
@@ -30,6 +31,7 @@ function App() {
     <Provider store={store}>
       <BrowserRouter>
         <ProfileLoader />
+        <ScrollToTop />
         <Routes>
           <Route path="/login" element={<LoginPage />} />
           <Route path="/signup" element={<SignupPage />} />

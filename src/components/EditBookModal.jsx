@@ -1,5 +1,5 @@
 import { useState, useRef } from "react";
-import { Modal, Row, Col, Form, InputGroup, Button } from "react-bootstrap";
+import { Modal, Row, Col, Form, InputGroup, Button, Spinner } from "react-bootstrap";
 import { instance } from "../config/api";
 
 const EditBookModal = ({ show, onHide, book, handleSaveBook }) => {
@@ -7,6 +7,7 @@ const EditBookModal = ({ show, onHide, book, handleSaveBook }) => {
   const [coverFile, setCoverFile] = useState(null);
   const [coverPreview, setCoverPreview] = useState(null);
   const [saveError, setSaveError] = useState("");
+  const [loading, setLoading] = useState(false);
   const fileInputRef = useRef(null);
   const isLocked = (field) => !isEmpty(book[field]);
 
@@ -73,6 +74,7 @@ const EditBookModal = ({ show, onHide, book, handleSaveBook }) => {
   };
 
   const handleSave = async () => {
+    setLoading(true);
     try {
       if (
         shouldSend(book.title, form.title) ||
@@ -112,6 +114,8 @@ const EditBookModal = ({ show, onHide, book, handleSaveBook }) => {
     } catch (err) {
       if (err.handled) return;
       setSaveError(err.response?.data?.message || "Something went wrong. Try again.");
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -269,8 +273,8 @@ const EditBookModal = ({ show, onHide, book, handleSaveBook }) => {
             <Button className="bv-btn-close" onClick={onHide}>
               Cancel
             </Button>
-            <Button disabled={!canSave} className="bv-btn-confirm" onClick={() => handleSave()}>
-              Save Book
+            <Button disabled={!canSave || loading} className="bv-btn-confirm" onClick={() => handleSave()}>
+              {loading ? <Spinner animation="border" size="sm" style={{ color: "var(--bg-deep)" }} /> : "Save Book"}
             </Button>
           </div>
         </div>

@@ -50,7 +50,7 @@ const BookSaveComponent = ({ book }) => {
       {location.pathname === "/search" && (
         <>
           {loading ? (
-            <Spinner animation="border" size="sm" className="text-saved" />
+            <Spinner animation="border" size="sm" className="text-saved" onClick={(e) => e.stopPropagation()} />
           ) : isSaved ? (
             <SuitHeartFill
               className="text-saved cursor-pointer"

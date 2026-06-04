@@ -152,7 +152,7 @@ export const removeBookFromLibrary = (googleId) => {
 
 export const setBookPrivacy = (googleId, boolean) => {
   return (dispatch) => {
-    instance
+    return instance
       .patch("/me/books/" + googleId + "/visibility", { isPublic: boolean })
       .then((response) => {
         const googleId = response.data.book.googleId;
@@ -178,7 +178,7 @@ export const setBookPrivacy = (googleId, boolean) => {
 
 export const updateBookStatus = (googleId, statusValue) => {
   return (dispatch) => {
-    instance
+    return instance
       .patch("/me/books/" + googleId + "/status", { status: statusValue })
       .then((response) => {
         const googleId = response.data.book.googleId;

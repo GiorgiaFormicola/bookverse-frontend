@@ -115,10 +115,11 @@ const UsersSection = () => {
   };
 
   const handleDeleteUser = () => {
-    instance
+    return instance
       .delete("/users/" + userToDelete.id)
       .then(() => {
         getUsers(queryFilters);
+        setUserToDelete(null);
       })
       .catch((err) => {
         if (err.handled) return;
@@ -126,8 +127,7 @@ const UsersSection = () => {
           window.location.replace("/error?type=server");
           return;
         }
-      })
-      .finally(() => setUserToDelete(null));
+      });
   };
 
   const handleDeleteCancel = () => {

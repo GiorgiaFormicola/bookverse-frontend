@@ -118,8 +118,12 @@ const LibraryPage = () => {
                 value={query}
                 onChange={(e) => setQuery(e.target.value)}
               />
-              <Button type="submit" className="rounded-end-pill bg-dark border-secondary border-opacity-25">
-                <Search size={20} className="text-accent my-1" />
+              <Button
+                type="submit"
+                disabled={loading}
+                className="rounded-end-pill bg-dark border-secondary border-opacity-25 d-flex align-items-center justify-content-center"
+              >
+                {loading ? <Spinner animation="border" size="sm" className="text-accent mb-1 mt-2 me-1" /> : <Search size={20} className="text-accent my-1" />}
               </Button>
             </InputGroup>
           </Form>
@@ -139,16 +143,16 @@ const LibraryPage = () => {
             }}
             className="flex-wrap gap-2 justify-content-center w-100"
           >
-            <ToggleButton id="tbg-btn-1" value="title" variant="outline-secondary" className="rounded-pill bv-filter-btn">
+            <ToggleButton id="tbg-btn-1" disabled={loading} value="title" variant="outline-secondary" className="rounded-pill bv-filter-btn">
               Title
             </ToggleButton>
-            <ToggleButton id="tbg-btn-2" value="author" variant="outline-secondary" className="rounded-pill bv-filter-btn">
+            <ToggleButton id="tbg-btn-2" disabled={loading} value="author" variant="outline-secondary" className="rounded-pill bv-filter-btn">
               Author
             </ToggleButton>
-            <ToggleButton id="tbg-btn-3" value="category" variant="outline-secondary" className="rounded-pill bv-filter-btn">
+            <ToggleButton id="tbg-btn-3" disabled={loading} value="category" variant="outline-secondary" className="rounded-pill bv-filter-btn">
               Category
             </ToggleButton>
-            <ToggleButton id="tbg-btn-4" value="publisher" variant="outline-secondary" className="rounded-pill bv-filter-btn">
+            <ToggleButton id="tbg-btn-4" disabled={loading} value="publisher" variant="outline-secondary" className="rounded-pill bv-filter-btn">
               Publisher
             </ToggleButton>
           </ToggleButtonGroup>
@@ -160,6 +164,7 @@ const LibraryPage = () => {
           <ToggleButtonGroup type="radio" name="readingStatus" value={readingStatus || ""} className="flex-wrap gap-2 justify-content-center w-100">
             <ToggleButton
               id="tbg-btn-6"
+              disabled={loading}
               value="TO_READ"
               variant="outline-secondary"
               onClick={() => handleStatusToggle("TO_READ")}
@@ -169,6 +174,7 @@ const LibraryPage = () => {
             </ToggleButton>
             <ToggleButton
               id="tbg-btn-7"
+              disabled={loading}
               value="READING"
               variant="outline-secondary"
               onClick={() => handleStatusToggle("READING")}
@@ -178,6 +184,7 @@ const LibraryPage = () => {
             </ToggleButton>
             <ToggleButton
               id="tbg-btn-8"
+              disabled={loading}
               value="READ"
               variant="outline-secondary"
               onClick={() => handleStatusToggle("READ")}

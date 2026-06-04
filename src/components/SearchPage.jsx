@@ -70,8 +70,12 @@ const SearchPage = () => {
                 value={query}
                 onChange={(e) => setQuery(e.target.value)}
               />
-              <Button type="submit" className="rounded-end-pill bg-dark border-secondary border-opacity-25">
-                <Search size={20} className="text-accent my-1" />
+              <Button
+                type="submit"
+                disabled={loading}
+                className="rounded-end-pill bg-dark border-secondary border-opacity-25 d-flex align-items-center justify-content-center"
+              >
+                {loading ? <Spinner animation="border" size="sm" className="text-accent mb-1 mt-2 me-1" /> : <Search size={20} className="text-accent my-1" />}
               </Button>
             </InputGroup>
           </Form>
@@ -86,6 +90,7 @@ const SearchPage = () => {
             name="filters"
             value={filter}
             onChange={(value) => {
+              if (loading) return;
               setFilter(value);
               if (query.trim()) {
                 searchBooks(query, value);
@@ -93,16 +98,16 @@ const SearchPage = () => {
             }}
             className="flex-wrap gap-2 justify-content-center w-100"
           >
-            <ToggleButton id="tbg-btn-1" value="title" variant="outline-secondary" className="rounded-pill bv-filter-btn">
+            <ToggleButton disabled={loading} id="tbg-btn-1" value="title" variant="outline-secondary" className="rounded-pill bv-filter-btn">
               Title
             </ToggleButton>
-            <ToggleButton id="tbg-btn-2" value="author" variant="outline-secondary" className="rounded-pill bv-filter-btn">
+            <ToggleButton disabled={loading} id="tbg-btn-2" value="author" variant="outline-secondary" className="rounded-pill bv-filter-btn">
               Author
             </ToggleButton>
-            <ToggleButton id="tbg-btn-3" value="category" variant="outline-secondary" className="rounded-pill bv-filter-btn">
+            <ToggleButton disabled={loading} id="tbg-btn-3" value="category" variant="outline-secondary" className="rounded-pill bv-filter-btn">
               Category
             </ToggleButton>
-            <ToggleButton id="tbg-btn-4" value="publisher" variant="outline-secondary" className="rounded-pill bv-filter-btn">
+            <ToggleButton disabled={loading} id="tbg-btn-4" value="publisher" variant="outline-secondary" className="rounded-pill bv-filter-btn">
               Publisher
             </ToggleButton>
           </ToggleButtonGroup>
