@@ -31,7 +31,7 @@ const HomePageSection = ({ filter, reviewed, title, loading, setLoading, onEmpty
   if (!loading && !error && books.length === 0) return null;
 
   return (
-    <Row className="g-2 mb-lg-4 home-section-fade">
+    <Row className="g-2 mb-5 home-section-fade">
       <Col xs={12}>
         <div className="d-flex align-items-center justify-content-between">
           <h2>{title}</h2>

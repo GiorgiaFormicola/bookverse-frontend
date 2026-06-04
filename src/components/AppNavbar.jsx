@@ -27,7 +27,7 @@ const AppNavbar = () => {
   return (
     <>
       <Navbar sticky="top" className="bv-navbar">
-        <Container fluid className="px-3 container-lg px-lg-4">
+        <Container fluid className="px-3 px-lg-4">
           <Navbar.Brand as={Link} to="/" className="bv-brand d-flex align-items-center gap-2 me-lg-4">
             <Book size={30} className="bv-brand__accent me-1" />
             <span className="bv-brand__text">
@@ -55,7 +55,7 @@ const AppNavbar = () => {
           <Nav className="align-items-center ms-auto gap-1">
             <Link to="/me" className={`d-none d-lg-flex ${userLinkClass("/me")} gap-2`}>
               <span className="bv-nav__username ps-1">{user?.displayName}</span>
-              <img src={user?.profilePictureURL} alt={user?.username} className="bv-nav__avatar" width={34} height={34} />
+              <img src={user?.profilePictureURL} alt={user?.username} className="bv-nav__avatar" width={40} height={40} />
             </Link>
             <NavDropdown id="user-dropdown" align="end" className="d-none d-lg-block bv-dropdown-toggle">
               <NavDropdown.Item as={Link} to="/me">
@@ -80,7 +80,6 @@ const AppNavbar = () => {
             </NavDropdown>
 
             {/* Mobile avatar */}
-            <span className="bv-nav__username px-1 d-lg-none">{user?.displayName}</span>
             <img
               src={user?.profilePictureURL}
               alt={user?.username}

@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { Container, Row, Col, Form, Button, InputGroup, Card, OverlayTrigger, Tooltip } from "react-bootstrap";
+import { Container, Row, Col, Form, Button, InputGroup, Card, OverlayTrigger, Tooltip, Spinner } from "react-bootstrap";
 import { Eye, EyeSlash, Book, People, Star, BarChartLine, InfoCircleFill, Search } from "react-bootstrap-icons";
 import { Link, useNavigate } from "react-router-dom";
 import { instance } from "../config/api";
@@ -18,10 +18,9 @@ const SignupPage = () => {
     birthdate: "",
   });
 
-  const minAge = 13;
   const maxAge = 120;
   const maxBirthdate = new Date();
-  maxBirthdate.setFullYear(maxBirthdate.getFullYear() - minAge);
+  maxBirthdate.setDate(maxBirthdate.getDate() - 1);
   const minBirthdate = new Date();
   minBirthdate.setFullYear(minBirthdate.getFullYear() - maxAge);
   const maxDateInput = maxBirthdate.toISOString().split("T")[0];
@@ -61,7 +60,7 @@ const SignupPage = () => {
     }
 
     if (birthdateValue > maxBirthdate) {
-      setError("To continue you must be at least 13 years old");
+      setError("Birthdate must be in the past");
       return false;
     }
 
@@ -93,7 +92,7 @@ const SignupPage = () => {
         birthdate: signUpCredentials.birthdate,
       })
       .then(() => {
-        navigate("/login");
+        navigate("/login", { state: { registered: true } });
       })
       .catch((err) => {
         if (err.handled) return;
@@ -108,7 +107,7 @@ const SignupPage = () => {
   }, []);
 
   return (
-    <Container fluid className="min-vh-100 d-flex align-items-center justify-content-center auth-gradient">
+    <Container fluid className="min-vh-100 d-flex align-items-center justify-content-center auth-gradient py-5">
       <Row className="justify-content-center w-100">
         <Col sm={12} md={11} lg={9} xl={8}>
           <Card className="bv-auth-card border-0 overflow-hidden">
@@ -181,7 +180,7 @@ const SignupPage = () => {
                 </div>
               </Col>
 
-              <Col sm={12} md={6} className="p-5" style={{ background: "var(--surface-raised)" }}>
+              <Col sm={12} md={6} className="py-5 px-4 px-lg-5" style={{ background: "var(--surface-raised)" }}>
                 {/* Mobile header */}
                 <div className="mb-4 text-center d-md-none">
                   <div className="bv-brand d-flex flex-column align-items-center justify-content-center gap-2 mb-3">
@@ -214,7 +213,7 @@ const SignupPage = () => {
                         placement="right"
                         overlay={
                           <Tooltip className="custom-tooltip">
-                            <strong>Username</strong> must be 2–30 characters long and can contain lowercase letters, numbers, underscores and dots.
+                            <strong>Username</strong> must be 2–30 characters long and can contain only lowercase letters, numbers, underscores and dots.
                           </Tooltip>
                         }
                         popperConfig={{
@@ -328,7 +327,7 @@ const SignupPage = () => {
                   </div>
 
                   <Button type="submit" disabled={loading} size="lg" className="w-100 bv-btn-confirm mb-3">
-                    {loading ? "Creating account..." : "Sign Up"}
+                    {loading ? <Spinner animation="border" size="sm" style={{ color: "var(--bg-deep)" }} /> : "Sign Up"}
                   </Button>
 
                   <div className="text-center">

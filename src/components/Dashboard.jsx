@@ -27,7 +27,7 @@ const Dashboard = () => {
       <DashboardCard statName="Now reading" statValue={stats.reading} color="reading">
         <BookOpen size={30} className="text-reading" />
       </DashboardCard>
-      <DashboardCard statName="To read" statValue={stats.toRead} color="toread">
+      <DashboardCard statName="Books to read" statValue={stats.toRead} color="toread">
         <Book size={30} className="text-toread" />
       </DashboardCard>
     </>

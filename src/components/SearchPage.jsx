@@ -52,7 +52,7 @@ const SearchPage = () => {
   };
 
   return (
-    <Container fluid className="py-4 p-3 px-lg-4 container-lg d-flex flex-column gap-2 gap-lg-3">
+    <Container fluid className="py-4 p-3 px-lg-4 container-lg d-flex flex-column gap-2 gap-lg-3 min-vh-100">
       {/* Search bar */}
       <Row className="justify-content-center">
         <Col xs={12}>

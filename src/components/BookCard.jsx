@@ -14,9 +14,9 @@ const BookCard = ({ book, status, isPublic, navigationState }) => {
       {location.pathname === "/" && (
         <Col xs={5} sm={4} md={3} lg={2}>
           <div className="bv-book-card" onClick={() => navigate("/books/" + book.googleId)}>
-            <div className="bv-book-card__cover-wrap">
+            <div className="bv-book-card__cover-wrap rounded-2">
               <img className="bv-book-card__cover" src={book.coverURL ? book.coverURL : defaultCover} alt={book.title} />
-              <div className="bv-book-card__overlay">
+              <div className="bv-book-card__overlay rounded-2">
                 <span className="bv-book-card__title-overlay">{book.title}</span>
                 <span className="bv-book-card__author-overlay">{book.authors?.[0] || "Unknown author"}</span>
               </div>
@@ -33,9 +33,9 @@ const BookCard = ({ book, status, isPublic, navigationState }) => {
       {location.pathname === "/me" && (
         <Col className="mb-3">
           <div className="bv-book-card" onClick={() => navigate("/books/" + book.googleId)}>
-            <div className="bv-book-card__cover-wrap">
+            <div className="bv-book-card__cover-wrap rounded-2">
               <img className="bv-book-card__cover" src={book.coverURL ? book.coverURL : defaultCover} alt={book.title} />
-              <div className="bv-book-card__overlay">
+              <div className="bv-book-card__overlay rounded-2">
                 <span className="bv-book-card__title-overlay">{book.title}</span>
                 <span className="bv-book-card__author-overlay">{book.authors?.[0] || "Unknown author"}</span>
               </div>

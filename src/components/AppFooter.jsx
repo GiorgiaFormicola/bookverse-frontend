@@ -30,8 +30,8 @@ const AppFooter = () => {
 
       {/* Desktop footer */}
       <footer className="bv-footer d-none d-lg-block">
-        <Container className="py-4">
-          <Row className="align-items-center gy-3">
+        <Container fluid className="p-4">
+          <Row className="align-items-center g-3 px-1">
             <Col lg={6}>
               <div className="d-flex align-items-center gap-2 mb-1">
                 <span className="bv-brand__accent">

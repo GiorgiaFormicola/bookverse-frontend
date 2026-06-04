@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { Container, Row, Col, Form, Button, InputGroup, Card } from "react-bootstrap";
+import { Container, Row, Col, Form, Button, InputGroup, Card, Spinner } from "react-bootstrap";
 import { Eye, EyeSlash, Book } from "react-bootstrap-icons";
 import { Link, useNavigate, useLocation } from "react-router-dom";
 import { instance } from "../config/api";
@@ -16,7 +16,7 @@ const LoginPage = () => {
 
   const clearMessages = () => {
     setError("");
-    if (location.state?.passwordReset) {
+    if (location.state?.passwordReset || location.state?.registered) {
       navigate(location.pathname, { replace: true, state: {} });
     }
   };
@@ -124,7 +124,7 @@ const LoginPage = () => {
                 </div>
               </Col>
 
-              <Col sm={12} md={6} className="p-5" style={{ background: "var(--surface-raised)" }}>
+              <Col sm={12} md={6} className="py-5 px-4 px-lg-5" style={{ background: "var(--surface-raised)" }}>
                 {/* Mobile header */}
                 <div className="mb-4 text-center d-md-none">
                   <div className="bv-brand d-flex flex-column align-items-center justify-content-center gap-2 mb-3">
@@ -190,16 +190,22 @@ const LoginPage = () => {
                   <div
                     className={
                       "alert text-center bg-transparent border-0 p-0 mb-3" +
-                      (error || location.state?.passwordReset ? "" : " invisible") +
+                      (error || location.state?.passwordReset || location.state?.registered ? "" : " invisible") +
                       (error ? " alert-danger" : " alert-success")
                     }
                     role="alert"
                   >
-                    {error ? error : location.state?.passwordReset ? "Password reset successfully" : "placeholder"}
+                    {error
+                      ? error
+                      : location.state?.passwordReset
+                        ? "Password reset successfully"
+                        : location.state?.registered
+                          ? "Account created successfully!"
+                          : "placeholder"}
                   </div>
 
                   <Button type="submit" disabled={loading} size="lg" className="w-100 bv-btn-confirm mb-3">
-                    {loading ? "Loading..." : "Log in"}
+                    {loading ? <Spinner animation="border" size="sm" style={{ color: "var(--bg-deep)" }} /> : "Log in"}
                   </Button>
 
                   <div className="text-center">

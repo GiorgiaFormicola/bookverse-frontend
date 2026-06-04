@@ -10,11 +10,11 @@ const ErrorPage = () => {
   const isNetwork = type === "network";
 
   return (
-    <Container fluid className="min-vh-100 d-flex align-items-center justify-content-center">
+    <Container fluid className="min-vh-100 d-flex align-items-center justify-content-center auth-gradient">
       <Row className="justify-content-center w-100">
-        <Col xs={11} sm={10} md={8} lg={7} xl={6} xxl={5}>
-          <Card className="bv-auth-card border-0 p-4 text-center">
-            <div className="bv-brand d-flex align-items-center justify-content-center gap-2 mb-4 mt-2">
+        <Col xs={12} md={11} lg={9} xl={7}>
+          <Card className="bv-auth-card border-0 p-4 py-5 px-lg-5 text-center">
+            <div className="bv-brand d-flex align-items-center justify-content-center gap-2 mb-4">
               <span className="bv-brand__icon">
                 <Book size={30} className="text-accent" />
               </span>
@@ -33,13 +33,13 @@ const ErrorPage = () => {
               {isNetwork ? "Check your internet connection and try again." : "Something went wrong on our end. Please try again later."}
             </p>
             <button
-              className="bv-btn-confirm btn w-100"
+              className="bv-btn-confirm btn w-100 mt-3"
               onClick={() => {
                 dispatch({ type: RESET_AUTH });
                 window.location.replace("/");
               }}
             >
-              Go back to homepage
+              Go back
             </button>
           </Card>
         </Col>

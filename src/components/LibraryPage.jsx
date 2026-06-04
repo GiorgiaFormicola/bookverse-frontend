@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { instance } from "../config/api";
-import { Container, Row, Col, ListGroup, Form, InputGroup, Button, ToggleButtonGroup, ToggleButton, Spinner, Alert } from "react-bootstrap";
+import { Container, Row, Col, ListGroup, Form, InputGroup, Button, ToggleButtonGroup, ToggleButton, Spinner } from "react-bootstrap";
 import BookCard from "./BookCard";
 import { Search, ThreeDots, ArrowClockwise } from "react-bootstrap-icons";
 import { useLocation, useSearchParams, Link } from "react-router-dom";
@@ -12,10 +12,10 @@ const LibraryPage = () => {
   const [error, setError] = useState(false);
   const [query, setQuery] = useState(savedState?.query || "");
   const [filter, setFilter] = useState(savedState?.filter || "title");
-  const [books, setBooks] = useState(savedState?.books || []);
-  const [loading, setLoading] = useState(!savedState);
-  const [currentPage, setCurrentPage] = useState(savedState?.currentPage || 0);
-  const [hasNext, setHasNext] = useState(savedState?.hasNext || false);
+  const [books, setBooks] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [currentPage, setCurrentPage] = useState(0);
+  const [hasNext, setHasNext] = useState(false);
   const [readingStatus, setReadingStatus] = useState(savedState?.readingStatus ?? searchParams.get("status") ?? null);
   const [hasBooks, setHasBooks] = useState(savedState?.hasBooks ?? null);
 
@@ -89,8 +89,13 @@ const LibraryPage = () => {
   };
 
   useEffect(() => {
-    if (!savedState) {
-      getAllBooks(0, false);
+    const query = savedState?.query || "";
+    const filter = savedState?.filter || "title";
+    const status = savedState?.readingStatus ?? null;
+    if (!query.trim()) {
+      getAllBooks(0, false, status);
+    } else {
+      searchBooks(query, filter, 0, false, status);
     }
   }, []);
 
@@ -248,7 +253,7 @@ const LibraryPage = () => {
                     book={book.info}
                     status={book.status}
                     isPublic={book.public}
-                    navigationState={{ query, filter, books, currentPage, hasNext, readingStatus, hasBooks, from: "/library" }}
+                    navigationState={{ query, filter, readingStatus, hasBooks, from: "/library" }}
                   />
                 ))}
               </ListGroup>

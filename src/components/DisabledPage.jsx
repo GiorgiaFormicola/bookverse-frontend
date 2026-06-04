@@ -28,8 +28,8 @@ const DisabledPage = () => {
   return (
     <Container fluid className="min-vh-100 d-flex align-items-center justify-content-center auth-gradient">
       <Row className="justify-content-center w-100">
-        <Col xs={11} sm={8} md={6} lg={4}>
-          <Card className="bv-auth-card border-0 p-4">
+        <Col sm={12} md={11} lg={9} xl={7}>
+          <Card className="bv-auth-card border-0 p-4 py-5 px-lg-5">
             {sent ? (
               <div className="text-center d-flex flex-column align-items-center gap-3 py-4">
                 <EnvelopeFill size={48} style={{ color: "var(--accent)" }} />
@@ -55,13 +55,12 @@ const DisabledPage = () => {
                     Your account has been temporarily disabled by an administrator. You can request reactivation below.
                   </p>
                 </div>
-
-                <Button className="w-100 bv-btn-confirm" size="lg" onClick={handleSend} disabled={loading || !email}>
-                  {loading ? <Spinner animation="border" size="sm" style={{ color: "var(--bg-deep)" }} /> : "Request reactivation"}
-                </Button>
                 <div className={"alert text-center border-0 p-0 mb-3" + (error ? " alert-danger" : " invisible")}>
                   {error ? "Something went wrong. Try again." : "placeholder"}
                 </div>
+                <Button className="w-100 bv-btn-confirm" size="lg" onClick={handleSend} disabled={loading || !email}>
+                  {loading ? <Spinner animation="border" size="sm" style={{ color: "var(--bg-deep)" }} /> : "Request reactivation"}
+                </Button>
               </>
             )}
           </Card>
