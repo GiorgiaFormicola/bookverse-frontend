@@ -6,6 +6,8 @@ BookVerse is a full-stack web application for book lovers. Discover new books, b
 
 This repository contains the **frontend** of the application, built with React + Vite.
 
+🌐 **Live Demo:** [bv-bookverse.vercel.app](https://bv-bookverse.vercel.app)
+
 🔗 **Backend repository:** [bookverse-backend](https://github.com/GiorgiaFormicola/bookverse-backend)
 
 ---
@@ -39,13 +41,19 @@ This repository contains the **frontend** of the application, built with React +
 
 ## 🚀 Getting Started
 
-### Prerequisites
+### Try it live
+
+You can try the app at [bv-bookverse.vercel.app](https://bv-bookverse.vercel.app) without any local setup.
+
+### Run locally
+
+#### Prerequisites
 
 - [Node.js](https://nodejs.org/)
 - [npm](https://www.npmjs.com/)
 - The [backend](https://github.com/GiorgiaFormicola/bookverse-backend) running locally
 
-### Installation
+#### Installation
 
 1. **Clone the repository**
 
