@@ -13,8 +13,11 @@ const ProfilePage = () => {
   const navigate = useNavigate();
   const user = useSelector((currentState) => currentState.profile.user);
   const library = useSelector((currentState) => currentState.profile.savedBooks);
+
+  const hasPublicBooks = Object.values(library ?? {}).some((book) => book.public);
+
   const [bookshelf, setBookshelf] = useState([]);
-  const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState(hasPublicBooks);
   const [error, setError] = useState(false);
   const [currentPage, setCurrentPage] = useState(0);
   const [hasNext, setHasNext] = useState(false);
@@ -65,7 +68,9 @@ const ProfilePage = () => {
   };
 
   useEffect(() => {
-    getUserBookshelf(currentPage, false);
+    if (hasPublicBooks) {
+      getUserBookshelf(0, false);
+    }
     getTotalReviews();
   }, []);
 
@@ -175,12 +180,12 @@ const ProfilePage = () => {
                   </div>
                 ) : (
                   <>
-                    {bookshelf.map((book) => {
-                      return <BookCard key={book.id} book={book.info} />;
-                    })}
+                    {bookshelf.map((book) => (
+                      <BookCard key={book.id} book={book.info} />
+                    ))}
                     {hasNext && (
                       <Col xs={12} className="text-center">
-                        <ThreeDots className="cursor-pointer text-faint" size={50} onClick={() => loadNextPage()} />
+                        <ThreeDots className="cursor-pointer text-faint" size={50} onClick={loadNextPage} />
                       </Col>
                     )}
                   </>
