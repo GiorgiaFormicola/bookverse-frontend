@@ -5,7 +5,7 @@ import { addBookToLibrary, removeBookFromLibrary } from "../redux/actions";
 import { useLocation } from "react-router-dom";
 import { useState } from "react";
 
-const BookSaveComponent = ({ book }) => {
+const BookSaveComponent = ({ book, onSaveComplete }) => {
   const dispatch = useDispatch();
   const location = useLocation();
   const savedBook = useSelector((currentState) => currentState.profile.savedBooks?.[book.googleId]);
@@ -22,6 +22,7 @@ const BookSaveComponent = ({ book }) => {
       }
     } finally {
       setLoading(false);
+      onSaveComplete?.();
     }
   };
 
