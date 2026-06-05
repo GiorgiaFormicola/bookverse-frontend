@@ -91,7 +91,7 @@ const LibraryPage = () => {
   useEffect(() => {
     const query = savedState?.query || "";
     const filter = savedState?.filter || "title";
-    const status = savedState?.readingStatus ?? null;
+    const status = savedState?.readingStatus ?? searchParams.get("status") ?? null;
     if (!query.trim()) {
       getAllBooks(0, false, status);
     } else {
