@@ -31,6 +31,11 @@ instance.interceptors.response.use(
         const requestBody = error.config.data ? JSON.parse(error.config.data) : {};
         if (requestBody?.email) {
           sessionStorage.setItem("disabledEmail", requestBody.email);
+        } else {
+          const userEmail = store.getState().profile.user?.email;
+          if (userEmail) {
+            sessionStorage.setItem("disabledEmail", userEmail);
+          }
         }
       } catch (err) {
         //
