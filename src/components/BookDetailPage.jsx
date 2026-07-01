@@ -35,6 +35,7 @@ const BookDetailPage = () => {
   const [bookStats, setBookStats] = useState(null);
   const [reviewLoading, setReviewLoading] = useState(false);
   const [deleteLoading, setDeleteLoading] = useState(false);
+  const [loadingMore, setLoadingMore] = useState(false);
 
   const defaultCover = "https://neelkanthpublishers.com/assets/bookcover_cover.png";
 
@@ -94,7 +95,10 @@ const BookDetailPage = () => {
         if (err.handled) return;
         setReviewsError(true);
       })
-      .finally(() => setReviewsLoading(false));
+      .finally(() => {
+        setReviewsLoading(false);
+        if (append) setLoadingMore(false);
+      });
   };
 
   const getUserReview = () => {
@@ -107,6 +111,8 @@ const BookDetailPage = () => {
   };
 
   const loadNextPage = () => {
+    if (loadingMore) return;
+    setLoadingMore(true);
     getBookReviews(currentPage + 1, true);
   };
 
@@ -175,6 +181,7 @@ const BookDetailPage = () => {
   const isFormDirty = currentUserReview && (userReview.rating !== currentUserReview.rating || userReview.comment !== currentUserReview.comment);
 
   const handleReviewClick = () => {
+    if (reviewLoading || deleteLoading) return;
     if (currentUserReview) {
       setUserReview({
         rating: currentUserReview.rating,
@@ -257,7 +264,12 @@ const BookDetailPage = () => {
                       <BookSaveComponent book={book} />
                     </Col>
                     <Col xs={12} sm={6} lg={12}>
-                      <BookReviewComponent isReviewed={!!currentUserReview} handleReviewClick={handleReviewClick} />
+                      <BookReviewComponent
+                        isReviewed={!!currentUserReview}
+                        handleReviewClick={handleReviewClick}
+                        disabled={reviewLoading || deleteLoading}
+                        active={showForm}
+                      />
                     </Col>
                   </Row>
                 </Col>
@@ -403,7 +415,15 @@ const BookDetailPage = () => {
                         ))}
                         {hasNext && (
                           <Col xs={12} className="text-center">
-                            <ThreeDots size={50} className="cursor-pointer" onClick={loadNextPage} />
+                            {loadingMore ? (
+                              <div className="d-inline-flex gap-2 align-items-center justify-content-center" style={{ height: 50 }}>
+                                <span className="bv-loader-dot" />
+                                <span className="bv-loader-dot" />
+                                <span className="bv-loader-dot" />
+                              </div>
+                            ) : (
+                              <ThreeDots size={50} className="cursor-pointer" onClick={loadNextPage} />
+                            )}
                           </Col>
                         )}
                       </ListGroup>
@@ -425,7 +445,7 @@ const BookDetailPage = () => {
                   {/* Review form */}
                   {showForm && (
                     <Col xs={12} ref={reviewFormRef}>
-                      <div className="bv-review-form mt-3">
+                      <div className="bv-review-form">
                         <h5 className="fw-semibold mb-3">{currentUserReview ? "Edit" : "Leave"} your review</h5>
 
                         <div className="d-flex gap-2 mb-3 align-items-center">
@@ -468,6 +488,7 @@ const BookDetailPage = () => {
                           <div className="d-flex justify-content-evenly justify-content-sm-end gap-sm-2 align-items-center">
                             <Button
                               type="button"
+                              disabled={reviewLoading || deleteLoading}
                               className="px-4 fw-semibold bv-btn-close"
                               onClick={() => {
                                 setShowForm(false);
@@ -479,7 +500,13 @@ const BookDetailPage = () => {
                             </Button>
                             <Button
                               type="submit"
-                              disabled={reviewLoading || userReview.rating === 0 || userReview.comment.trim() === "" || (currentUserReview && !isFormDirty)}
+                              disabled={
+                                reviewLoading ||
+                                deleteLoading ||
+                                userReview.rating === 0 ||
+                                userReview.comment.trim() === "" ||
+                                (currentUserReview && !isFormDirty)
+                              }
                               className="px-4 fw-semibold bv-btn-confirm"
                             >
                               {reviewLoading ? (
@@ -493,7 +520,7 @@ const BookDetailPage = () => {
                             {currentUserReview && (
                               <Button
                                 type="button"
-                                disabled={deleteLoading}
+                                disabled={deleteLoading || reviewLoading}
                                 className="px-4 fw-semibold bv-btn-delete"
                                 onClick={() => deleteReview(currentUserReview.id)}
                               >

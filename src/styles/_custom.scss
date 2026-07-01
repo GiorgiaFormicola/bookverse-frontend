@@ -851,6 +851,11 @@ html {
     outline: none !important;
     box-shadow: none !important;
   }
+
+  &:disabled {
+    opacity: 1 !important;
+    cursor: not-allowed;
+  }
 }
 
 .bv-book-review--add {
@@ -874,6 +879,12 @@ html {
     background: rgba(244, 114, 182, 0.22);
     border-color: var(--st-review);
     color: var(--st-review);
+  }
+
+  &:disabled {
+    background: var(--st-review-bg) !important;
+    border-color: var(--st-review) !important;
+    color: var(--st-review) !important;
   }
 }
 

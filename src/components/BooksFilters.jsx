@@ -1,5 +1,5 @@
-import { Row, Col, Form, Button } from "react-bootstrap";
-const BooksFilters = ({ filters, handleFilterChange, handleSearch }) => {
+import { Row, Col, Form, Button, Spinner } from "react-bootstrap";
+const BooksFilters = ({ filters, handleFilterChange, handleSearch, loading }) => {
   return (
     <div className="bv-admin-filters mb-3">
       <Row className="g-3">
@@ -75,8 +75,8 @@ const BooksFilters = ({ filters, handleFilterChange, handleSearch }) => {
           </div>
         </Col>
         <Col md={12}>
-          <Button className="w-100 bv-btn-confirm" onClick={() => handleSearch()}>
-            Search
+          <Button className="w-100 bv-btn-confirm" disabled={loading} onClick={() => handleSearch()}>
+            {loading ? <Spinner animation="border" size="sm" /> : "Search"}
           </Button>
         </Col>
       </Row>

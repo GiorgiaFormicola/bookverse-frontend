@@ -18,6 +18,7 @@ const LibraryPage = () => {
   const [hasNext, setHasNext] = useState(false);
   const [readingStatus, setReadingStatus] = useState(savedState?.readingStatus ?? searchParams.get("status") ?? null);
   const [hasBooks, setHasBooks] = useState(savedState?.hasBooks ?? null);
+  const [loadingMore, setLoadingMore] = useState(false);
 
   const getAllBooks = (pageNumber, append, status = readingStatus) => {
     const readingStatusParam = status ? `&status=${status}` : "";
@@ -39,7 +40,10 @@ const LibraryPage = () => {
         if (err.handled) return;
         setError(true);
       })
-      .finally(() => setLoading(false));
+      .finally(() => {
+        setLoading(false);
+        if (append) setLoadingMore(false);
+      });
   };
 
   const searchBooks = (query, filter, pageNumber, append, status = readingStatus) => {
@@ -59,7 +63,10 @@ const LibraryPage = () => {
         if (err.handled) return;
         setError(true);
       })
-      .finally(() => setLoading(false));
+      .finally(() => {
+        setLoading(false);
+        if (append) setLoadingMore(false);
+      });
   };
 
   const handleSearch = (query, filter, pageNumber, append, status = readingStatus) => {
@@ -79,6 +86,8 @@ const LibraryPage = () => {
   };
 
   const loadNextPage = () => {
+    if (loadingMore) return;
+    setLoadingMore(true);
     handleSearch(query, filter, currentPage + 1, true);
   };
 
@@ -200,7 +209,7 @@ const LibraryPage = () => {
       <Row className="g-3 pt-3 pt-sm-1 pt-md-2 pt-lg-0">
         <Col xs={12}>
           {loading ? (
-            <div className="d-flex gap-3 justify-content-center align-items-center py-5">
+            <div className="d-flex gap-3 justify-content-center align-items-center py-5 my-5">
               <Spinner animation="grow" size="sm" style={{ color: "var(--primary-light)" }} />
               <Spinner animation="grow" size="sm" style={{ color: "var(--accent)" }} />
               <Spinner animation="grow" size="sm" style={{ color: "var(--st-review)" }} />
@@ -264,7 +273,15 @@ const LibraryPage = () => {
               </ListGroup>
               {hasNext && (
                 <div className="text-center pt-2 pt-sm-3">
-                  <ThreeDots size={50} className="cursor-pointer text-faint" onClick={() => loadNextPage()} />
+                  {loadingMore ? (
+                    <div className="d-inline-flex gap-2 align-items-center justify-content-center" style={{ height: 50 }}>
+                      <span className="bv-loader-dot" />
+                      <span className="bv-loader-dot" />
+                      <span className="bv-loader-dot" />
+                    </div>
+                  ) : (
+                    <ThreeDots size={50} className="cursor-pointer text-faint" onClick={loadNextPage} />
+                  )}
                 </div>
               )}
             </>

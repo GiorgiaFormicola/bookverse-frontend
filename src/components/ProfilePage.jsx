@@ -23,6 +23,7 @@ const ProfilePage = () => {
   const [hasNext, setHasNext] = useState(false);
   const [showEditModal, setShowEditModal] = useState(false);
   const [totalReviews, setTotalReviews] = useState(0);
+  const [loadingMore, setLoadingMore] = useState(false);
 
   const stats = Object.values(library ?? {}).reduce(
     (acc, book) => {
@@ -51,7 +52,10 @@ const ProfilePage = () => {
         if (err.handled) return;
         setError(true);
       })
-      .finally(() => setLoading(false));
+      .finally(() => {
+        setLoading(false);
+        if (append) setLoadingMore(false);
+      });
   };
 
   const getTotalReviews = () => {
@@ -64,6 +68,8 @@ const ProfilePage = () => {
   };
 
   const loadNextPage = () => {
+    if (loadingMore) return;
+    setLoadingMore(true);
     getUserBookshelf(currentPage + 1, true);
   };
 
@@ -136,15 +142,26 @@ const ProfilePage = () => {
               <h3 className="mt-2 mb-3">Bookshelf</h3>
               <Row className=" justify-content-center g-2 g-md-3 g-xl-3 g-xxl-4 row-cols-3 row-cols-sm-4 row-cols-md-5 row-cols-xxl-6">
                 {loading ? (
-                  Array.from({ length: 10 }).map((_, i) => (
-                    <Col key={i} className="mb-3">
-                      <Card className="bg-transparent border-0">
-                        <div className="placeholder-glow rounded-3 book-cover">
-                          <div className="placeholder rounded-3 w-100 h-100" />
-                        </div>
-                      </Card>
-                    </Col>
-                  ))
+                  <>
+                    {Array.from({ length: 12 }).map((_, i) => (
+                      <Col key={`sm-${i}`} className="mb-3 d-md-none d-xxl-block">
+                        <Card className="bg-transparent border-0">
+                          <div className="placeholder-glow rounded-3 book-cover">
+                            <div className="placeholder rounded-3 w-100 h-100" />
+                          </div>
+                        </Card>
+                      </Col>
+                    ))}
+                    {Array.from({ length: 10 }).map((_, i) => (
+                      <Col key={`lg-${i}`} className="mb-3 d-none d-md-block d-xxl-none">
+                        <Card className="bg-transparent border-0">
+                          <div className="placeholder-glow rounded-3 book-cover">
+                            <div className="placeholder rounded-3 w-100 h-100" />
+                          </div>
+                        </Card>
+                      </Col>
+                    ))}
+                  </>
                 ) : error ? (
                   <div className="bv-empty-state w-100">
                     <ArrowClockwise
@@ -179,18 +196,24 @@ const ProfilePage = () => {
                     </span>
                   </div>
                 ) : (
-                  <>
-                    {bookshelf.map((book) => (
-                      <BookCard key={book.id} book={book.info} />
-                    ))}
-                    {hasNext && (
-                      <Col xs={12} className="text-center">
-                        <ThreeDots className="cursor-pointer text-faint" size={50} onClick={loadNextPage} />
-                      </Col>
-                    )}
-                  </>
+                  bookshelf.map((book) => <BookCard key={book.id} book={book.info} />)
                 )}
               </Row>
+              {!loading && !error && bookshelf.length > 0 && hasNext && (
+                <Row>
+                  <Col xs={12} className="text-center">
+                    {loadingMore ? (
+                      <div className="d-inline-flex gap-2 align-items-center justify-content-center" style={{ height: 50 }}>
+                        <span className="bv-loader-dot" />
+                        <span className="bv-loader-dot" />
+                        <span className="bv-loader-dot" />
+                      </div>
+                    ) : (
+                      <ThreeDots className="cursor-pointer text-faint" size={50} onClick={loadNextPage} />
+                    )}
+                  </Col>
+                </Row>
+              )}
             </div>
           </Col>
         </Row>

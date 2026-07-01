@@ -15,6 +15,7 @@ const SearchPage = () => {
   const [error, setError] = useState(false);
   const [visibleBooksCount, setVisibleBooksCount] = useState(savedState?.visibleBooksCount || 10);
   const [hasSearched, setHasSearched] = useState(savedState?.hasSearched || false);
+  const [loadingMore, setLoadingMore] = useState(false);
 
   const visibleBooks = books.slice(0, visibleBooksCount);
   const hasNext = visibleBooksCount < books.length;
@@ -48,7 +49,12 @@ const SearchPage = () => {
   };
 
   const loadNextPage = () => {
-    setVisibleBooksCount((prev) => prev + 10);
+    if (loadingMore) return;
+    setLoadingMore(true);
+    setTimeout(() => {
+      setVisibleBooksCount((prev) => prev + 10);
+      setLoadingMore(false);
+    }, 1000);
   };
 
   return (
@@ -118,7 +124,7 @@ const SearchPage = () => {
       <Row className="g-3 pt-3 pt-sm-1 pt-md-2 pt-lg-0">
         <Col xs={12}>
           {loading ? (
-            <div className="d-flex gap-3 justify-content-center align-items-center py-5">
+            <div className="d-flex gap-3 justify-content-center align-items-center py-5 my-5">
               <Spinner animation="grow" size="sm" style={{ color: "var(--primary-light)" }} />
               <Spinner animation="grow" size="sm" style={{ color: "var(--accent)" }} />
               <Spinner animation="grow" size="sm" style={{ color: "var(--st-review)" }} />
@@ -166,7 +172,15 @@ const SearchPage = () => {
               </ListGroup>
               {hasNext && (
                 <div className="text-center pt-2 pt-sm-3">
-                  <ThreeDots size={50} className="cursor-pointer text-faint" onClick={() => loadNextPage()} />
+                  {loadingMore ? (
+                    <div className="d-inline-flex gap-2 align-items-center justify-content-center" style={{ height: 50 }}>
+                      <span className="bv-loader-dot" />
+                      <span className="bv-loader-dot" />
+                      <span className="bv-loader-dot" />
+                    </div>
+                  ) : (
+                    <ThreeDots size={50} className="cursor-pointer text-faint" onClick={loadNextPage} />
+                  )}
                 </div>
               )}
             </>
