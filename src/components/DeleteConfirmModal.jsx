@@ -13,8 +13,13 @@ const DeleteConfirmModal = ({ show, onHide, onConfirm, username, bookId }) => {
     }
   };
 
+  const handleClose = () => {
+    if (loading) return;
+    onHide();
+  };
+
   return (
-    <Modal show={show} onHide={onHide} centered>
+    <Modal show={show} onHide={handleClose} centered>
       <Modal.Header closeButton>
         <Modal.Title className="text-danger">Confirm deletion</Modal.Title>
       </Modal.Header>
@@ -34,7 +39,7 @@ const DeleteConfirmModal = ({ show, onHide, onConfirm, username, bookId }) => {
       </Modal.Body>
 
       <Modal.Footer className="d-flex gap-2">
-        <Button disabled={loading} className="flex-grow-1 bv-btn-close" onClick={onHide}>
+        <Button disabled={loading} className="flex-grow-1 bv-btn-close" onClick={handleClose}>
           Cancel
         </Button>
         <Button disabled={loading} className="flex-grow-1 bv-btn-delete" onClick={handleConfirm}>

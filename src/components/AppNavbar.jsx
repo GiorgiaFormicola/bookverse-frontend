@@ -62,16 +62,16 @@ const AppNavbar = () => {
                 <User size={16} className="me-2" />
                 Profile
               </NavDropdown.Item>
-              <NavDropdown.Item as={Link} to="/me/account">
-                <Settings size={16} className="me-2" />
-                Account
-              </NavDropdown.Item>
               {user?.role === "ADMIN" && (
                 <NavDropdown.Item as={Link} to="/admin">
                   <Shield size={16} className="me-2" />
                   Admin Panel
                 </NavDropdown.Item>
               )}
+              <NavDropdown.Item as={Link} to="/me/account">
+                <Settings size={16} className="me-2" />
+                Account
+              </NavDropdown.Item>
               <NavDropdown.Divider />
               <NavDropdown.Item onClick={logout} className="text-danger">
                 <LogOut size={16} className="me-2" />
@@ -109,16 +109,16 @@ const AppNavbar = () => {
               <User size={25} />
               Profile
             </Link>
-            <Link to="/me/account" className="nav-link d-flex align-items-center gap-2 fs-5" onClick={() => setShowOffcanvas(false)}>
-              <Settings size={25} />
-              Account
-            </Link>
             {user?.role === "ADMIN" && (
               <Link to="/admin" className="nav-link d-flex align-items-center gap-2 fs-5" onClick={() => setShowOffcanvas(false)}>
                 <Shield size={25} />
                 Admin Panel
               </Link>
             )}
+            <Link to="/me/account" className="nav-link d-flex align-items-center gap-2 fs-5" onClick={() => setShowOffcanvas(false)}>
+              <Settings size={25} />
+              Account
+            </Link>
           </div>
           <div className="px-3">
             <button

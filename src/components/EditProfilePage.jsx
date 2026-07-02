@@ -18,8 +18,15 @@ const EditProfilePage = () => {
   const [uploadError, setUploadError] = useState(false);
   const [show, setShow] = useState(false);
 
-  const handleClose = () => setShow(false);
-  const handleShow = () => setShow(true);
+  const handleClose = () => {
+    if (uploadLoading) return;
+    setShow(false);
+  };
+
+  const handleShow = () => {
+    setUploadError(false);
+    setShow(true);
+  };
 
   const originalUser = { username: user?.username, displayName: user?.displayName, bio: user?.bio };
 
@@ -172,8 +179,8 @@ const EditProfilePage = () => {
             <Spinner animation="border" style={{ color: "var(--primary-light)" }} />
           ) : uploadError ? (
             <div className="bv-empty-state py-3">
-              <ArrowClockwise size={30} className="bv-empty-state__icon cursor-pointer" onClick={() => setUploadError(false)} />
-              <p className="bv-empty-state__text mb-0">Something went wrong uploading the picture.</p>
+              <ArrowClockwise size={30} className="bv-empty-state__icon" />
+              <p className="bv-empty-state__text mb-0">Something went wrong uploading the picture</p>
               <span className="bv-empty-state__link cursor-pointer" onClick={() => setUploadError(false)}>
                 Try again
               </span>
@@ -185,7 +192,7 @@ const EditProfilePage = () => {
         <Modal.Footer className="px-4">
           <Form>
             <Form.Group>
-              <Form.Label htmlFor="file-upload" className="bv-btn-confirm btn mb-0 fw-semibold cursor-pointer">
+              <Form.Label htmlFor="file-upload" className={`bv-btn-confirm btn mb-0 fw-semibold ${uploadLoading ? "disabled" : "cursor-pointer"}`}>
                 Upload picture
               </Form.Label>
               <Form.Control
@@ -193,6 +200,7 @@ const EditProfilePage = () => {
                 type="file"
                 accept="image/*"
                 id="file-upload"
+                disabled={uploadLoading}
                 onChange={async (e) => {
                   const data = new FormData();
                   data.append("profile_picture", e.target.files[0]);

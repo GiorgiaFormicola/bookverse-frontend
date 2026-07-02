@@ -127,6 +127,11 @@ const AccountPage = () => {
     }
   };
 
+  const handleDeleteModalClose = () => {
+    if (deleteLoading) return;
+    setShowDeleteConfirm(false);
+  };
+
   return (
     <>
       <Container fluid className="container-lg py-4 px-3 px-lg-4">
@@ -347,7 +352,7 @@ const AccountPage = () => {
         </Row>
       </Container>
 
-      <Modal show={showDeleteConfirm} onHide={() => setShowDeleteConfirm(false)} centered>
+      <Modal show={showDeleteConfirm} onHide={handleDeleteModalClose} centered>
         <Modal.Header closeButton className="px-4">
           <Modal.Title className="text-danger">Delete account</Modal.Title>
         </Modal.Header>
@@ -360,7 +365,7 @@ const AccountPage = () => {
           <div className={"alert bg-transparent border-0 p-0 mt-3" + (deleteError ? " alert-danger" : " invisible")}>{deleteError || "placeholder"}</div>
         </Modal.Body>
         <Modal.Footer className="px-4 d-flex gap-2">
-          <Button className="flex-grow-1 bv-btn-close" onClick={() => setShowDeleteConfirm(false)} disabled={deleteLoading}>
+          <Button className="flex-grow-1 bv-btn-close" onClick={handleDeleteModalClose} disabled={deleteLoading}>
             Cancel
           </Button>
           <Button className="flex-grow-1 bv-btn-delete" onClick={handleDeleteAccount} disabled={deleteLoading}>

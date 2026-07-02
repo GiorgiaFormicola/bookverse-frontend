@@ -9,13 +9,48 @@ const EditBookModal = ({ show, onHide, book, handleSaveBook }) => {
   const [saveError, setSaveError] = useState("");
   const [loading, setLoading] = useState(false);
   const fileInputRef = useRef(null);
-  const isLocked = (field) => !isEmpty(book[field]);
 
   if (!book || !form) return null;
   const isEmpty = (val) => {
     if (Array.isArray(val)) return val.length === 0;
     return val === null || val === undefined || val === "";
   };
+
+  const isInvalidClear = (original, current) => {
+    return !isEmpty(original) && isEmpty(current);
+  };
+
+  const isValidIsbn10 = (value) => isEmpty(value) || /^\d{9}[\dXx]$/.test(value.trim());
+  const isValidIsbn13 = (value) => isEmpty(value) || /^\d{13}$/.test(value.trim());
+
+  const isValidPages = (value) => isEmpty(value) || (/^\d+$/.test(String(value).trim()) && Number(value) >= 1);
+
+  const isValidPublishedDate = (value) => {
+    if (isEmpty(value)) return true;
+    const match = /^(\d{4})(-(\d{2})(-(\d{2}))?)?$/.exec(value.trim());
+    if (!match) return false;
+    const month = match[3] ? Number(match[3]) : null;
+    const day = match[5] ? Number(match[5]) : null;
+    if (month !== null && (month < 1 || month > 12)) return false;
+    if (day !== null && (day < 1 || day > 31)) return false;
+    return true;
+  };
+
+  const titleClearInvalid = isInvalidClear(book.title, form.title);
+  const publisherClearInvalid = isInvalidClear(book.publisher, form.publisher);
+  const publishedDateClearInvalid = isInvalidClear(book.publishedDate, form.publishedDate);
+  const descriptionClearInvalid = isInvalidClear(book.description, form.description);
+  const isbn10ClearInvalid = isInvalidClear(book.isbn10, form.isbn10);
+  const isbn13ClearInvalid = isInvalidClear(book.isbn13, form.isbn13);
+  const pagesClearInvalid = isInvalidClear(book.pages, form.pages);
+
+  const isbn10Invalid = isbn10ClearInvalid || (!isEmpty(form.isbn10) && !isValidIsbn10(form.isbn10));
+  const isbn13Invalid = isbn13ClearInvalid || (!isEmpty(form.isbn13) && !isValidIsbn13(form.isbn13));
+  const pagesInvalid = pagesClearInvalid || (!isEmpty(form.pages) && !isValidPages(form.pages));
+  const publishedDateInvalid = publishedDateClearInvalid || (!isEmpty(form.publishedDate) && !isValidPublishedDate(form.publishedDate));
+
+  const authorsCleared = isInvalidClear(book.authors, form.authors);
+  const categoriesCleared = isInvalidClear(book.categories, form.categories);
 
   const shouldSend = (original, current) => {
     const changed = Array.isArray(original) ? JSON.stringify(original) !== JSON.stringify(current) : original !== current;
@@ -25,26 +60,20 @@ const EditBookModal = ({ show, onHide, book, handleSaveBook }) => {
     return true;
   };
 
-  const isInvalidClear = (original, current) => {
-    return !isEmpty(original) && isEmpty(current);
-  };
-
-  const hasInvalidClears = () => {
-    return (
-      isInvalidClear(book.title, form.title) ||
-      isInvalidClear(book.description, form.description) ||
-      isInvalidClear(book.publisher, form.publisher) ||
-      isInvalidClear(book.publishedDate, form.publishedDate) ||
-      isInvalidClear(book.isbn10, form.isbn10) ||
-      isInvalidClear(book.isbn13, form.isbn13) ||
-      isInvalidClear(book.pages, form.pages) ||
-      isInvalidClear(book.authors, form.authors) ||
-      isInvalidClear(book.categories, form.categories)
-    );
+  const shouldSendClearable = (original, current) => {
+    return Array.isArray(original) ? JSON.stringify(original) !== JSON.stringify(current) : original !== current;
   };
 
   const canSave =
-    !hasInvalidClears() &&
+    !titleClearInvalid &&
+    !publisherClearInvalid &&
+    !publishedDateClearInvalid &&
+    !descriptionClearInvalid &&
+    !pagesClearInvalid &&
+    !isbn10Invalid &&
+    !isbn13Invalid &&
+    !pagesInvalid &&
+    !publishedDateInvalid &&
     (shouldSend(book.title, form.title) ||
       shouldSend(book.description, form.description) ||
       shouldSend(book.publisher, form.publisher) ||
@@ -52,8 +81,8 @@ const EditBookModal = ({ show, onHide, book, handleSaveBook }) => {
       shouldSend(book.isbn10, form.isbn10) ||
       shouldSend(book.isbn13, form.isbn13) ||
       shouldSend(book.pages, form.pages) ||
-      shouldSend(book.authors, form.authors) ||
-      shouldSend(book.categories, form.categories) ||
+      shouldSendClearable(book.authors, form.authors) ||
+      shouldSendClearable(book.categories, form.categories) ||
       coverFile);
 
   const updateField = (field, value) => {
@@ -73,6 +102,11 @@ const EditBookModal = ({ show, onHide, book, handleSaveBook }) => {
     if (fileInputRef.current) fileInputRef.current.value = "";
   };
 
+  const handleClose = () => {
+    if (loading) return;
+    onHide();
+  };
+
   const handleSave = async () => {
     setLoading(true);
     try {
@@ -81,26 +115,26 @@ const EditBookModal = ({ show, onHide, book, handleSaveBook }) => {
         shouldSend(book.description, form.description) ||
         shouldSend(book.publisher, form.publisher) ||
         shouldSend(book.publishedDate, form.publishedDate) ||
-        (isEmpty(book.isbn10) && shouldSend(book.isbn10, form.isbn10)) ||
-        (isEmpty(book.isbn13) && shouldSend(book.isbn13, form.isbn13)) ||
-        (!isEmpty(form.pages) && shouldSend(book.pages, form.pages))
+        shouldSend(book.isbn10, form.isbn10) ||
+        shouldSend(book.isbn13, form.isbn13) ||
+        shouldSend(book.pages, form.pages)
       ) {
         await instance.put(`/books/${book.googleId}`, {
           title: form.title,
           publisher: form.publisher,
-          publishedDate: form.publishedDate,
+          publishedDate: form.publishedDate?.trim(),
           description: form.description,
-          isbn10: form.isbn10,
-          isbn13: form.isbn13,
+          isbn10: form.isbn10?.trim(),
+          isbn13: form.isbn13?.trim(),
           pages: Number(form.pages),
         });
       }
 
-      if (shouldSend(book.authors, form.authors)) {
+      if (shouldSendClearable(book.authors, form.authors)) {
         await instance.patch(`/books/${book.googleId}/authors`, { authors: form.authors });
       }
 
-      if (shouldSend(book.categories, form.categories)) {
+      if (shouldSendClearable(book.categories, form.categories)) {
         await instance.patch(`/books/${book.googleId}/categories`, { categories: form.categories });
       }
 
@@ -120,9 +154,10 @@ const EditBookModal = ({ show, onHide, book, handleSaveBook }) => {
   };
 
   return (
-    <Modal size="lg" show={show} onHide={onHide} centered>
-      <Modal.Header closeButton>
+    <Modal size="lg" show={show} onHide={handleClose} centered>
+      <Modal.Header>
         <Modal.Title>Edit Book</Modal.Title>
+        <button type="button" className="btn-close" aria-label="Close" disabled={loading} onClick={handleClose}></button>
       </Modal.Header>
 
       <Modal.Body>
@@ -156,15 +191,18 @@ const EditBookModal = ({ show, onHide, book, handleSaveBook }) => {
                 className="py-2"
                 as="textarea"
                 rows={15}
+                isInvalid={descriptionClearInvalid}
                 value={form.description ?? ""}
                 onChange={(e) => updateField("description", e.target.value)}
               />
+              <Form.Control.Feedback type="invalid">Description can't be cleared</Form.Control.Feedback>
             </Form.Group>
           </Col>
           <Col md={6} className="mb-2">
             <Form.Group>
               <Form.Label>Title</Form.Label>
-              <Form.Control value={form.title ?? ""} onChange={(e) => updateField("title", e.target.value)} />
+              <Form.Control isInvalid={titleClearInvalid} value={form.title ?? ""} onChange={(e) => updateField("title", e.target.value)} />
+              <Form.Control.Feedback type="invalid">Title can't be cleared</Form.Control.Feedback>
             </Form.Group>
           </Col>
 
@@ -185,6 +223,7 @@ const EditBookModal = ({ show, onHide, book, handleSaveBook }) => {
                   )
                 }
               />
+              {authorsCleared && <Form.Text className="text-muted d-block">This will remove all authors</Form.Text>}
             </Form.Group>
           </Col>
 
@@ -192,7 +231,9 @@ const EditBookModal = ({ show, onHide, book, handleSaveBook }) => {
           <Col md={6} className="mb-2">
             <Form.Group>
               <Form.Label>Publisher</Form.Label>
-              <Form.Control value={form.publisher ?? ""} onChange={(e) => updateField("publisher", e.target.value)} />
+              <Form.Control isInvalid={publisherClearInvalid} value={form.publisher ?? ""} onChange={(e) => updateField("publisher", e.target.value)} />
+
+              <Form.Control.Feedback type="invalid">Publisher can't be cleared</Form.Control.Feedback>
             </Form.Group>
           </Col>
           <Col md={6} className="mb-2">
@@ -210,6 +251,7 @@ const EditBookModal = ({ show, onHide, book, handleSaveBook }) => {
                   )
                 }
               />
+              {categoriesCleared && <Form.Text className="text-muted d-block">This will remove all categories</Form.Text>}
             </Form.Group>
           </Col>
 
@@ -219,10 +261,14 @@ const EditBookModal = ({ show, onHide, book, handleSaveBook }) => {
               <Form.Label>Published date</Form.Label>
               <Form.Control
                 type="text"
+                isInvalid={publishedDateInvalid}
                 value={form.publishedDate ?? ""}
                 placeholder="es. 2023, 2023-06, 2023-06-15"
                 onChange={(e) => updateField("publishedDate", e.target.value)}
               />
+              <Form.Control.Feedback type="invalid">
+                {publishedDateClearInvalid ? "Published date can't be cleared" : "Use YYYY, YYYY-MM or YYYY-MM-DD (e.g. 2023-06-15)"}
+              </Form.Control.Feedback>
             </Form.Group>
           </Col>
 
@@ -230,7 +276,10 @@ const EditBookModal = ({ show, onHide, book, handleSaveBook }) => {
           <Col md={6}>
             <Form.Group>
               <Form.Label>Pages</Form.Label>
-              <Form.Control type="number" min={1} value={form.pages ?? ""} onChange={(e) => updateField("pages", e.target.value)} />
+              <Form.Control type="number" min={1} isInvalid={pagesInvalid} value={form.pages ?? ""} onChange={(e) => updateField("pages", e.target.value)} />
+              <Form.Control.Feedback type="invalid">
+                {pagesClearInvalid ? "Pages count can't be cleared" : "Pages count must be a whole number of 1 or more"}
+              </Form.Control.Feedback>
             </Form.Group>
           </Col>
 
@@ -240,11 +289,14 @@ const EditBookModal = ({ show, onHide, book, handleSaveBook }) => {
               <Form.Label>ISBN-10</Form.Label>
               <Form.Control
                 value={form.isbn10 ?? ""}
-                disabled={isLocked("isbn10")}
+                isInvalid={isbn10Invalid}
                 maxLength={10}
-                placeholder={isLocked("isbn10") ? "already setted" : ""}
+                placeholder="es. 0306406152"
                 onChange={(e) => updateField("isbn10", e.target.value)}
               />
+              <Form.Control.Feedback type="invalid">
+                {isbn10ClearInvalid ? "ISBN-10 can't be cleared" : "ISBN-10 must be 9 digits followed by a digit or X"}
+              </Form.Control.Feedback>
             </Form.Group>
           </Col>
 
@@ -254,11 +306,14 @@ const EditBookModal = ({ show, onHide, book, handleSaveBook }) => {
               <Form.Label>ISBN-13</Form.Label>
               <Form.Control
                 value={form.isbn13 ?? ""}
-                disabled={isLocked("isbn13")}
+                isInvalid={isbn13Invalid}
                 maxLength={13}
-                placeholder={isLocked("isbn13") ? "alredy setted" : ""}
+                placeholder="es. 9780306406157"
                 onChange={(e) => updateField("isbn13", e.target.value)}
               />
+              <Form.Control.Feedback type="invalid">
+                {isbn13ClearInvalid ? "ISBN-13 can't be cleared" : "ISBN-13 must be exactly 13 digits"}
+              </Form.Control.Feedback>
             </Form.Group>
           </Col>
         </Row>
@@ -270,11 +325,11 @@ const EditBookModal = ({ show, onHide, book, handleSaveBook }) => {
             {saveError || "placeholder"}
           </div>
           <div className="d-flex gap-2 justify-content-end">
-            <Button className="bv-btn-close" onClick={onHide}>
+            <Button disabled={loading} className="bv-btn-close" onClick={handleClose}>
               Cancel
             </Button>
             <Button disabled={!canSave || loading} className="bv-btn-confirm" onClick={() => handleSave()}>
-              {loading ? <Spinner animation="border" size="sm" style={{ color: "var(--bg-deep)" }} /> : "Save Book"}
+              {loading ? <Spinner animation="border" size="sm" className="mx-4" style={{ color: "var(--bg-deep)" }} /> : "Save Book"}
             </Button>
           </div>
         </div>

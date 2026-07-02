@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { Modal, Form, Button, Spinner } from "react-bootstrap";
 import { instance } from "../config/api";
+
 const EditUserModal = ({ show, onHide, user, handleSaveUser }) => {
   const [userRole, setUserRole] = useState(user?.role);
   const [userIsActive, setUserIsActive] = useState(user?.active ? "true" : "false");
@@ -16,6 +17,11 @@ const EditUserModal = ({ show, onHide, user, handleSaveUser }) => {
     if (newRole === "ADMIN") {
       setUserIsActive("true");
     }
+  };
+
+  const handleClose = () => {
+    if (loading) return;
+    onHide();
   };
 
   const handleSave = async () => {
@@ -60,7 +66,7 @@ const EditUserModal = ({ show, onHide, user, handleSaveUser }) => {
   };
 
   return (
-    <Modal show={show} onHide={onHide} centered>
+    <Modal show={show} onHide={handleClose} centered>
       <Modal.Header closeButton>
         <Modal.Title>Edit User</Modal.Title>
       </Modal.Header>
@@ -93,7 +99,7 @@ const EditUserModal = ({ show, onHide, user, handleSaveUser }) => {
       <Modal.Footer className="flex-column gap-2">
         <div className={"alert bg-transparent border-0 p-0 w-100 text-center" + (saveError ? " alert-danger" : " invisible")}>{saveError || "placeholder"}</div>
         <div className="d-flex gap-2 w-100">
-          <Button className="flex-grow-1 bv-btn-close" onClick={onHide}>
+          <Button disabled={loading} className="flex-grow-1 bv-btn-close" onClick={handleClose}>
             Cancel
           </Button>
           <Button disabled={loading} className="flex-grow-1 bv-btn-confirm" onClick={() => handleSave()}>

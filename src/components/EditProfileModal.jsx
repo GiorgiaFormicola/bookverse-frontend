@@ -16,6 +16,13 @@ const EditProfileModal = ({ show, handleClose }) => {
 
   const originalUser = { username: user?.username, displayName: user?.displayName, bio: user?.bio };
 
+  const handleModalClose = () => {
+    if (loading || uploadLoading) return;
+    setUploadError(false);
+    setError(false);
+    handleClose();
+  };
+
   const validateForm = (form) => {
     if (!form.displayName || form.displayName.trim() === "" || form.displayName.length < 2 || form.displayName.length > 50) {
       setError("Provide a valid display name");
@@ -49,7 +56,7 @@ const EditProfileModal = ({ show, handleClose }) => {
 
   return (
     <>
-      <Modal show={show} onHide={handleClose} centered size="lg">
+      <Modal show={show} onHide={handleModalClose} centered size="lg">
         <Modal.Header closeButton className="px-4">
           <Modal.Title>Edit profile</Modal.Title>
         </Modal.Header>
@@ -59,13 +66,18 @@ const EditProfileModal = ({ show, handleClose }) => {
             <div className="position-relative d-inline-block">
               {uploadLoading ? (
                 <div className="d-flex justify-content-center align-items-center" style={{ height: 200, width: 200 }}>
-                  <Spinner animation="border" style={{ color: "var(--text-muted)" }} />
+                  <Spinner animation="border" style={{ color: "var(--primary-light)" }} />
                 </div>
               ) : uploadError ? (
-                <div className="d-flex flex-column align-items-center gap-2 py-3" style={{ width: 200 }}>
-                  <p className="mb-0 small text-danger">Something went wrong uploading the picture.</p>
-                  <ArrowClockwise size={24} className="cursor-pointer text-muted" onClick={() => setUploadError(false)} />
-                </div>
+                <>
+                  <div className="bv-empty-state py-3">
+                    <ArrowClockwise size={30} className="bv-empty-state__icon" />
+                    <p className="bv-empty-state__text mb-0">Something went wrong uploading the picture</p>
+                    <span className="bv-empty-state__link cursor-pointer" onClick={() => setUploadError(false)}>
+                      Try again
+                    </span>
+                  </div>
+                </>
               ) : (
                 <>
                   <img src={user.profilePictureURL} alt={user.username} className="avatar" style={{ width: 200 }} />
@@ -80,6 +92,7 @@ const EditProfileModal = ({ show, handleClose }) => {
                       type="file"
                       accept="image/*"
                       id="modal-file-upload"
+                      disabled={loading}
                       onChange={async (e) => {
                         const data = new FormData();
                         data.append("profile_picture", e.target.files[0]);
@@ -152,7 +165,7 @@ const EditProfileModal = ({ show, handleClose }) => {
               {error || "Error placeholder"}
             </div>
 
-            <Button disabled={!hasChanged() || loading} className="w-100 fw-semibold my-2 fs-4 bv-btn-confirm" type="submit">
+            <Button disabled={!hasChanged() || loading || uploadLoading} className="w-100 fw-semibold my-2 fs-4 bv-btn-confirm" type="submit">
               {loading ? <Spinner animation="border" size="sm" /> : "Save"}
             </Button>
           </Form>
